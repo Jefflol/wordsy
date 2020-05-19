@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 
+const userRoutes = require('./api/routes/users');
+
+
 // Connect MongoDB
 mongoose.connect(
   'mongodb+srv://JAF:' + 
@@ -35,7 +38,7 @@ app.use((req, res, next) => {
 });
 
 // Routes handling requests
-
+app.use('/users', userRoutes);
 
 // app.use((req, res, next) => {
 //   const error = new Error('Not found');
