@@ -1,0 +1,102 @@
+.register-form {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+
+  width: 40%;
+  height: 100%;
+
+  padding: 5%;
+
+  /* background-color: aqua; */
+  color: #E6E6E6;
+  box-sizing: border-box;
+}
+
+.form-header {
+  margin: 20px 0;
+}
+
+.form-title {
+  margin: 0;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.form-caption {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  opacity: 20%;
+}
+
+.username-input,
+.password-input {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+}
+
+.username-input > label,
+.password-input > label {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.username-input > input,
+.password-input > input {
+  height: 40px;
+  padding: 10px 15px;
+  border: 0;
+  margin: 4px 0;
+  border-radius: 10px;
+
+  font-size: 14px;
+  color: #262626;
+  background-color: #E6E6E6;
+  opacity: 20%;
+  box-sizing: border-box;
+}
+
+.username-input > input:focus,
+.username-input > input:hover,
+.password-input > input:focus,
+.password-input > input:hover {
+  opacity: 100%;
+  outline: none;
+}
+
+.form-submit-btn {
+  height: 40px;
+  border: 0;
+  margin: 20px 0;
+  border-radius: 10px;
+
+  font-size: 16px;
+  font-weight: bold;
+  color: #E6E6E6;
+  background-color: #3385C6;
+}
+.form-submit-btn:hover {
+  cursor: pointer;
+}
+
+.existing-account {
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.sign-in-btn {
+  border: 0;
+  font-size: 12px;
+  font-weight: bold;
+  color: #3385C6;
+  background-color: transparent;
+}
+
+.sign-in-btn:hover {
+  cursor: pointer;
+}
