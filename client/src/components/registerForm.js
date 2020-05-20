@@ -47,8 +47,8 @@ class RegisterForm extends Component {
         {/* <input className="form-submit-btn" type="submit" value="Register"></input> */}
         <button className="form-submit-btn">Register</button>
         <div className="existing-account">
-          <span>Already have an account?</span>
-          <button className="sign-in-btn" onClick={this.goToLogin}>Sign in!</button>
+            Already have an account?
+            <span className="sign-in-btn" onClick={this.goToLogin}>Sign in!</span>
         </div>
       </form>
     );
@@ -65,7 +65,3 @@ export default connect(
     registerUser
   }
 )(RegisterForm);
-
-/* TODO 
- * Align [sign-in-btn] with rest of text
- */

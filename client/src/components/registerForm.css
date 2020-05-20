@@ -83,18 +83,20 @@
 }
 
 .existing-account {
-  display: flex;
-  justify-content: center;
   font-size: 12px;
   font-weight: bold;
+  text-align: center;
 }
 
 .sign-in-btn {
+  display: inline;
+  margin: 0 10px;
   border: 0;
   font-size: 12px;
   font-weight: bold;
   color: #3385C6;
   background-color: transparent;
+  white-space: nowrap;
 }
 
 .sign-in-btn:hover {
