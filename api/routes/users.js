@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const User = require('../models/users.model');
 
 
@@ -15,26 +16,34 @@ router.post('/signup', (req, res, next) => {
           message: 'Username already exists'
         });
       } else {
-        const user = new User({
-          _id: new mongoose.Types.ObjectId(),
-          username: req.body.username,
-          password: req.body.password
-        });
-
-        user.save()
-          .then(result => {
-            console.log(result);
-            return res.status(201).json({
-              message: 'User created'
-            });
-          })
-          .catch(err => {
+        bcrypt.hash(req.body.password, 10, (err, hash) => {
+          if (err) {
             return res.status(500).json({
               error: err
             });
-          });
+          } else {
+            const user = new User({
+              _id: new mongoose.Types.ObjectId(),
+              username: req.body.username,
+              password: hash
+            });
+
+            user.save()
+            .then(result => {
+              console.log(result);
+              return res.status(201).json({
+                message: 'User created'
+              });
+            })
+            .catch(err => {
+              return res.status(500).json({
+                error: err
+              });
+            });
+          }
+        });
       }
-    })
+    });
 });
 
 // @route   POST /users/login
