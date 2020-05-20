@@ -50,18 +50,32 @@ router.post('/signup', (req, res, next) => {
 // @desc    Check for a user and login
 // @access  PUBLIC
 router.post('/login', (req, res, next) => {
-  User.find({ username: req.body.username, password: req.body.password })
+  User.find({ username: req.body.username })
     .then(user => {
       if (user.length < 1) {
         return res.status(401).json({
-          message: 'Authorization failed'
+          message: 'Invalid credentials'
         });
       }
-      
-      return res.status(200).json({
-        message: 'Authorization successful',
-        userId: user[0]._id,
-        username: user[0].username
+
+      bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+        if (err) {
+          return res.status(401).json({
+            message: 'Invalid credentials'
+          });
+        }
+
+        if (result) {
+          return res.status(200).json({
+            message: 'Authorization successful',
+            userId: user[0]._id,
+            username: user[0].username
+          });
+        }
+
+        return res.status(401).json({
+          message: 'Invalid credentials'
+        });
       });
     })
     .catch(err => {
