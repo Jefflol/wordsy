@@ -10,11 +10,11 @@ export default class RegisterForm extends Component {
           <h3 className="form-caption">Ready to add a new word?</h3>
         </div>
         <div className="username-input">
-          <label for="username">USERNAME</label>
+          <label htmlFor="username">USERNAME</label>
           <input type="text" id="username" name="username"></input>
         </div>
         <div className="password-input">
-          <label for="password">PASSWORD</label>
+          <label htmlFor="password">PASSWORD</label>
           <input type="text" id="password" name="password"></input>
         </div>
         <button className="form-submit-btn">Register</button>
