@@ -66,7 +66,7 @@ router.post('/login', (req, res, next) => {
 // @desc    Delete a user by ID
 // @access  PUBLIC
 router.delete('/:userId', (req, res, next) => {
-  User.deleteOne({ id: req.params.userId})
+  User.deleteOne({ _id: req.params.userId})
     .then(() => {
       return res.status(200).json({
         message: `User [${req.params.userId}] deleted`
@@ -83,7 +83,9 @@ router.delete('/:userId', (req, res, next) => {
 // @route   GET /users/:userId
 // @desc    Fetch user data
 // @access  PUBLIC
-// router.get('/:userId');
+// router.get('/:userId', (req, res, next) => {
+//   User.findById({ id})
+// });
 
 
 module.exports = router;
