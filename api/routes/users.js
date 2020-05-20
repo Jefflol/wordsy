@@ -40,7 +40,27 @@ router.post('/signup', (req, res, next) => {
 // @route   POST /users/login
 // @desc    Check for a user and login
 // @access  PUBLIC
-// router.post('/login',);
+router.post('/login', (req, res, next) => {
+  User.find({ username: req.body.username, password: req.body.password })
+    .then(user => {
+      if (user.length < 1) {
+        return res.status(401).json({
+          message: 'Authorization failed'
+        });
+      }
+      
+      return res.status(200).json({
+        message: 'Authorization successful',
+        userId: user[0]._id,
+        username: user[0].username
+      });
+    })
+    .catch(err => {
+      return res.status(500).json({
+        error: err
+      });
+    });
+});
 
 // @route   DELETE /users/:userId
 // @desc    Delete a user by ID
