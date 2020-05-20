@@ -1,0 +1,63 @@
+.form-group {
+  /* display: flex;
+  flex-direction: column;
+  margin: 20px 0; */
+}
+
+.header {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.header > .header-label {
+  margin-right: 10px;
+}
+
+.body {
+  position: relative;
+}
+
+.body > .body-input {
+  width: 100%;
+  height: 40px;
+  padding: 10px 15px;
+  border: 0;
+  margin: 4px 0;
+  border-radius: 10px;
+
+  font-size: 14px;
+  color: #262626;
+  background-color: #E6E6E6;
+  opacity: 20%;
+  box-sizing: border-box;
+}
+
+.body > .body-input:focus,
+.body > .body-input:hover {
+  opacity: 100%;
+  outline: none;
+}
+
+
+.header > .header-alert-error {
+  float: right;
+  color: #FF4F4F;
+}
+
+.body > .body-alert-error {
+  border: 2px solid #FF4F4F;
+  opacity: 100%;
+}
+
+.body > .alert-error-icon {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  top: 0;
+  right: 0;
+
+  margin: 4px 0;
+}

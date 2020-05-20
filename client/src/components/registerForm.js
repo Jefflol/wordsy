@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { registerUser } from '../actions/userActions';
 
+import FormGroup, { FormLabel, FormInput } from './FormGroup/formGroup';
+
 class RegisterForm extends Component {
   state = {
     username: '',
@@ -25,7 +27,7 @@ class RegisterForm extends Component {
     this.props.registerUser({ username, password });
   }
 
-  goToLogin = (e) => {
+  goToLogin = e => {
     e.preventDefault();
   }
 
@@ -37,14 +39,17 @@ class RegisterForm extends Component {
           <h3 className="form-caption">Ready to add a new word?</h3>
         </div>
         <div className="username-input">
-          <label htmlFor="username">USERNAME</label>
-          <input type="text" id="username" name="username" minLength="8" maxLength="20" onChange={this.onChange}></input>
+          <FormGroup>
+            <FormLabel for="username" name="USERNAME" errorMessage="Username must not be empty"/>
+            <FormInput type="text" id="username" name="username" minLength="8" maxLength="20" onChange={this.onChange}/>
+          </FormGroup>
         </div>
         <div className="password-input">
-          <label htmlFor="password">PASSWORD</label>
-          <input type="password" id="password" name="password" autoComplete="on" onChange={this.onChange}></input>
+          <FormGroup>
+            <FormLabel for="password" name="PASSWORD"/>
+            <FormInput type="password" id="password" name="password" autoComplete="on" onChange={this.onChange}/>
+          </FormGroup>
         </div>
-        {/* <input className="form-submit-btn" type="submit" value="Register"></input> */}
         <button className="form-submit-btn">Register</button>
         <div className="existing-account">
             Already have an account?
