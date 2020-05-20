@@ -65,7 +65,19 @@ router.post('/login', (req, res, next) => {
 // @route   DELETE /users/:userId
 // @desc    Delete a user by ID
 // @access  PUBLIC
-// router.delete('/:userId' );
+router.delete('/:userId', (req, res, next) => {
+  User.deleteOne({ id: req.params.userId})
+    .then(() => {
+      return res.status(200).json({
+        message: `User [${req.params.userId}] deleted`
+      });
+    })
+    .catch(err => {
+      return res.status(500).json({
+        error: err
+      });
+    });
+});
 
 
 // @route   GET /users/:userId
