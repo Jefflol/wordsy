@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const checkAuth = require('../middleware/check-auth');
 
 const User = require('../models/users-model');
 
@@ -99,13 +100,26 @@ router.post('/login', (req, res, next) => {
 
 // @route   DELETE /users/:userId
 // @desc    Delete a user by ID
-// @access  PUBLIC
-router.delete('/:userId', (req, res, next) => {
+// @access  PRIVATE
+router.delete('/:userId', checkAuth, (req, res, next) => {
+  // Check if user is authorized
+  if (req.params.userId !== req.userData.userId) {
+    return res.status(401).json({
+      message: 'Unauthorized'
+    });
+  }
+
   User.deleteOne({ _id: req.params.userId})
-    .then(() => {
-      return res.status(200).json({
-        message: `User [${req.params.userId}] deleted`
-      });
+    .then((user) => {
+      if (user.deletedCount) {
+        return res.status(200).json({
+          message: `User [${req.params.userId}] deleted`
+        });
+      } else {
+        return res.status(404).json({
+          message: `User [${req.params.userId}] not found`
+        });
+      }
     })
     .catch(err => {
       return res.status(500).json({
@@ -117,10 +131,17 @@ router.delete('/:userId', (req, res, next) => {
 
 // @route   GET /users/:userId
 // @desc    Fetch user data
-// @access  PUBLIC
-router.get('/:userId', (req, res, next) => {
+// @access  PRIVATE
+router.get('/:userId', checkAuth, (req, res, next) => {
+  // Check if user is authorized
+  if (req.params.userId !== req.userData.userId) {
+    return res.status(401).json({
+      message: 'Unauthorized'
+    });
+  }
+
   User.findById({ _id: req.params.userId })
-    .select('_id username password')
+    .select('_id username')
     .then(user => {
       console.log('User found ', user);
 
