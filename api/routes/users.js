@@ -83,9 +83,26 @@ router.delete('/:userId', (req, res, next) => {
 // @route   GET /users/:userId
 // @desc    Fetch user data
 // @access  PUBLIC
-// router.get('/:userId', (req, res, next) => {
-//   User.findById({ id})
-// });
+router.get('/:userId', (req, res, next) => {
+  User.findById({ _id: req.params.userId })
+    .select('_id username password')
+    .then(user => {
+      console.log('User found ', user);
+
+      if (user) {
+        return res.status(200).json({
+          user: user
+        });
+      } else {
+        return res.status(404).json({ message: 'No valid entry found for provided ID' });
+      }
+    })
+    .catch(err => {
+      return res.status(500).json({
+        error: err
+      });
+    });
+});
 
 
 module.exports = router;
