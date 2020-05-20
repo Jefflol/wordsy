@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 
 const userRoutes = require('./api/routes/users');
 
@@ -20,6 +21,9 @@ mongoose.connect(
 
 // Bodyparser Middleware
 app.use(express.json());
+
+// Logging Middle ware
+app.use(morgan('dev'));
 
 // Allow resource sharing from different server (CORS Headers)
 app.use((req, res, next) => {
