@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import RegisterForm from './components/registerForm';
+import LoginForm from './components/loginForm';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -10,7 +11,8 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <div className="App">
-          <RegisterForm />
+          {/* <RegisterForm /> */}
+          <LoginForm />
         </div>
       </Provider>
     )
