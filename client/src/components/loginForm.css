@@ -48,7 +48,10 @@
   color: #E6E6E6;
   background-color: #3385C6;
 }
-.form-submit-btn:hover {
+.form-submit-btn:hover,
+.form-submit-btn:focus {
+  background-color: #1E4F76;
+  /* outline: none;   */
   cursor: pointer;
 }
 
@@ -68,7 +71,8 @@
 
 .register-btn {
   display: inline;
-  margin: 0 0 0 10px;
+  border: 0;
+  margin: 0 0 0 5px;
   font-size: 12px;
   font-weight: bold;
   color: #3385C6;
@@ -76,6 +80,10 @@
   white-space: nowrap;
 }
 
-.register-btn:hover {
+.register-btn:hover,
+.register-btn:focus {
+  color: #1E4F76;
+  text-decoration: underline;
+  /* outline: none; */
   cursor: pointer;
 }

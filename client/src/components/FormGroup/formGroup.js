@@ -58,6 +58,7 @@ export class FormInput extends Component {
           minLength={this.props.minLength} 
           maxLength={this.props.maxLength} 
           autoComplete={this.props.autoComplete}
+          tabIndex={this.props.tabIndex}
           onChange={this.onChange}
         ></input>
         {

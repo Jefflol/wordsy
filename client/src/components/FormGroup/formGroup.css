@@ -33,10 +33,10 @@
   box-sizing: border-box;
 }
 
-.body > .body-input:focus,
-.body > .body-input:hover {
+.body > .body-input:hover,
+.body > .body-input:focus {
   opacity: 100%;
-  outline: none;
+  /* outline: none; */
 }
 
 

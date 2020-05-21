@@ -25,6 +25,7 @@ export default class LoginForm extends Component {
 
   goToRegister = e => {
     e.preventDefault();
+    this.props.switchTab();
   }
 
   render() {
@@ -37,20 +38,20 @@ export default class LoginForm extends Component {
       <div className="username-input">
         <FormGroup>
           <FormLabel for="username" name="USERNAME" />
-          <FormInput type="text" id="username" name="username" maxLength="20" onChange={this.onChange} />
+          <FormInput type="text" id="username" name="username" maxLength="20" tabIndex="1" onChange={this.onChange} />
         </FormGroup>
       </div>
       <div className="password-input">
         <FormGroup>
           <FormLabel for="password" name="PASSWORD" />
-          <FormInput type="text" id="password" name="password" autoComplete="on" onChange={this.onChange} />
+          <FormInput type="text" id="password" name="password" autoComplete="on" tabIndex="2" onChange={this.onChange} />
         </FormGroup>
       </div>
-      <button className="form-submit-btn">Login</button>
+      <button className="form-submit-btn" tabIndex="3">Login</button>
       <div className="form-footer">
         <div className="register-account">
           <span className="register-text">Don't have an account?</span>
-          <span className="register-btn" onClick={this.goToRegister}>Register now!</span>
+          <button className="register-btn" tabIndex="4" onClick={this.goToRegister}>Register now!</button>
         </div>
       </div>
     </form>

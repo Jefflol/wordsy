@@ -105,6 +105,7 @@ class RegisterForm extends Component {
 
   goToLogin = e => {
     e.preventDefault();
+    this.props.switchTab();
   }
 
   render() {
@@ -117,27 +118,27 @@ class RegisterForm extends Component {
         <div className="username-input">
           <FormGroup>
             <FormLabel for="username" name="USERNAME" errorMessage={this.state.errors.username} errorOn={this.state.errors.username}/>
-            <FormInput type="text" id="username" name="username" maxLength="20" onChange={this.onChange} errorOn={this.state.errors.username}/>
+            <FormInput type="text" id="username" name="username" maxLength="20" tabIndex="1" onChange={this.onChange} errorOn={this.state.errors.username}/>
           </FormGroup>
         </div>
         <div className="password-input">
           <FormGroup>
             <FormLabel for="password" name="PASSWORD" errorMessage={this.state.errors.password} errorOn={this.state.errors.password}/>
-            <FormInput type="text" id="password" name="password" autoComplete="on" onChange={this.onChange} errorOn={this.state.errors.password}/>
+            <FormInput type="text" id="password" name="password" autoComplete="on" tabIndex="2" onChange={this.onChange} errorOn={this.state.errors.password}/>
           </FormGroup>
         </div>
-        <button className="form-submit-btn">Register</button>
+        <button className="form-submit-btn" tabIndex="3">Register</button>
         <div className="form-footer">
           {
             this.props.isRegistered &&
             <div className="registration-success">
               <span className="registration-success-text">Registration success!</span>
-              <span className="sign-in-btn" onClick={this.goToLogin}>Sign in now!</span>
+              <button className="sign-in-btn" tabIndex="4" onClick={this.goToLogin}>Sign in now!</button>
             </div>
           }
           <div className="existing-account">
             <span className="existing-account-text">Already have an account?</span>
-            <span className="sign-in-btn" onClick={this.goToLogin}>Sign in!</span>
+            <button className="sign-in-btn" tabIndex="5" onClick={this.goToLogin}>Sign in!</button>
           </div>
         </div>
       </form>
