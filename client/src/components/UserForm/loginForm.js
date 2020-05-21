@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './loginForm.css';
 
-import FormGroup, { FormLabel, FormInput } from './FormGroup/formGroup';
+import FormGroup, { FormLabel, FormInput } from '../FormGroup/formGroup';
 
 export default class LoginForm extends Component {
   state = {

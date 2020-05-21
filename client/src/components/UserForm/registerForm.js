@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import './registerForm.css';
 import { connect } from 'react-redux';
 
-import { registerUser } from '../actions/userActions';
+import { registerUser } from '../../actions/userActions';
 
-import FormGroup, { FormLabel, FormInput } from './FormGroup/formGroup';
+import FormGroup, { FormLabel, FormInput } from '../FormGroup/formGroup';
 
 class RegisterForm extends Component {
   state = {
