@@ -15,7 +15,27 @@ class LoginForm extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    const { error } = this.props;
+
+    if(error !== prevProps.error) {
+      // Check if username and passwords are correct
+      if(error.id === 'ERROR_INVALID_CREDENTIALS') {
+        this.setState(prevState => ({ 
+          errors: {
+            ...prevState.errors,
+            username: error.msg,
+            password: error.msg
+          }
+        }));
+      }
+    }
+  }
+
   onChange = e => {
+    // Validate Inputs
+    this.checkValidation(e);
+
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -24,10 +44,63 @@ class LoginForm extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const { username, password } = this.state;
+    const { username, password, errors } = this.state;
+
+    // Validate Form
+    if (!this.validateForm(username, password, errors)) {
+      return;
+    }
 
     // Login User
     this.props.loginUser({ username, password });
+  }
+
+  checkValidation = (e) => {
+    const { name, value } = e.target;
+    let errors = this.state.errors;
+
+    switch(name) {
+      case 'username':
+        errors.username = 
+          (value.length === 0)
+            ? 'Enter a username'
+            : '';
+        break;
+      case 'password':
+        errors.password = 
+        (value.length === 0)
+            ? 'Enter a password'
+            : '';
+        break;
+      default: break;
+    }
+
+    this.setState({ errors: errors });
+  }
+
+  validateForm = (username, password, errors) => {
+    let valid = true;
+    let newErrors = {...errors};
+
+    // Check if username is empty
+    if (!username) {
+      newErrors.username = 'Enter a username';
+    }
+
+    // Check if password is empty
+    if (!password) {
+      newErrors.password = 'Enter a password';
+    }
+
+    // Return false if any inputs are empty
+    Object.values(newErrors).forEach(val => {
+      val.length > 0 && (valid = false)
+    });
+
+    // Update state for render
+    if (!valid) this.setState({ errors: newErrors });
+
+    return valid;
   }
 
   goToRegister = e => {
@@ -44,14 +117,14 @@ class LoginForm extends Component {
       </div>
       <div className="username-input">
         <FormGroup>
-          <FormLabel for="username" name="USERNAME" />
-          <FormInput type="text" id="username" name="username" maxLength="20" tabIndex="1" onChange={this.onChange} />
+          <FormLabel for="username" name="USERNAME" errorMessage={this.state.errors.username} errorOn={this.state.errors.username} />
+          <FormInput type="text" id="username" name="username" maxLength="20" tabIndex="1" errorOn={this.state.errors.username} onChange={this.onChange} />
         </FormGroup>
       </div>
       <div className="password-input">
         <FormGroup>
-          <FormLabel for="password" name="PASSWORD" />
-          <FormInput type="text" id="password" name="password" autoComplete="on" tabIndex="2" onChange={this.onChange} />
+          <FormLabel for="password" name="PASSWORD" errorMessage={this.state.errors.password} errorOn={this.state.errors.password} />
+          <FormInput type="text" id="password" name="password" autoComplete="on" tabIndex="2" errorOn={this.state.errors.password} onChange={this.onChange} />
         </FormGroup>
       </div>
       <button className="form-submit-btn" tabIndex="3">Login</button>
@@ -67,7 +140,7 @@ class LoginForm extends Component {
 }
 
 const mapStateToProps = state => ({
-
+  error: state.error
 });
 
 export default connect(mapStateToProps, {
