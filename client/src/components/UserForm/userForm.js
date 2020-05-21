@@ -6,7 +6,7 @@ import LoginForm from './loginForm';
 
 export default class UserForm extends Component {
   state = {
-    tab: 'REGISTER_TAB'
+    tab: 'LOGIN_TAB'
   };
 
   switchTab = () => {

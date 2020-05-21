@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import './loginForm.css';
+import { connect } from 'react-redux';
 
 import FormGroup, { FormLabel, FormInput } from '../FormGroup/formGroup';
+import { loginUser } from '../../actions/userActions';
 
-export default class LoginForm extends Component {
+class LoginForm extends Component {
   state = {
     username: null,
     password: null,
@@ -21,6 +23,11 @@ export default class LoginForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+
+    const { username, password } = this.state;
+
+    // Login User
+    this.props.loginUser({ username, password });
   }
 
   goToRegister = e => {
@@ -58,3 +65,11 @@ export default class LoginForm extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+
+});
+
+export default connect(mapStateToProps, {
+  loginUser
+})(LoginForm);
