@@ -8,11 +8,34 @@ import FormGroup, { FormLabel, FormInput } from './FormGroup/formGroup';
 
 class RegisterForm extends Component {
   state = {
-    username: '',
-    password: ''
+    username: null,
+    password: null,
+    errors: {
+      username: '',
+      password: ''
+    }
   };
 
+  componentDidUpdate(prevProps) {
+    const { error } = this.props;
+
+    if(error !== prevProps.error) {
+      // Check if username is taken
+      if(error.id === 'ERROR_USER_EXISTS') {
+        this.setState(prevState => ({ 
+          errors: {
+            ...prevState.errors,
+            username: 'Username already taken'
+          }
+        }));
+      }
+    }
+  }
+
   onChange = e => {
+    // Validate Inputs
+    this.checkValidation(e);
+
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -21,10 +44,63 @@ class RegisterForm extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const { username, password } = this.state;
+    const { username, password, errors } = this.state;
+
+    // Validate Form
+    if (!this.validateForm(username, password, errors)) {
+      return;
+    }
 
     // Register Account
     this.props.registerUser({ username, password });
+  }
+
+  checkValidation = (e) => {
+    const { name, value } = e.target;
+    let errors = this.state.errors;
+
+    switch(name) {
+      case 'username':
+        errors.username = 
+          (value.length < 8 || value.length > 20)
+            ? 'Username must be 8 - 20 characters long'
+            : '';
+        break;
+      case 'password':
+        errors.password = 
+        (value.length < 3)
+            ? 'Password must be at least 3 characters long'
+            : '';
+        break;
+      default: break;
+    }
+
+    this.setState({ errors: errors });
+  }
+
+  validateForm = (username, password, errors) => {
+    let valid = true;
+    let newErrors = {...errors};
+
+    // Check if username is empty
+    if (!username) {
+      newErrors.username = 'Username must be 8 - 20 characters long';
+    }
+
+    // Check if password is empty
+    if (!password) {
+      newErrors.password = 'Password must be at least 3 characters long';
+    }
+
+    // Return false if any inputs are empty
+    Object.values(newErrors).forEach(val => {
+      val.length > 0 && (valid = false)
+    });
+
+    // Update state for render
+    if (!valid) this.setState({ errors: newErrors });
+
+    return valid;
   }
 
   goToLogin = e => {
@@ -40,20 +116,29 @@ class RegisterForm extends Component {
         </div>
         <div className="username-input">
           <FormGroup>
-            <FormLabel for="username" name="USERNAME" errorMessage="Username must not be empty"/>
-            <FormInput type="text" id="username" name="username" minLength="8" maxLength="20" onChange={this.onChange}/>
+            <FormLabel for="username" name="USERNAME" errorMessage={this.state.errors.username} errorOn={this.state.errors.username}/>
+            <FormInput type="text" id="username" name="username" maxLength="20" onChange={this.onChange} errorOn={this.state.errors.username}/>
           </FormGroup>
         </div>
         <div className="password-input">
           <FormGroup>
-            <FormLabel for="password" name="PASSWORD"/>
-            <FormInput type="password" id="password" name="password" autoComplete="on" onChange={this.onChange}/>
+            <FormLabel for="password" name="PASSWORD" errorMessage={this.state.errors.password} errorOn={this.state.errors.password}/>
+            <FormInput type="text" id="password" name="password" autoComplete="on" onChange={this.onChange} errorOn={this.state.errors.password}/>
           </FormGroup>
         </div>
         <button className="form-submit-btn">Register</button>
-        <div className="existing-account">
-            Already have an account?
+        <div className="form-footer">
+          {
+            this.props.isRegistered &&
+            <div className="registration-success">
+              <span className="registration-success-text">Registration success!</span>
+              <span className="sign-in-btn" onClick={this.goToLogin}>Sign in now!</span>
+            </div>
+          }
+          <div className="existing-account">
+            <span className="existing-account-text">Already have an account?</span>
             <span className="sign-in-btn" onClick={this.goToLogin}>Sign in!</span>
+          </div>
         </div>
       </form>
     );
@@ -61,7 +146,8 @@ class RegisterForm extends Component {
 }
 
 const mapStateToProps = state => ({
-
+  isRegistered: state.user.isRegistered,
+  error: state.error,
 });
 
 export default connect(

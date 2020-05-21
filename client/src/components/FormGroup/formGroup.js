@@ -29,7 +29,7 @@ export class FormLabel extends Component {
 
     return (
       <div className="header">
-        <label htmlFor={this.props.for}>{this.props.name}</label>
+        <label className="header-label" htmlFor={this.props.for}>{this.props.name}</label>
         {
           this.props.errorOn &&
           <span className="header-alert-error">{errorMessage}</span>

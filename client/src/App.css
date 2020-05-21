@@ -13,3 +13,8 @@ button {
   font-family: 'Nunito', sans-serif;
   /* font-weight: bold; */
 }
+
+input {
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+}
