@@ -69,3 +69,97 @@ export class FormInput extends Component {
     );
   }
 }
+
+export class FormTextarea extends Component {
+  onChange = (e) => {
+    this.props.onChange(e);
+  }
+
+  render() {
+    return (
+      <textarea
+        className="form-textarea" 
+        id={this.props.id} 
+        name={this.props.name}
+        value={this.props.value || ''} 
+        tabIndex={this.props.tabIndex}
+        onChange={this.onChange}
+      />
+    );
+  }
+}
+
+export class FormSelect extends Component {
+  render() {
+    const options = this.props.option;
+
+    console.log(options);
+
+    return (
+      <div className="form-select">
+        { options.map(option => <FormOption key={option.id} type={option.type} />) }
+      </div>
+    );
+  }
+}
+
+export class FormOption extends Component {
+  state = {
+    isPressed: false
+  }
+  
+  toggle = () => {
+    this.setState(prevState => ({
+      isPressed: !prevState.isPressed
+    }));
+  }
+
+  getType = (type) => {
+    let posData = {};
+    
+    switch(type) {
+      case 'Noun':
+        posData.color = 'pos-blue';
+        posData.text = 'N';
+        break;
+      case 'Pronoun':
+        posData.color = 'pos-green';
+        posData.text = 'PN';
+        break;
+      case 'Adjective':
+        posData.color = 'pos-yellow';
+        posData.text = 'Adj';
+        break;
+      case 'Verb':
+        posData.color = 'pos-orange';
+        posData.text = 'V';
+        break;
+      case 'Adverb':
+        posData.color = 'pos-red';
+        posData.text = 'Adv';
+        break;
+      case 'Preposition':
+        posData.color = 'pos-dark-red';
+        posData.text = 'Pre';
+        break;
+      case 'Other':
+      default:
+        posData.color = 'pos-grey';
+        posData.text = 'O';
+        break;
+    }
+
+    return posData;
+  }
+
+  render() {
+    const typeData = this.getType(this.props.type);
+    const classNames = this.state.isPressed ? `form-option pos-border ${typeData.color}` : `form-option ${typeData.color}`;
+
+    return (
+      <div className={classNames} key={this.props.id} onClick={this.toggle}>
+        {typeData.text}
+      </div>
+    );
+  }
+}
