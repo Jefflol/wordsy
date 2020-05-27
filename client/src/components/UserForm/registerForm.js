@@ -25,7 +25,7 @@ class RegisterForm extends Component {
         this.setState(prevState => ({ 
           errors: {
             ...prevState.errors,
-            username: 'Username already taken'
+            username: error.msg
           }
         }));
       }
