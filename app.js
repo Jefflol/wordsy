@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 
 const userRoutes = require('./api/routes/users');
+const entryRoutes = require('./api/routes/entry');
+
 
 
 // Connect MongoDB
@@ -43,6 +45,8 @@ app.use((req, res, next) => {
 
 // Routes handling requests
 app.use('/users', userRoutes);
+app.use('/entry', entryRoutes);
+
 
 // app.use((req, res, next) => {
 //   const error = new Error('Not found');

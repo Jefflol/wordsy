@@ -47,4 +47,14 @@ const entrySchema = mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Entry', entrySchema);
+// module.exports = mongoose.model('Entry', entrySchema);
+const Entry = mongoose.model('Entry', entrySchema);
+const Definition = mongoose.model('Definition', definitionSchema);
+const Example = mongoose.model('Example', exampleSchema);
+
+
+module.exports = {
+  Entry: Entry,
+  Definition: Definition,
+  Example: Example
+};
