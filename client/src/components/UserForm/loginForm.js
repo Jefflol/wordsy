@@ -124,7 +124,7 @@ class LoginForm extends Component {
       <div className="password-input">
         <FormGroup>
           <FormLabel for="password" name="PASSWORD" errorMessage={this.state.errors.password} errorOn={this.state.errors.password} />
-          <FormInput type="text" id="password" name="password" autoComplete="on" tabIndex="2" errorOn={this.state.errors.password} onChange={this.onChange} />
+          <FormInput type="password" id="password" name="password" autoComplete="on" tabIndex="2" errorOn={this.state.errors.password} onChange={this.onChange} />
         </FormGroup>
       </div>
       <button className="form-submit-btn" tabIndex="3">Login</button>
