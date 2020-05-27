@@ -26,7 +26,7 @@ export default function(state = initialState, action) {
       };
     case ERROR_INVALID_CREDENTIALS:
       return {
-        msg: 'Incorrect username or password',
+        msg: 'Incorrect username and/or password',
         status: 401,
         id: 'ERROR_INVALID_CREDENTIALS'
       };
