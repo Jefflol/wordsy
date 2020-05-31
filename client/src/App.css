@@ -16,7 +16,7 @@ button {
   /* font-weight: bold; */
 }
 
-input {
+input, textarea {
   font-family: 'Nunito', sans-serif;
   font-weight: bold;
 }
