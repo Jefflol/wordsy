@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './formGroup.css';
 
 import { ReactComponent as AlertIcon } from '../../assets/alert-circle.svg';
+import { getPartsOfSpeechData } from '../partsOfSpeech';
 
 export default class FormGroup extends Component {
   render() {
@@ -49,7 +50,7 @@ export class FormInput extends Component {
     if (this.props.errorOn) classNames += " body-alert-error";
 
     return (
-      <div className="body">
+      <div className="body" tabIndex={this.props.tabIndex}>
         <input 
           className={classNames} 
           type={this.props.type} 
@@ -58,7 +59,8 @@ export class FormInput extends Component {
           minLength={this.props.minLength} 
           maxLength={this.props.maxLength} 
           autoComplete={this.props.autoComplete}
-          tabIndex={this.props.tabIndex}
+          // tabIndex={this.props.tabIndex}
+          tabIndex={-1}
           onChange={this.onChange}
         ></input>
         {
@@ -76,9 +78,12 @@ export class FormTextarea extends Component {
   }
 
   render() {
+    const { color: posColor } = getPartsOfSpeechData(this.props.type);
+    const classNames = `form-textarea pos-border-active pos-border-${posColor}`;
+
     return (
       <textarea
-        className="form-textarea" 
+        className={classNames}
         id={this.props.id} 
         name={this.props.name}
         value={this.props.value || ''} 
@@ -90,75 +95,43 @@ export class FormTextarea extends Component {
 }
 
 export class FormSelect extends Component {
+  onClick = (newPartsOfSpeech) => {
+    // Add new inputs for definition and example
+    this.props.onClick(newPartsOfSpeech);
+  }
+
   render() {
     const options = this.props.option;
 
-    console.log(options);
-
     return (
       <div className="form-select">
-        { options.map(option => <FormOption key={option.id} type={option.type} />) }
+        { 
+          options.map(option => 
+            <FormOption
+              key={option.id} 
+              type={option.type} 
+              onClick={this.onClick} 
+            />
+          )
+        }
       </div>
     );
   }
 }
 
 export class FormOption extends Component {
-  state = {
-    isPressed: false
-  }
-  
-  toggle = () => {
-    this.setState(prevState => ({
-      isPressed: !prevState.isPressed
-    }));
-  }
-
-  getType = (type) => {
-    let posData = {};
-    
-    switch(type) {
-      case 'Noun':
-        posData.color = 'pos-blue';
-        posData.text = 'N';
-        break;
-      case 'Pronoun':
-        posData.color = 'pos-green';
-        posData.text = 'PN';
-        break;
-      case 'Adjective':
-        posData.color = 'pos-yellow';
-        posData.text = 'Adj';
-        break;
-      case 'Verb':
-        posData.color = 'pos-orange';
-        posData.text = 'V';
-        break;
-      case 'Adverb':
-        posData.color = 'pos-red';
-        posData.text = 'Adv';
-        break;
-      case 'Preposition':
-        posData.color = 'pos-dark-red';
-        posData.text = 'Pre';
-        break;
-      case 'Other':
-      default:
-        posData.color = 'pos-grey';
-        posData.text = 'O';
-        break;
-    }
-
-    return posData;
+  onClick = () => {
+    // Add new inputs for definition and example
+    this.props.onClick(this.props.type);
   }
 
   render() {
-    const typeData = this.getType(this.props.type);
-    const classNames = this.state.isPressed ? `form-option pos-border ${typeData.color}` : `form-option ${typeData.color}`;
+    const { text: posText, color: posColor } = getPartsOfSpeechData(this.props.type);
+    const classNames = `form-option pos-border pos-border-${posColor} pos-background-${posColor} pos-text-${posColor}`;
 
     return (
-      <div className={classNames} key={this.props.id} onClick={this.toggle}>
-        {typeData.text}
+      <div className={classNames} key={this.props.id} onClick={this.onClick}>
+        {posText}
       </div>
     );
   }
