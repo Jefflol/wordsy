@@ -4,16 +4,14 @@ import './entryForm.css';
 import FormGroup, { FormLabel, FormInput, FormTextarea, FormSelect } from '../FormGroup/formGroup';
 import { partsOfSpeech } from '../partsOfSpeech';
 
-export default class EntryForm extends Component {
+import { addWordEntry } from '../../actions/entryActions';
+import { connect } from 'react-redux';
+
+class EntryForm extends Component {
   state = {
+    userId: '5ec61921d367772fc3177453',
     word: null,
-    pos: null,
-    definition: null,
-    example: null,
-    errors: {
-      word: ''
-    },
-    inputTypes: []
+    partsOfSpeeches: []
   }
 
   onChange = e => {
@@ -24,11 +22,55 @@ export default class EntryForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+
+    const definitionArray = [];
+    const exampleArray = [];
+    const entries = Object.entries(this.state);
+
+    // Iterate through states to separate definitions and examples
+    for (const [propName, value] of entries) {
+      // console.log(`[${propName}]: ${value}`);
+
+      // Check if state property mataches definiton
+      if (propName.includes('definition-')) {
+        const index = propName.slice(-1);
+        const pos = this.state.partsOfSpeeches[index];
+
+        const definitionEntry = {
+          partsOfSpeech: pos,
+          definition: value
+        };
+
+        definitionArray.push(definitionEntry);
+      }
+
+      // Check if state property mataches example
+      if (propName.includes('example-') && value) {
+        const index = propName.slice(-1);
+        const pos = this.state.partsOfSpeeches[index];
+
+        const exampleEntry = {
+          partsOfSpeech: pos,
+          example: value
+        };
+
+        exampleArray.push(exampleEntry);
+      }
+    }
+
+    const wordEntry = {
+      userId: this.state.userId,
+      word: this.state.word,
+      definition: definitionArray,
+      example: exampleArray,
+    };
+
+    this.props.addWordEntry(wordEntry);
   }
 
-  posOnClick = (newPartsOfSpeech) => {
+  posOnClick = newPartsOfSpeech => {
     this.setState(prevState => ({
-      inputTypes: [...prevState.inputTypes, newPartsOfSpeech]
+      partsOfSpeeches: [...prevState.partsOfSpeeches, newPartsOfSpeech]
     }));
   }
 
@@ -36,10 +78,10 @@ export default class EntryForm extends Component {
     const definitionChildren = [];
     const exampleChildren = []
 
-    for(let i = 0; i < this.state.inputTypes.length; i++) {
+    for(let i = 0; i < this.state.partsOfSpeeches.length; i++) {
       definitionChildren.push(
         <FormTextarea
-          type={this.state.inputTypes[i]}
+          type={this.state.partsOfSpeeches[i]}
           key={`${i}`}
           id={`definition-${i}`}
           name={`definition-${i}`}
@@ -51,7 +93,7 @@ export default class EntryForm extends Component {
 
       exampleChildren.push(
         <FormTextarea
-          type={this.state.inputTypes[i]}
+          type={this.state.partsOfSpeeches[i]}
           key={`${i}`}
           id={`example-${i}`}
           name={`example-${i}`}
@@ -103,3 +145,11 @@ export default class EntryForm extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+
+});
+
+export default connect(mapStateToProps, {
+  addWordEntry
+})(EntryForm);
