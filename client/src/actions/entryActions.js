@@ -23,10 +23,11 @@ export const addWordEntry = ({ userId, word, definition, example }) => dispatch 
   // Add a word
   axios.post('/entry', body, config)
     .then(res => {
-      console.log('SUCCESS');
+      console.log(`[SUCCESS]: ADDED NEW WORD - ${word}`);
       dispatch({
         type: ADD_ENTRY_SUCCESS,
       });
+      dispatch(getWordEntries());
     })
     .catch(err => {
       console.log('[ENTRY]: ', err);
@@ -43,8 +44,7 @@ export const getWordEntries = () => dispatch => {
 
   axios.get('/entry')
     .then(res => {
-      // console.log('[ENTRY]: GET WORD ENTRIES SUCCESS');
-      // console.log(res.data);
+      // console.log('[SUCCESS]: GET ALL WORD ENTRIES');
       dispatch({
         type: GET_ENTRIES_SUCCESS,
         payload: res.data

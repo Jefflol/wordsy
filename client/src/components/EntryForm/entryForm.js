@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import './entryForm.css';
+import { connect } from 'react-redux';
 
 import FormGroup, { FormLabel, FormInput, FormTextarea, FormSelect } from '../FormGroup/formGroup';
+import { addWordEntry, getWordEntries } from '../../actions/entryActions';
 import { partsOfSpeech } from '../partsOfSpeech';
 
-import { addWordEntry, getWordEntries } from '../../actions/entryActions';
-import { connect } from 'react-redux';
+import './entryForm.css';
+
 
 class EntryForm extends Component {
   state = {
@@ -66,7 +67,6 @@ class EntryForm extends Component {
     };
 
     this.props.addWordEntry(wordEntry);
-    this.props.getWordEntries();
   }
 
   posOnClick = newPartsOfSpeech => {
@@ -75,35 +75,41 @@ class EntryForm extends Component {
     }));
   }
 
+  renderDefinition = () => {
+    return this.state.partsOfSpeeches.map((partsOfSpeech, index) => {
+      return (
+        <FormTextarea
+          type={partsOfSpeech}
+          key={`${index}`}
+          id={`definition-${index}`}
+          name={`definition-${index}`}
+          tabIndex="2" 
+          value={this.state[`definition-${index}`]} 
+          onChange={this.onChange}  
+        />
+      );
+    });
+  };
+
+  renderExample = () => {
+    return this.state.partsOfSpeeches.map((partsOfSpeech, index) => {
+      return (
+        <FormTextarea
+          type={partsOfSpeech}
+          key={`${index}`}
+          id={`example-${index}`}
+          name={`example-${index}`}
+          tabIndex="2" 
+          value={this.state[`example-${index}`]} 
+          onChange={this.onChange}  
+        />
+      );
+    });
+  }
+
   render() {
-    const definitionChildren = [];
-    const exampleChildren = []
-
-    for(let i = 0; i < this.state.partsOfSpeeches.length; i++) {
-      definitionChildren.push(
-        <FormTextarea
-          type={this.state.partsOfSpeeches[i]}
-          key={`${i}`}
-          id={`definition-${i}`}
-          name={`definition-${i}`}
-          tabIndex="2" 
-          value={this.state[`definition-${i}`]} 
-          onChange={this.onChange}  
-        />
-      );
-
-      exampleChildren.push(
-        <FormTextarea
-          type={this.state.partsOfSpeeches[i]}
-          key={`${i}`}
-          id={`example-${i}`}
-          name={`example-${i}`}
-          tabIndex="2" 
-          value={this.state[`example-${i}`]} 
-          onChange={this.onChange}  
-        />
-      );
-    }
+    const definitionChildren = this.renderDefinition();
+    const exampleChildren = this.renderExample();
 
     return (
       <div className="entry-form-container">

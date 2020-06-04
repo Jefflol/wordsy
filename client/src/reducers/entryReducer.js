@@ -32,8 +32,12 @@ export default function (state = initialState, action) {
         ...state,
         isEntryLoading: false,
       };
-    case ADD_ENTRY_FAIL:
     case ADD_ENTRY_SUCCESS:
+      return {
+        ...state,
+        isEntryLoading: false,
+      };
+    case ADD_ENTRY_FAIL:
     default: return state;
   }
 }

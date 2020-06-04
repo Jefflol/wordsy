@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import './wordBank.css';
 import { connect } from 'react-redux';
-import { getWordEntries } from '../actions/entryActions';
 
 import Entry from './Entry/entry';
+import { getWordEntries } from '../actions/entryActions';
+
+import './wordBank.css';
+
 
 class WordBank extends Component {
   state = {
@@ -16,21 +18,15 @@ class WordBank extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isEntryLoaded, isEntryLoading } = this.props;
+    const { isEntryLoading } = this.props;
 
     if (isEntryLoading !== prevProps.isEntryLoading && !isEntryLoading) {
-      this.setState({ entry: this.props.entry });
+      this.setState({ entry: this.props.entry || [] });
     }
-
-    // if (isEntryLoaded !== prevProps.isEntryLoaded && isEntryLoaded) {
-    //   this.setState({ entry: this.props.entry });
-    // }
   }
 
-  render() {
-    const entries = [];
-
-    this.state.entry.forEach(entry => {
+  renderWordBank = () => {
+    const wordBank = this.state.entry.map(entry => {
       const definition = entry.definition[0].definition;
       const partsOfSpeeches = [];
       
@@ -38,21 +34,27 @@ class WordBank extends Component {
         partsOfSpeeches.push(entry.partsOfSpeech)
       });
 
-      const entryChild = <Entry
-        key={entry._id}
-        id={entry._id}
-        word={entry.word}
-        definition={definition}
-        pos={partsOfSpeeches}
-      />
-      entries.push(entryChild);
+      return (
+        <Entry
+          key={entry._id}
+          id={entry._id}
+          word={entry.word}
+          definition={definition}
+          pos={partsOfSpeeches}
+        />
+      );
     });
+
+    return wordBank;
+  };
+
+  render() {
+    const wordBank = this.renderWordBank();
 
     return (
       <div className="word-bank-container">
         <div className="word-bank">
-          { entries }
-          {/* <button onClick={this.props.getWordEntries}>Get Entries</button> */}
+          { wordBank }
         </div>
       </div>
     );
@@ -61,8 +63,6 @@ class WordBank extends Component {
 
 const mapStateToProps = state => ({
   entry: state.entry.wordEntry,
-  isLoggedIn: state.user.isLoggedIn,
-  isEntryLoaded: state.entry.isEntryLoaded,
   isEntryLoading: state.entry.isEntryLoading
 });
 

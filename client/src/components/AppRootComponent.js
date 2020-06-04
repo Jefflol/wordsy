@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
-import '../App.css';
+import { connect } from 'react-redux';
 
 import UserForm from '../components/UserForm/userForm';
-import WordBank from '../components/wordBank';
 import EntryForm from '../components/EntryForm/entryForm';
+import WordBank from '../components/wordBank';
 
-import { connect } from 'react-redux';
+import '../App.css';
 
 class AppRootComponent extends Component {
   render() {
     return (
       <div className="App">
-        { this.props.isLoggedIn && <EntryForm /> }
-        { this.props.isLoggedIn && <WordBank/> }
-        { !this.props.isLoggedIn && <UserForm /> }
+        {
+          this.props.isLoggedIn ? 
+          <>
+            <EntryForm />
+            <WordBank />
+          </> :
+          <>
+            <UserForm />
+          </>
+        }
       </div>
     )
   }
