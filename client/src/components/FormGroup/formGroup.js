@@ -1,43 +1,32 @@
 import React, { Component } from 'react';
-import './formGroup.css';
 
 import { ReactComponent as AlertIcon } from '../../assets/alert-circle.svg';
 import { getPartsOfSpeechData } from '../partsOfSpeech';
+
+import './formGroup.css';
 
 export default class FormGroup extends Component {
   render() {
     return (
       <div className="form-group">
         {this.props.children}
-        {/* <div className="header">
-          <label htmlFor="header-label">USERNAME</label>
-          <span className="header-alert-error">Username must not be empty</span>
-        </div> */}
-        {/* <div className="body">
-          <input className="body-input" type="text" id="username" name="username" minLength="8" maxLength="20" onChange={this.onChange}></input>
-          <input className="body-input body-alert-error" type="text" id="username" name="username" minLength="8" maxLength="20" onChange={this.onChange}></input>
-          <div className="alert-error-icon"><AlertIcon /></div>
-        </div> */}
       </div>
     );
   }
 }
 
+export const FormLabel = props => {
+  const { for: htmlFor, name, errorMessage, errorOn } = props;
 
-export class FormLabel extends Component {
-  render() {
-    const errorMessage = this.props.errorMessage;
-
-    return (
-      <div className="header">
-        <label className="header-label" htmlFor={this.props.for}>{this.props.name}</label>
-        {
-          this.props.errorOn &&
-          <span className="header-alert-error">{errorMessage}</span>
-        }
-      </div>
-    );
-  }
+  return (
+    <div className="header">
+      <label className="header-label" htmlFor={htmlFor}>{name}</label>
+      {
+        errorOn &&
+        <span className="header-alert-error">{errorMessage}</span>
+      }
+    </div>
+  );
 }
 
 export class FormInput extends Component {
@@ -46,25 +35,25 @@ export class FormInput extends Component {
   }
 
   render() {
-    let classNames = "body-input";
-    if (this.props.errorOn) classNames += " body-alert-error";
+    const { type, id, name, minLength, maxLength, autoComplete, tabIndex, errorOn } = this.props;
+    let classNames = errorOn ? "body-input body-alert-error" : "body-input";
 
     return (
-      <div className="body" tabIndex={this.props.tabIndex}>
+      <div className="body" tabIndex={tabIndex}>
         <input 
           className={classNames} 
-          type={this.props.type} 
-          id={this.props.id} 
-          name={this.props.name} 
-          minLength={this.props.minLength} 
-          maxLength={this.props.maxLength} 
-          autoComplete={this.props.autoComplete}
-          // tabIndex={this.props.tabIndex}
+          type={type} 
+          id={id} 
+          name={name} 
+          minLength={minLength} 
+          maxLength={maxLength} 
+          autoComplete={autoComplete}
+          // tabIndex={tabIndex}
           tabIndex={-1}
           onChange={this.onChange}
         ></input>
         {
-          this.props.errorOn &&
+          errorOn &&
           <div className="alert-error-icon"><AlertIcon /></div>
         }
       </div>
@@ -75,21 +64,20 @@ export class FormInput extends Component {
 export class FormTextarea extends Component {
   onChange = (e) => {
     this.props.onChange(e);
-
-    // console.log(`[${e.target.name}]: ${e.target.value}`);
   }
 
   render() {
-    const { color: posColor } = getPartsOfSpeechData(this.props.type);
+    const { id, name, type, value, tabIndex } = this.props;
+    const { color: posColor } = getPartsOfSpeechData(type);
     const classNames = `form-textarea pos-border-active pos-border-${posColor}`;
 
     return (
       <textarea
         className={classNames}
-        id={this.props.id} 
-        name={this.props.name}
-        value={this.props.value || ''} 
-        tabIndex={this.props.tabIndex}
+        id={id} 
+        name={name}
+        value={value || ''} 
+        tabIndex={tabIndex}
         onChange={this.onChange}
       />
     );
@@ -97,7 +85,7 @@ export class FormTextarea extends Component {
 }
 
 export class FormSelect extends Component {
-  onClick = (newPartsOfSpeech) => {
+  onClick = newPartsOfSpeech => {
     // Add new inputs for definition and example
     this.props.onClick(newPartsOfSpeech);
   }
@@ -128,11 +116,12 @@ export class FormOption extends Component {
   }
 
   render() {
-    const { text: posText, color: posColor } = getPartsOfSpeechData(this.props.type);
+    const { id, type } = this.props;
+    const { text: posText, color: posColor } = getPartsOfSpeechData(type);
     const classNames = `form-option pos-border pos-border-${posColor} pos-background-${posColor} pos-text-${posColor}`;
 
     return (
-      <div className={classNames} key={this.props.id} onClick={this.onClick}>
+      <div className={classNames} key={id} onClick={this.onClick}>
         {posText}
       </div>
     );

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import FormGroup, { FormLabel, FormInput, FormTextarea, FormSelect } from '../FormGroup/formGroup';
-import { addWordEntry, getWordEntries } from '../../actions/entryActions';
+import { addWordEntry } from '../../actions/entryActions';
 import { partsOfSpeech } from '../partsOfSpeech';
 
 import './entryForm.css';
@@ -159,6 +159,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  addWordEntry,
-  getWordEntries
+  addWordEntry
 })(EntryForm);
