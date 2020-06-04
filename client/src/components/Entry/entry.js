@@ -4,8 +4,10 @@ import './entry.css';
 export default class Entry extends Component {
   render() {
     const word = this.props.word;
-    const definition = this.props.definition[0].text;
+    const definition = this.props.definition;
     const pos = this.props.pos;
+
+    const id = this.props.id;
 
     return (
       <div className="entry">
@@ -16,7 +18,7 @@ export default class Entry extends Component {
           <EntryDefinition>{definition}</EntryDefinition>
         </div>
         <div className="entry-parts-of-speech">
-          { pos.map(pos => <EntryPOS type={pos.text} />) }
+          { pos.map(pos => <EntryPOS key={`${id}+${pos}`}type={pos} />) }
         </div>
       </div>
     );
