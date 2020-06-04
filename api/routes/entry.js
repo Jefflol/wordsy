@@ -6,30 +6,29 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const { Entry, Definition, Example } = require('../models/entry-model');
-// const Entry = require('../models/entry-model');
 
 
 // @route   GET /entry
 // @desc    Fetch all entries
 // @access  PRIVATE
-router.get('/', (req, res, next) => {
-  Entry.find()
-    .select('_id userId word definition example dateCreated')
-    .then(entries => {
-      console.log('Entries found ', entries);
-      return res.status(200).json({
-          entry: entries
-      });
-    })
-    .catch(err => {
-      return res.status(500).json({
-        error: err
-      });
-    });
-});
+// router.get('/', (req, res, next) => {
+//   Entry.find()
+//     .select('_id userId word definition example dateCreated')
+//     .then(entries => {
+//       console.log('Entries found ', entries);
+//       return res.status(200).json({
+//           entry: entries
+//       });
+//     })
+//     .catch(err => {
+//       return res.status(500).json({
+//         error: err
+//       });
+//     });
+// });
 
 // @route   GET /entry/:userId
-// @desc    Fetch all entries
+// @desc    Fetch all entries for a specific user
 // @access  PRIVATE
 router.get('/:userId', (req, res, next) => {
   // Check if user is authorized
@@ -55,31 +54,31 @@ router.get('/:userId', (req, res, next) => {
 });
 
 
-// @route   GET /entry/:entryId
+// @route   GET /entry/:userId/:entryId
 // @desc    Fetch an entry by ID
 // @access  PRIVATE
-// router.get('/:entryId', (req, res, next) => {
-//   Entry.find({ _id: req.params.entryId })
-//     .select('_id userId word definition example dateCreated')
-//     .then(entry => {
-//       console.log('Entries found ', entry);
+router.get('/:userId/:entryId', (req, res, next) => {
+  Entry.find({ userId: req.params.userId, _id: req.params.entryId })
+    .select('_id userId word definition example dateCreated')
+    .then(entry => {
+      console.log('Entries found ', entry);
 
-//       if (entry) {
-//         return res.status(200).json({
-//             entry: entry
-//         });
-//       } else {
-//         return res.status(404).json({
-//           message: 'No valid entry found for provided ID'
-//         });
-//       }
-//     })
-//     .catch(err => {
-//       return res.status(500).json({
-//         error: err
-//       });
-//     });
-// });
+      if (entry) {
+        return res.status(200).json({
+            entry: entry
+        });
+      } else {
+        return res.status(404).json({
+          message: 'No valid entry found for provided ID'
+        });
+      }
+    })
+    .catch(err => {
+      return res.status(500).json({
+        error: err
+      });
+    });
+});
 
 
 // @route   POST /entry
