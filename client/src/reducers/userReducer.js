@@ -13,7 +13,7 @@ const initialState = {
   userId: null,
   username: null,
   isRegistered: false,
-  isLoggedIn: true
+  isLoggedIn: false
 };
 
 export default function(state = initialState, action) {

@@ -9,12 +9,12 @@ import './wordBank.css';
 
 class WordBank extends Component {
   state = {
-    userId: '5ec61921d367772fc3177453',
     entry: [],
   }
 
   componentDidMount() {
-    this.props.getWordEntries();
+    this.props.getWordEntries(this.props.userId);
+    // this.props.getWordEntries('5ec61921d367772fc3177453');
   }
 
   componentDidUpdate(prevProps) {
@@ -62,6 +62,7 @@ class WordBank extends Component {
 }
 
 const mapStateToProps = state => ({
+  userId: state.user.userId,
   entry: state.entry.wordEntry,
   isEntryLoading: state.entry.isEntryLoading
 });

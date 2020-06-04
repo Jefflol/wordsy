@@ -28,25 +28,24 @@ router.get('/', (req, res, next) => {
     });
 });
 
-
-// @route   GET /entry/:entryId
-// @desc    Fetch an entry by ID
+// @route   GET /entry/:userId
+// @desc    Fetch all entries
 // @access  PRIVATE
-router.get('/:entryId', (req, res, next) => {
-  Entry.find({ _id: req.params.entryId })
-    .select('_id userId word definition example dateCreated')
-    .then(entry => {
-      console.log('Entries found ', entry);
+router.get('/:userId', (req, res, next) => {
+  // Check if user is authorized
+  // if (req.params.userId !== req.userData.userId) {
+  //   return res.status(401).json({
+  //     message: 'Unauthorized'
+  //   });
+  // }
 
-      if (entry) {
-        return res.status(200).json({
-            entry: entry
-        });
-      } else {
-        return res.status(404).json({
-          message: 'No valid entry found for provided ID'
-        });
-      }
+  Entry.find({ userId: req.params.userId })
+    .select('_id userId word definition example dateCreated')
+    .then(entries => {
+      console.log('Entries found ', entries);
+      return res.status(200).json({
+          entry: entries
+      });
     })
     .catch(err => {
       return res.status(500).json({
@@ -54,6 +53,33 @@ router.get('/:entryId', (req, res, next) => {
       });
     });
 });
+
+
+// @route   GET /entry/:entryId
+// @desc    Fetch an entry by ID
+// @access  PRIVATE
+// router.get('/:entryId', (req, res, next) => {
+//   Entry.find({ _id: req.params.entryId })
+//     .select('_id userId word definition example dateCreated')
+//     .then(entry => {
+//       console.log('Entries found ', entry);
+
+//       if (entry) {
+//         return res.status(200).json({
+//             entry: entry
+//         });
+//       } else {
+//         return res.status(404).json({
+//           message: 'No valid entry found for provided ID'
+//         });
+//       }
+//     })
+//     .catch(err => {
+//       return res.status(500).json({
+//         error: err
+//       });
+//     });
+// });
 
 
 // @route   POST /entry

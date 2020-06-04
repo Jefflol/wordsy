@@ -27,7 +27,7 @@ export const addWordEntry = ({ userId, word, definition, example }) => dispatch 
       dispatch({
         type: ADD_ENTRY_SUCCESS,
       });
-      dispatch(getWordEntries());
+      dispatch(getWordEntries(userId));
     })
     .catch(err => {
       console.log('[ENTRY]: ', err);
@@ -39,10 +39,10 @@ export const addWordEntry = ({ userId, word, definition, example }) => dispatch 
 
 
 // Get word entry for a user
-export const getWordEntries = () => dispatch => {
+export const getWordEntries = userId => dispatch => {
   dispatch({ type: LOAD_ENTRIES });
 
-  axios.get('/entry')
+  axios.get(`/entry/${userId}`)
     .then(res => {
       // console.log('[SUCCESS]: GET ALL WORD ENTRIES');
       dispatch({

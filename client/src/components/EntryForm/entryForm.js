@@ -10,9 +10,15 @@ import './entryForm.css';
 
 class EntryForm extends Component {
   state = {
-    userId: '5ec61921d367772fc3177453',
+    // userId: '5ec61921d367772fc3177453',
     word: null,
     partsOfSpeeches: []
+  }
+
+  componentDidMount() {
+    this.setState({
+      userId: this.props.userId
+    });
   }
 
   onChange = e => {
@@ -156,6 +162,7 @@ class EntryForm extends Component {
 }
 
 const mapStateToProps = state => ({
+  userId: state.user.userId
 });
 
 export default connect(mapStateToProps, {
