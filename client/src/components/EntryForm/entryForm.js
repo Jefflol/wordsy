@@ -4,7 +4,7 @@ import './entryForm.css';
 import FormGroup, { FormLabel, FormInput, FormTextarea, FormSelect } from '../FormGroup/formGroup';
 import { partsOfSpeech } from '../partsOfSpeech';
 
-import { addWordEntry } from '../../actions/entryActions';
+import { addWordEntry, getWordEntries } from '../../actions/entryActions';
 import { connect } from 'react-redux';
 
 class EntryForm extends Component {
@@ -66,6 +66,7 @@ class EntryForm extends Component {
     };
 
     this.props.addWordEntry(wordEntry);
+    this.props.getWordEntries();
   }
 
   posOnClick = newPartsOfSpeech => {
@@ -152,5 +153,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  addWordEntry
+  addWordEntry,
+  getWordEntries
 })(EntryForm);

@@ -2,7 +2,8 @@ import {
   ADD_ENTRY_SUCCESS,
   ADD_ENTRY_FAIL,
   GET_ENTRIES_SUCCESS,
-  GET_ENTRIES_FAIL
+  GET_ENTRIES_FAIL,
+  LOAD_ENTRIES
 } from '../actions/types';
 
 const initialState = {
@@ -10,21 +11,26 @@ const initialState = {
   word: null,
   definition: null,
   example: null,
-  isEntryLoaded: false
+  isEntryLoading: false
 };
 
 export default function (state = initialState, action) {
   switch(action.type) {
+    case LOAD_ENTRIES:
+      return {
+        ...state,
+        isEntryLoading: true
+      };
     case GET_ENTRIES_SUCCESS:
       return {
         ...state,
         wordEntry: action.payload.entry,
-        isEntryLoaded: true,
+        isEntryLoading: false,
       };
     case GET_ENTRIES_FAIL:
       return {
         ...state,
-        isEntryLoaded: false,
+        isEntryLoading: false,
       };
     case ADD_ENTRY_FAIL:
     case ADD_ENTRY_SUCCESS:

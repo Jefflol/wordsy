@@ -16,11 +16,15 @@ class WordBank extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isEntryLoaded } = this.props;
+    const { isEntryLoaded, isEntryLoading } = this.props;
 
-    if (isEntryLoaded !== prevProps.isEntryLoaded && isEntryLoaded) {
+    if (isEntryLoading !== prevProps.isEntryLoading && !isEntryLoading) {
       this.setState({ entry: this.props.entry });
     }
+
+    // if (isEntryLoaded !== prevProps.isEntryLoaded && isEntryLoaded) {
+    //   this.setState({ entry: this.props.entry });
+    // }
   }
 
   render() {
@@ -58,7 +62,8 @@ class WordBank extends Component {
 const mapStateToProps = state => ({
   entry: state.entry.wordEntry,
   isLoggedIn: state.user.isLoggedIn,
-  isEntryLoaded: state.entry.isEntryLoaded
+  isEntryLoaded: state.entry.isEntryLoaded,
+  isEntryLoading: state.entry.isEntryLoading
 });
 
 export default connect(mapStateToProps, {

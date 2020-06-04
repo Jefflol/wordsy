@@ -4,7 +4,8 @@ import {
   ADD_ENTRY_SUCCESS,
   ADD_ENTRY_FAIL,
   GET_ENTRIES_SUCCESS,
-  GET_ENTRIES_FAIL
+  GET_ENTRIES_FAIL,
+  LOAD_ENTRIES
 } from './types';
 
 // Add a word entry
@@ -38,6 +39,8 @@ export const addWordEntry = ({ userId, word, definition, example }) => dispatch 
 
 // Get word entry for a user
 export const getWordEntries = () => dispatch => {
+  dispatch({ type: LOAD_ENTRIES });
+
   axios.get('/entry')
     .then(res => {
       // console.log('[ENTRY]: GET WORD ENTRIES SUCCESS');
