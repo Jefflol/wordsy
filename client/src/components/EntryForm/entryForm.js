@@ -105,49 +105,50 @@ class EntryForm extends Component {
     }
 
     return (
-      <form className="entry-form" onSubmit={this.onSubmit}>
-        <div className="form-header">
-          <h1 className="form-title">Hi JAF</h1>
-          <h3 className="form-caption">Ready to add a new word?</h3>
-        </div>
-        <div className="word-input">
-          <FormGroup>
-            <FormLabel for="word" name="WORD" />
-            <FormInput type="text" id="word" name="word" maxLength="20" tabIndex="1" onChange={this.onChange} />
-          </FormGroup>
-        </div>
-        <div className="parts-of-speech-selection">
-          <FormGroup>
-            <FormLabel name="PARTS OF SPEECH" />
-            <FormSelect option={partsOfSpeech} onClick={this.posOnClick} />
-          </FormGroup>
-        </div>
-        <div className="definition-input">
-          <FormGroup>
-            <FormLabel for="definition" name="DEFINITION" />
-            {/* <FormTextarea id="definition" name="definition" tabIndex="2" value={this.state.definition} onChange={this.onChange} /> */}
-            <div className="definition-textareas">
-              { definitionChildren }
-            </div>
-          </FormGroup>
-        </div>
-        <div className="example-input">
-          <FormGroup>
-            <FormLabel for="example" name="EXAMPLE" />
-            {/* <FormTextarea id="example" name="example" tabIndex="3" value={this.state.example} onChange={this.onChange} /> */}
-            <div className="example-textareas">
-              { exampleChildren }
-            </div>
-          </FormGroup>
-        </div>
-        <button className="form-submit-btn" tabIndex="10">Add</button>
-      </form>
+      <div className="entry-form-container">
+        <form className="entry-form" onSubmit={this.onSubmit}>
+          <div className="form-header">
+            <h1 className="form-title">Hi JAF</h1>
+            <h3 className="form-caption">Ready to add a new word?</h3>
+          </div>
+          <div className="word-input">
+            <FormGroup>
+              <FormLabel for="word" name="WORD" />
+              <FormInput type="text" id="word" name="word" maxLength="20" tabIndex="1" onChange={this.onChange} />
+            </FormGroup>
+          </div>
+          <div className="parts-of-speech-selection">
+            <FormGroup>
+              <FormLabel name="PARTS OF SPEECH" />
+              <FormSelect option={partsOfSpeech} onClick={this.posOnClick} />
+            </FormGroup>
+          </div>
+          <div className="definition-input">
+            <FormGroup>
+              <FormLabel for="definition" name="DEFINITION" />
+              {/* <FormTextarea id="definition" name="definition" tabIndex="2" value={this.state.definition} onChange={this.onChange} /> */}
+              <div className="definition-textareas">
+                { definitionChildren }
+              </div>
+            </FormGroup>
+          </div>
+          <div className="example-input">
+            <FormGroup>
+              <FormLabel for="example" name="EXAMPLE" />
+              {/* <FormTextarea id="example" name="example" tabIndex="3" value={this.state.example} onChange={this.onChange} /> */}
+              <div className="example-textareas">
+                { exampleChildren }
+              </div>
+            </FormGroup>
+          </div>
+          <button className="form-submit-btn" tabIndex="10">Add</button>
+        </form>
+      </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-
 });
 
 export default connect(mapStateToProps, {

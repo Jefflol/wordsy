@@ -75,6 +75,8 @@ export class FormInput extends Component {
 export class FormTextarea extends Component {
   onChange = (e) => {
     this.props.onChange(e);
+
+    // console.log(`[${e.target.name}]: ${e.target.value}`);
   }
 
   render() {
