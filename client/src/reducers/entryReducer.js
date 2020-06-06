@@ -11,7 +11,8 @@ const initialState = {
   word: null,
   definition: null,
   example: null,
-  isEntryLoading: false
+  isEntryLoading: false,
+  isEntryAdded: false
 };
 
 export default function (state = initialState, action) {
@@ -19,23 +20,27 @@ export default function (state = initialState, action) {
     case LOAD_ENTRIES:
       return {
         ...state,
-        isEntryLoading: true
+        isEntryLoading: true,
+        isEntryAdded: false,
       };
     case GET_ENTRIES_SUCCESS:
       return {
         ...state,
         wordEntry: action.payload.entry,
         isEntryLoading: false,
+        isEntryAdded: false,
       };
     case GET_ENTRIES_FAIL:
       return {
         ...state,
         isEntryLoading: false,
+        isEntryAdded: false,
       };
     case ADD_ENTRY_SUCCESS:
       return {
         ...state,
         isEntryLoading: false,
+        isEntryAdded: true,
       };
     case ADD_ENTRY_FAIL:
     default: return state;
