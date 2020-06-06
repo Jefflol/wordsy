@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const definitionSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
+  id: String,
   partsOfSpeech: {
     type: String,
     required: true
@@ -14,6 +15,7 @@ const definitionSchema = mongoose.Schema({
 
 const exampleSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
+  id: String,
   partsOfSpeech: {
     type: String,
     required: true

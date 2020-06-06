@@ -59,7 +59,7 @@ class EntryForm extends Component {
 
         const definitionEntry = {
           id: id,
-          partsOfSpeech: pos.,
+          partsOfSpeech: pos.partsOfSpeech,
           definition: value
         };
 
