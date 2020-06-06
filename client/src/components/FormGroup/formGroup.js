@@ -35,7 +35,7 @@ export class FormInput extends Component {
   }
 
   render() {
-    const { type, id, name, minLength, maxLength, autoComplete, tabIndex, errorOn } = this.props;
+    const { type, id, name, minLength, maxLength, autoComplete, tabIndex, value, errorOn } = this.props;
     let classNames = errorOn ? "body-input body-alert-error" : "body-input";
 
     return (
@@ -50,6 +50,7 @@ export class FormInput extends Component {
           autoComplete={autoComplete}
           // tabIndex={tabIndex}
           tabIndex={-1}
+          value={value}
           onChange={this.onChange}
         ></input>
         {
