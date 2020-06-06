@@ -75,7 +75,9 @@
   margin: 4px 0;
 }
 
-
+.form-textarea-container {
+  position: relative;
+}
 
 .form-textarea {
   width: 100%;
@@ -90,7 +92,6 @@
   background-color: #E6E6E6;
   opacity: 20%;
   box-sizing: border-box;
-
   resize: none;
 }
 
@@ -98,6 +99,51 @@
 .form-textarea:focus {
   opacity: 100%;
   outline: none;
+}
+
+.form-textarea-delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+
+  border-radius: 15px;
+  font-size: 8px;
+  font-weight: 800;
+
+  background-color: #FF4F4F;
+  color: #262626;
+}
+
+.form-textarea-delete-btn:hover {
+  top: -1px;
+  right: -1px;
+  width: 15px;
+  height: 15px;
+  
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.form-textarea-delete-btn > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  visibility: 0;
+  opacity: 0;
+}
+.form-textarea-delete-btn > span:hover {
+  visibility: visible;
+  opacity: 1;
 }
 
 

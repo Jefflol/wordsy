@@ -62,8 +62,12 @@ export class FormInput extends Component {
 }
 
 export class FormTextarea extends Component {
-  onChange = (e) => {
+  onChange = e => {
     this.props.onChange(e);
+  }
+
+  onDelete = index => {
+    this.props.onDelete(index);
   }
 
   render() {
@@ -72,14 +76,22 @@ export class FormTextarea extends Component {
     const classNames = `form-textarea pos-border-active pos-border-${posColor}`;
 
     return (
-      <textarea
-        className={classNames}
-        id={id} 
-        name={name}
-        value={value || ''} 
-        tabIndex={tabIndex}
-        onChange={this.onChange}
-      />
+      <div className="form-textarea-container">
+        <textarea
+          className={classNames}
+          id={id} 
+          name={name}
+          value={value || ''} 
+          tabIndex={tabIndex}
+          onChange={this.onChange}
+        />
+        {
+          !!this.props.onDelete &&
+          <div className="form-textarea-delete-btn">
+            <span onClick={() => this.onDelete(id)}>&times;</span>
+          </div>
+        }
+      </div>
     );
   }
 }

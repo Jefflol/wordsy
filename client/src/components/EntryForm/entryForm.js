@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 import FormGroup, { FormLabel, FormInput, FormTextarea, FormSelect } from '../FormGroup/formGroup';
 import { addWordEntry } from '../../actions/entryActions';
@@ -27,6 +28,17 @@ class EntryForm extends Component {
     });
   }
 
+  onDelete = id => {
+    console.log('idx: ', id);
+
+    this.setState(prevState => ({
+      partsOfSpeeches: prevState.partsOfSpeeches.filter(lexeme => {
+        console.log(lexeme.id);
+        return lexeme.id !== id;
+      })
+    }));
+  }
+
   onSubmit = e => {
     e.preventDefault();
 
@@ -40,11 +52,14 @@ class EntryForm extends Component {
 
       // Check if state property mataches definiton
       if (propName.includes('definition-')) {
-        const index = propName.slice(-1);
-        const pos = this.state.partsOfSpeeches[index];
+        // const index = propName.slice(-1);
+        // const pos = this.state.partsOfSpeeches[index];
+        const id = propName.slice(11);
+        const pos = this.state.partsOfSpeeches.find(lexeme => lexeme.id === id);
 
         const definitionEntry = {
-          partsOfSpeech: pos,
+          id: id,
+          partsOfSpeech: pos.,
           definition: value
         };
 
@@ -53,11 +68,14 @@ class EntryForm extends Component {
 
       // Check if state property mataches example
       if (propName.includes('example-') && value) {
-        const index = propName.slice(-1);
-        const pos = this.state.partsOfSpeeches[index];
+        // const index = propName.slice(-1);
+        // const pos = this.state.partsOfSpeeches[index];
+        const id = propName.slice(8);
+        const pos = this.state.partsOfSpeeches.find(lexeme => lexeme.id === id);
 
         const exampleEntry = {
-          partsOfSpeech: pos,
+          id: id,
+          partsOfSpeech: pos.partsOfSpeech,
           example: value
         };
 
@@ -76,38 +94,45 @@ class EntryForm extends Component {
   }
 
   posOnClick = newPartsOfSpeech => {
+    const pos = {
+      id: uuidv4(),
+      partsOfSpeech: newPartsOfSpeech
+    };
+
     this.setState(prevState => ({
-      partsOfSpeeches: [...prevState.partsOfSpeeches, newPartsOfSpeech]
+      partsOfSpeeches: [...prevState.partsOfSpeeches, pos]
     }));
   }
 
   renderDefinition = () => {
-    return this.state.partsOfSpeeches.map((partsOfSpeech, index) => {
+    return this.state.partsOfSpeeches.map((lexeme, index) => {
       return (
         <FormTextarea
-          type={partsOfSpeech}
-          key={`${index}`}
-          id={`definition-${index}`}
-          name={`definition-${index}`}
-          tabIndex="2" 
-          value={this.state[`definition-${index}`]} 
-          onChange={this.onChange}  
+          type={lexeme.partsOfSpeech}
+          key={lexeme.id}
+          id={lexeme.id}
+          name={`definition-${lexeme.id}`}
+          tabIndex="2"
+          value={this.state[`definition-${lexeme.id}`]}
+          onChange={this.onChange}
+          onDelete={this.onDelete}
         />
       );
     });
   };
 
   renderExample = () => {
-    return this.state.partsOfSpeeches.map((partsOfSpeech, index) => {
+    return this.state.partsOfSpeeches.map((lexeme, index) => {
       return (
         <FormTextarea
-          type={partsOfSpeech}
-          key={`${index}`}
-          id={`example-${index}`}
-          name={`example-${index}`}
+          type={lexeme.partsOfSpeech}
+          key={lexeme.id}
+          id={lexeme.id}
+          name={`example-${lexeme.id}`}
           tabIndex="2" 
-          value={this.state[`example-${index}`]} 
-          onChange={this.onChange}  
+          value={this.state[`example-${lexeme.id}`]} 
+          onChange={this.onChange}
+          onDelete={this.onDelete}
         />
       );
     });
