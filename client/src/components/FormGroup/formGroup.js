@@ -39,7 +39,8 @@ export class FormInput extends Component {
     let classNames = errorOn ? "body-input body-alert-error" : "body-input";
 
     return (
-      <div className="body" tabIndex={tabIndex}>
+      // <div className="body" tabIndex={tabIndex}>
+      <div className="body">
         <input 
           className={classNames} 
           type={type} 
@@ -48,8 +49,8 @@ export class FormInput extends Component {
           minLength={minLength} 
           maxLength={maxLength} 
           autoComplete={autoComplete}
-          // tabIndex={tabIndex}
-          tabIndex={-1}
+          tabIndex={tabIndex}
+          // tabIndex={-1}
           value={value}
           onChange={this.onChange}
         ></input>
@@ -67,8 +68,14 @@ export class FormTextarea extends Component {
     this.props.onChange(e);
   }
 
-  onDelete = index => {
-    this.props.onDelete(index);
+  onDelete = id => {
+    this.props.onDelete(id);
+  }
+
+  onKeyPress = (e, id) => {
+    if (e.key === 'Enter') {
+      this.onDelete(id);
+    }
   }
 
   render() {
@@ -82,14 +89,19 @@ export class FormTextarea extends Component {
           className={classNames}
           id={id} 
           name={name}
-          value={value || ''} 
+          value={value} 
           tabIndex={tabIndex}
           onChange={this.onChange}
         />
         {
           !!this.props.onDelete &&
-          <div className="form-textarea-delete-btn">
-            <span onClick={() => this.onDelete(id)}>&times;</span>
+          <div
+            className="form-textarea-delete-btn" 
+            onClick={() => this.onDelete(id)}
+            onKeyPress={(e) => this.onKeyPress(e, id)}
+            tabIndex={tabIndex + 1}
+          >
+            <span>&times;</span>
           </div>
         }
       </div>
@@ -109,10 +121,11 @@ export class FormSelect extends Component {
     return (
       <div className="form-select">
         { 
-          options.map(option => 
+          options.map((option, index) => 
             <FormOption
               key={option.id} 
               type={option.type} 
+              tabIndex={index + 1}
               onClick={this.onClick} 
             />
           )
@@ -128,13 +141,26 @@ export class FormOption extends Component {
     this.props.onClick(this.props.type);
   }
 
+  onKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.onClick();
+    }
+  }
+
+
   render() {
-    const { id, type } = this.props;
+    const { id, type, tabIndex } = this.props;
     const { text: posText, color: posColor } = getPartsOfSpeechData(type);
     const classNames = `form-option pos-border pos-border-${posColor} pos-background-${posColor} pos-text-${posColor}`;
 
     return (
-      <div className={classNames} key={id} onClick={this.onClick}>
+      <div
+        className={classNames} 
+        key={id}
+        tabIndex={tabIndex}
+        onClick={this.onClick}
+        onKeyPress={this.onKeyPress}
+      >
         {posText}
       </div>
     );
