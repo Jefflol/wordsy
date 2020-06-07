@@ -12,8 +12,9 @@ import './entryForm.css';
 class EntryForm extends Component {
   state = {
     // userId: '5ec61921d367772fc3177453',
-    word: null,
-    partsOfSpeeches: []
+    word: '',
+    partsOfSpeeches: [],
+    details: {}
   }
 
   componentDidMount() {
@@ -22,10 +23,29 @@ class EntryForm extends Component {
     });
   }
 
+  componentDidUpdate(prevProps) {
+    const { isEntryAdded } = this.props;
+
+    if (isEntryAdded !== prevProps.isEntryAdded && isEntryAdded) {
+      this.clearForm();
+    }
+  }
+
   onChange = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
+  }
+
+  onChangeDetails = e => {
+    const { name, value } = e.target;
+  
+    this.setState(prevState => ({
+      details: {
+        ...prevState.details,
+        [name]: value
+      }
+    }));
   }
 
   onDelete = id => {
@@ -44,16 +64,14 @@ class EntryForm extends Component {
 
     const definitionArray = [];
     const exampleArray = [];
-    const entries = Object.entries(this.state);
+    const entries = Object.entries(this.state.details);
 
     // Iterate through states to separate definitions and examples
     for (const [propName, value] of entries) {
-      // console.log(`[${propName}]: ${value}`);
+      console.log(`[${propName}]: ${value}`);
 
       // Check if state property mataches definiton
       if (propName.includes('definition-')) {
-        // const index = propName.slice(-1);
-        // const pos = this.state.partsOfSpeeches[index];
         const id = propName.slice(11);
         const pos = this.state.partsOfSpeeches.find(lexeme => lexeme.id === id);
 
@@ -68,8 +86,6 @@ class EntryForm extends Component {
 
       // Check if state property mataches example
       if (propName.includes('example-') && value) {
-        // const index = propName.slice(-1);
-        // const pos = this.state.partsOfSpeeches[index];
         const id = propName.slice(8);
         const pos = this.state.partsOfSpeeches.find(lexeme => lexeme.id === id);
 
@@ -93,6 +109,14 @@ class EntryForm extends Component {
     this.props.addWordEntry(wordEntry);
   }
 
+  clearForm = () => {
+    this.setState({
+      word: '',
+      partsOfSpeeches: [],
+      details: {}
+    });
+  }
+
   posOnClick = newPartsOfSpeech => {
     const pos = {
       id: uuidv4(),
@@ -112,9 +136,9 @@ class EntryForm extends Component {
           key={lexeme.id}
           id={lexeme.id}
           name={`definition-${lexeme.id}`}
-          tabIndex="2"
-          value={this.state[`definition-${lexeme.id}`]}
-          onChange={this.onChange}
+          tabIndex={(2 * index) + 10}
+          value={this.state.details[`definition-${lexeme.id}`]}
+          onChange={this.onChangeDetails}
           onDelete={this.onDelete}
         />
       );
@@ -129,9 +153,9 @@ class EntryForm extends Component {
           key={lexeme.id}
           id={lexeme.id}
           name={`example-${lexeme.id}`}
-          tabIndex="2" 
-          value={this.state[`example-${lexeme.id}`]} 
-          onChange={this.onChange}
+          tabIndex={(2 * index) + 30}
+          value={this.state.details[`example-${lexeme.id}`]} 
+          onChange={this.onChangeDetails}
           onDelete={this.onDelete}
         />
       );
@@ -152,7 +176,7 @@ class EntryForm extends Component {
           <div className="word-input">
             <FormGroup>
               <FormLabel for="word" name="WORD" />
-              <FormInput type="text" id="word" name="word" maxLength="20" tabIndex="1" onChange={this.onChange} />
+              <FormInput type="text" id="word" name="word" maxLength="20" tabIndex="1" value={this.state.word} onChange={this.onChange} />
             </FormGroup>
           </div>
           <div className="parts-of-speech-selection">
@@ -179,7 +203,7 @@ class EntryForm extends Component {
               </div>
             </FormGroup>
           </div>
-          <button className="form-submit-btn" tabIndex="10">Add</button>
+          <button className="form-submit-btn" tabIndex="100">Add</button>
         </form>
       </div>
     )
@@ -187,7 +211,8 @@ class EntryForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  userId: state.user.userId
+  userId: state.user.userId,
+  isEntryAdded: state.entry.isEntryAdded
 });
 
 export default connect(mapStateToProps, {
