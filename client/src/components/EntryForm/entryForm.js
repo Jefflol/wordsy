@@ -14,7 +14,8 @@ class EntryForm extends Component {
     // userId: '5ec61921d367772fc3177453',
     word: '',
     partsOfSpeeches: [],
-    details: {}
+    definitions: {},
+    examples: {}
   }
 
   componentDidMount() {
@@ -37,12 +38,23 @@ class EntryForm extends Component {
     });
   }
 
-  onChangeDetails = e => {
+  onChangeDefinition = e => {
     const { name, value } = e.target;
-  
+
     this.setState(prevState => ({
-      details: {
-        ...prevState.details,
+      definitions: {
+        ...prevState.definitions,
+        [name]: value
+      }
+    }));
+  }
+
+  onChangeExample = e => {
+    const { name, value } = e.target;
+
+    this.setState(prevState => ({
+      examples: {
+        ...prevState.examples,
         [name]: value
       }
     }));
@@ -64,11 +76,12 @@ class EntryForm extends Component {
 
     const definitionArray = [];
     const exampleArray = [];
-    const entries = Object.entries(this.state.details);
+    const definitionEntries = Object.entries(this.state.definitions);
+    const exampleEntries = Object.entries(this.state.examples);
 
     // Iterate through states to separate definitions and examples
-    for (const [propName, value] of entries) {
-      console.log(`[${propName}]: ${value}`);
+    for (const [propName, value] of definitionEntries) {
+      // console.log(`[${propName}]: ${value}`);
 
       // Check if state property mataches definiton
       if (propName.includes('definition-')) {
@@ -83,7 +96,9 @@ class EntryForm extends Component {
 
         definitionArray.push(definitionEntry);
       }
+    }
 
+    for (const [propName, value] of exampleEntries) {
       // Check if state property mataches example
       if (propName.includes('example-') && value) {
         const id = propName.slice(8);
@@ -113,7 +128,8 @@ class EntryForm extends Component {
     this.setState({
       word: '',
       partsOfSpeeches: [],
-      details: {}
+      definitions: {},
+      examples: {}
     });
   }
 
@@ -137,8 +153,8 @@ class EntryForm extends Component {
           id={lexeme.id}
           name={`definition-${lexeme.id}`}
           tabIndex={(2 * index) + 10}
-          value={this.state.details[`definition-${lexeme.id}`]}
-          onChange={this.onChangeDetails}
+          value={this.state.definitions[`definition-${lexeme.id}`]}
+          onChange={this.onChangeDefinition}
           onDelete={this.onDelete}
         />
       );
@@ -154,8 +170,8 @@ class EntryForm extends Component {
           id={lexeme.id}
           name={`example-${lexeme.id}`}
           tabIndex={(2 * index) + 30}
-          value={this.state.details[`example-${lexeme.id}`]} 
-          onChange={this.onChangeDetails}
+          value={this.state.examples[`example-${lexeme.id}`]} 
+          onChange={this.onChangeExample}
           onDelete={this.onDelete}
         />
       );
