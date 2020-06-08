@@ -50,6 +50,14 @@ class EntryForm extends Component {
   onChangeDefinition = e => {
     const { name, value } = e.target;
 
+    this.setState(prevState => ({
+      definitions: {
+        ...prevState.definitions,
+        [name]: value
+      }
+    }));
+
+    // Remove error message when user begins typing definition
     if (this.state.errors.definition) {
       this.setState(prevState => ({
         errors: {
@@ -58,13 +66,6 @@ class EntryForm extends Component {
         } 
       }));
     }
-
-    this.setState(prevState => ({
-      definitions: {
-        ...prevState.definitions,
-        [name]: value
-      }
-    }));
   }
 
   onChangeExample = e => {
@@ -79,13 +80,16 @@ class EntryForm extends Component {
   }
 
   onDelete = id => {
-    console.log('idx: ', id);
+    const { [id]: definitionValue, ...definition } = this.state.definitions;
+    const { [id]: exampleValue, ...example } = this.state.examples;
 
     this.setState(prevState => ({
       partsOfSpeeches: prevState.partsOfSpeeches.filter(lexeme => {
         console.log(lexeme.id);
         return lexeme.id !== id;
-      })
+      }),
+      definitions: definition,
+      examples: example
     }));
   }
 
@@ -105,38 +109,28 @@ class EntryForm extends Component {
     const exampleEntries = Object.entries(this.state.examples);
 
     // Iterate through states to separate definitions and examples
-    for (const [propName, value] of definitionEntries) {
-      // console.log(`[${propName}]: ${value}`);
+    for (const [id, value] of definitionEntries) {
+      const pos = this.state.partsOfSpeeches.find(lexeme => lexeme.id === id);
 
-      // Check if state property mataches definiton
-      if (propName.includes('definition-')) {
-        const id = propName.slice(11);
-        const pos = this.state.partsOfSpeeches.find(lexeme => lexeme.id === id);
+      const definitionEntry = {
+        id: id,
+        partsOfSpeech: pos.partsOfSpeech,
+        definition: value
+      };
 
-        const definitionEntry = {
-          id: id,
-          partsOfSpeech: pos.partsOfSpeech,
-          definition: value
-        };
-
-        definitionArray.push(definitionEntry);
-      }
+      definitionArray.push(definitionEntry);
     }
 
-    for (const [propName, value] of exampleEntries) {
-      // Check if state property mataches example
-      if (propName.includes('example-') && value) {
-        const id = propName.slice(8);
-        const pos = this.state.partsOfSpeeches.find(lexeme => lexeme.id === id);
+    for (const [id, value] of exampleEntries) {
+      const pos = this.state.partsOfSpeeches.find(lexeme => lexeme.id === id);
 
-        const exampleEntry = {
-          id: id,
-          partsOfSpeech: pos.partsOfSpeech,
-          example: value
-        };
+      const exampleEntry = {
+        id: id,
+        partsOfSpeech: pos.partsOfSpeech,
+        example: value
+      };
 
-        exampleArray.push(exampleEntry);
-      }
+      exampleArray.push(exampleEntry);
     }
 
     const wordEntry = {
@@ -215,8 +209,8 @@ class EntryForm extends Component {
     });
 
     // Update state for render
-    // if (!valid) this.setState({ errors: newErrors });
-    this.setState({ errors: newErrors });
+    if (!valid) this.setState({ errors: newErrors });
+    // this.setState({ errors: newErrors });
 
     return valid;
   }
@@ -227,20 +221,13 @@ class EntryForm extends Component {
       partsOfSpeech: newPartsOfSpeech
     };
 
-    const definition = {
-      [`definition-${pos.id}`]: ''
-    };
-
-    const example = {
-      [`example-${pos.id}`]: ''
-    };
-
     this.setState(prevState => ({
       partsOfSpeeches: [...prevState.partsOfSpeeches, pos],
-      definitions: {...prevState.definitions, ...definition},
-      examples: {...prevState.examples, ...example}
+      definitions: {...prevState.definitions, [pos.id]: ''},
+      examples: {...prevState.examples, [pos.id]: ''}
     }));
 
+    // Remove error message if lexeme is selected
     if (this.state.errors.lexeme) {
       this.setState(prevState => ({
         errors: {
@@ -258,9 +245,9 @@ class EntryForm extends Component {
           type={lexeme.partsOfSpeech}
           key={lexeme.id}
           id={lexeme.id}
-          name={`definition-${lexeme.id}`}
+          name={`${lexeme.id}`}
           tabIndex={(2 * index) + 10}
-          value={this.state.definitions[`definition-${lexeme.id}`]}
+          value={this.state.definitions[`${lexeme.id}`]}
           onChange={this.onChangeDefinition}
           onDelete={this.onDelete}
           errorOn={this.state.errors.definition}
@@ -276,9 +263,9 @@ class EntryForm extends Component {
           type={lexeme.partsOfSpeech}
           key={lexeme.id}
           id={lexeme.id}
-          name={`example-${lexeme.id}`}
+          name={`${lexeme.id}`}
           tabIndex={(2 * index) + 30}
-          value={this.state.examples[`example-${lexeme.id}`]} 
+          value={this.state.examples[`${lexeme.id}`]} 
           onChange={this.onChangeExample}
           onDelete={this.onDelete}
         />
