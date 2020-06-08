@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import FormGroup, { FormLabel, FormInput, FormTextarea, FormSelect } from '../FormGroup/formGroup';
 import { addWordEntry } from '../../actions/entryActions';
 import { partsOfSpeech } from '../partsOfSpeech';
+import { isEmpty } from '../helperFunctions';
 
 import './entryForm.css';
 
@@ -15,7 +16,12 @@ class EntryForm extends Component {
     word: '',
     partsOfSpeeches: [],
     definitions: {},
-    examples: {}
+    examples: {},
+    errors: {
+      word: '',
+      lexeme: '',
+      definition: ''
+    }
   }
 
   componentDidMount() {
@@ -33,6 +39,9 @@ class EntryForm extends Component {
   }
 
   onChange = e => {
+    // Validate Inputs
+    this.checkValidation(e);
+    
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -40,6 +49,15 @@ class EntryForm extends Component {
 
   onChangeDefinition = e => {
     const { name, value } = e.target;
+
+    if (this.state.errors.definition) {
+      this.setState(prevState => ({
+        errors: {
+          ...prevState.errors,
+          definition: ''
+        } 
+      }));
+    }
 
     this.setState(prevState => ({
       definitions: {
@@ -73,6 +91,13 @@ class EntryForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+
+    const { word, definitions } = this.state;
+
+    // Validate Form
+    if (!this.validateForm(word, definitions)) {
+      return;
+    }
 
     const definitionArray = [];
     const exampleArray = [];
@@ -129,8 +154,71 @@ class EntryForm extends Component {
       word: '',
       partsOfSpeeches: [],
       definitions: {},
-      examples: {}
+      examples: {},
+      errors: {
+        word: '',
+        lexeme: '',
+        definition: ''
+      }
     });
+  }
+
+  checkValidation = e => {
+    const { name, value } = e.target;
+    let errors = this.state.errors;
+
+    switch(name) {
+      case 'word':
+        errors.word = 
+          (value.length === 0)
+            ? 'Enter a word'
+            : '';
+        break;
+      default: break;
+    }
+
+    this.setState({ errors: errors });
+  }
+
+  validateForm = (word, definitions) => {
+    let valid = true;
+    let newErrors = {
+      word: '',
+      lexeme: '',
+      definition: ''
+    };
+
+    // Check if word is empty
+    if (!word) {
+      newErrors.word = 'Enter a word';
+    }
+
+    // Check if a definition entry is added
+    if (isEmpty(definitions)) {
+      newErrors.lexeme = 'Select a part of speech';
+    } 
+
+    // Check if definition is empty
+    if (!isEmpty(definitions)) {
+      for (const key in definitions) {
+        const value = definitions[key];
+        if (!value ) {
+          newErrors.definition = 'Fill in all definitions';
+          break;
+        }
+      }
+    }
+
+    // Return false if any inputs are empty
+    Object.values(newErrors).forEach(val => {
+      val.length > 0 && (valid = false)
+    });
+
+    // Update state for render
+    // if (!valid) this.setState({ errors: newErrors });
+    this.setState({ errors: newErrors });
+
+    return valid;
   }
 
   posOnClick = newPartsOfSpeech => {
@@ -139,9 +227,28 @@ class EntryForm extends Component {
       partsOfSpeech: newPartsOfSpeech
     };
 
+    const definition = {
+      [`definition-${pos.id}`]: ''
+    };
+
+    const example = {
+      [`example-${pos.id}`]: ''
+    };
+
     this.setState(prevState => ({
-      partsOfSpeeches: [...prevState.partsOfSpeeches, pos]
+      partsOfSpeeches: [...prevState.partsOfSpeeches, pos],
+      definitions: {...prevState.definitions, ...definition},
+      examples: {...prevState.examples, ...example}
     }));
+
+    if (this.state.errors.lexeme) {
+      this.setState(prevState => ({
+        errors: {
+          ...prevState.errors,
+          lexeme: ''
+        }
+      }));
+    }
   }
 
   renderDefinition = () => {
@@ -156,6 +263,7 @@ class EntryForm extends Component {
           value={this.state.definitions[`definition-${lexeme.id}`]}
           onChange={this.onChangeDefinition}
           onDelete={this.onDelete}
+          errorOn={this.state.errors.definition}
         />
       );
     });
@@ -191,19 +299,19 @@ class EntryForm extends Component {
           </div>
           <div className="word-input">
             <FormGroup>
-              <FormLabel for="word" name="WORD" />
-              <FormInput type="text" id="word" name="word" maxLength="20" tabIndex="1" value={this.state.word} onChange={this.onChange} />
+              <FormLabel for="word" name="WORD" errorMessage={this.state.errors.word} errorOn={this.state.errors.word} />
+              <FormInput type="text" id="word" name="word" maxLength="20" tabIndex="1" value={this.state.word} onChange={this.onChange} errorOn={this.state.errors.word}/>
             </FormGroup>
           </div>
           <div className="parts-of-speech-selection">
             <FormGroup>
-              <FormLabel name="PARTS OF SPEECH" />
+              <FormLabel name="PARTS OF SPEECH" errorMessage={this.state.errors.lexeme} errorOn={this.state.errors.lexeme} />
               <FormSelect option={partsOfSpeech} onClick={this.posOnClick} />
             </FormGroup>
           </div>
           <div className="definition-input">
             <FormGroup>
-              <FormLabel for="definition" name="DEFINITION" />
+              <FormLabel for="definition" name="DEFINITION" errorMessage={this.state.errors.definition} errorOn={this.state.errors.definition} />
               {/* <FormTextarea id="definition" name="definition" tabIndex="2" value={this.state.definition} onChange={this.onChange} /> */}
               <div className="definition-textareas">
                 { definitionChildren }
