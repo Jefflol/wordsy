@@ -18,11 +18,11 @@ const exampleSchema = mongoose.Schema({
   id: String,
   partsOfSpeech: {
     type: String,
-    required: true
+    // required: true
   },
   example: {
     type: String,
-    required: true
+    // required: true
   }
 });
 
