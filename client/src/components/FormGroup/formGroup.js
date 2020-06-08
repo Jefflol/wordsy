@@ -79,9 +79,9 @@ export class FormTextarea extends Component {
   }
 
   render() {
-    const { id, name, type, value, tabIndex } = this.props;
+    const { id, name, type, value, tabIndex, errorOn } = this.props;
     const { color: posColor } = getPartsOfSpeechData(type);
-    const classNames = `form-textarea pos-border-active pos-border-${posColor}`;
+    const classNames = errorOn ? `form-textarea body-alert-error pos-border-active pos-border-${posColor}` : `form-textarea pos-border-active pos-border-${posColor}`;
 
     return (
       <div className="form-textarea-container">
@@ -89,7 +89,7 @@ export class FormTextarea extends Component {
           className={classNames}
           id={id} 
           name={name}
-          value={value} 
+          value={value}
           tabIndex={tabIndex}
           onChange={this.onChange}
         />
