@@ -44,10 +44,10 @@ class LoginForm extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const { username, password, errors } = this.state;
+    const { username, password } = this.state;
 
     // Validate Form
-    if (!this.validateForm(username, password, errors)) {
+    if (!this.validateForm(username, password)) {
       return;
     }
 
@@ -78,9 +78,9 @@ class LoginForm extends Component {
     this.setState({ errors: errors });
   }
 
-  validateForm = (username, password, errors) => {
+  validateForm = (username, password) => {
     let valid = true;
-    let newErrors = {...errors};
+    let newErrors = {};
 
     // Check if username is empty
     if (!username) {
