@@ -172,7 +172,7 @@ class EntryForm extends Component {
 
     // Check if definition is empty
     if (!isEmpty(details)) {
-      for (const [detail] of Object.entries(details)) {
+      for (const detail of Object.values(details)) {
         if (!detail.definition ) {
           newErrors.definition = 'Fill in all definitions';
           break;
