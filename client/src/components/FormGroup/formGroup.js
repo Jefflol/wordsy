@@ -99,7 +99,7 @@ export class FormTextarea extends Component {
             className="form-textarea-delete-btn" 
             onClick={() => this.onDelete(id)}
             onKeyPress={(e) => this.onKeyPress(e, id)}
-            tabIndex={tabIndex + 1}
+            tabIndex={tabIndex}
           >
             <span>&times;</span>
           </div>

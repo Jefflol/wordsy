@@ -14,9 +14,13 @@ class EntryForm extends Component {
   state = {
     // userId: '5ec61921d367772fc3177453',
     word: '',
-    partsOfSpeeches: [],
-    definitions: {},
-    examples: {},
+    details: {
+      // "": {
+      //   lexeme: '',
+      //   definition: '',
+      //   example: ''
+      // }
+    },
     errors: {
       word: '',
       lexeme: '',
@@ -47,89 +51,59 @@ class EntryForm extends Component {
     });
   }
 
-  onChangeDefinition = e => {
+  onChangeDetails = (e, id) => {
+    // Validate Inputs
+    this.checkValidation(e);
+
     const { name, value } = e.target;
 
     this.setState(prevState => ({
-      definitions: {
-        ...prevState.definitions,
-        [name]: value
-      }
-    }));
-
-    // Remove error message when user begins typing definition
-    if (this.state.errors.definition) {
-      this.setState(prevState => ({
-        errors: {
-          ...prevState.errors,
-          definition: ''
-        } 
-      }));
-    }
-  }
-
-  onChangeExample = e => {
-    const { name, value } = e.target;
-
-    this.setState(prevState => ({
-      examples: {
-        ...prevState.examples,
-        [name]: value
+      details: {
+        ...prevState.details,
+        [id]: {
+          ...prevState.details[id],
+          [name]: value
+        }
       }
     }));
   }
 
   onDelete = id => {
-    const { [id]: definitionValue, ...definition } = this.state.definitions;
-    const { [id]: exampleValue, ...example } = this.state.examples;
+    const { [id]: value, ...details } = this.state.details;
 
-    this.setState(prevState => ({
-      partsOfSpeeches: prevState.partsOfSpeeches.filter(lexeme => {
-        console.log(lexeme.id);
-        return lexeme.id !== id;
-      }),
-      definitions: definition,
-      examples: example
-    }));
+    this.setState({
+      details: details
+    });
   }
 
   onSubmit = e => {
     e.preventDefault();
 
-    const { word, definitions } = this.state;
+    const { word, details } = this.state;
 
     // Validate Form
-    if (!this.validateForm(word, definitions)) {
+    if (!this.validateForm(word, details)) {
       return;
     }
 
     const definitionArray = [];
     const exampleArray = [];
-    const definitionEntries = Object.entries(this.state.definitions);
-    const exampleEntries = Object.entries(this.state.examples);
 
-    // Iterate through states to separate definitions and examples
-    for (const [id, value] of definitionEntries) {
-      const pos = this.state.partsOfSpeeches.find(lexeme => lexeme.id === id);
-
+    // Iterate through states to combine definitions and examples
+    for (const [id, detail] of Object.entries(details)) {
       const definitionEntry = {
         id: id,
-        partsOfSpeech: pos.partsOfSpeech,
-        definition: value
+        partsOfSpeech: detail.lexeme,
+        definition: detail.definition
       };
-
-      definitionArray.push(definitionEntry);
-    }
-
-    for (const [id, value] of exampleEntries) {
-      const pos = this.state.partsOfSpeeches.find(lexeme => lexeme.id === id);
 
       const exampleEntry = {
         id: id,
-        partsOfSpeech: pos.partsOfSpeech,
-        example: value
+        partsOfSpeech: detail.lexeme,
+        example: detail.example
       };
 
+      definitionArray.push(definitionEntry);
       exampleArray.push(exampleEntry);
     }
 
@@ -146,9 +120,7 @@ class EntryForm extends Component {
   clearForm = () => {
     this.setState({
       word: '',
-      partsOfSpeeches: [],
-      definitions: {},
-      examples: {},
+      details: {},
       errors: {
         word: '',
         lexeme: '',
@@ -168,13 +140,19 @@ class EntryForm extends Component {
             ? 'Enter a word'
             : '';
         break;
+      case 'definition':
+        errors.definition =
+          (value.length === 0)
+            ? 'Fill in all definitions'
+            : '';
+        break;
       default: break;
     }
 
     this.setState({ errors: errors });
   }
 
-  validateForm = (word, definitions) => {
+  validateForm = (word, details) => {
     let valid = true;
     let newErrors = {
       word: '',
@@ -187,16 +165,15 @@ class EntryForm extends Component {
       newErrors.word = 'Enter a word';
     }
 
-    // Check if a definition entry is added
-    if (isEmpty(definitions)) {
+    // Check if a lexeme is selected
+    if (isEmpty(details)) {
       newErrors.lexeme = 'Select a part of speech';
     } 
 
     // Check if definition is empty
-    if (!isEmpty(definitions)) {
-      for (const key in definitions) {
-        const value = definitions[key];
-        if (!value ) {
+    if (!isEmpty(details)) {
+      for (const [detail] of Object.entries(details)) {
+        if (!detail.definition ) {
           newErrors.definition = 'Fill in all definitions';
           break;
         }
@@ -208,26 +185,29 @@ class EntryForm extends Component {
       val.length > 0 && (valid = false)
     });
 
-    // Update state for render
-    if (!valid) this.setState({ errors: newErrors });
-    // this.setState({ errors: newErrors });
+    // Update state for error message render
+    if (!valid) {
+      this.setState({ errors: newErrors });
+    }
 
     return valid;
   }
 
-  posOnClick = newPartsOfSpeech => {
-    const pos = {
-      id: uuidv4(),
-      partsOfSpeech: newPartsOfSpeech
-    };
+  lexemeOnClick = lexeme => {
+    const id = uuidv4();
 
     this.setState(prevState => ({
-      partsOfSpeeches: [...prevState.partsOfSpeeches, pos],
-      definitions: {...prevState.definitions, [pos.id]: ''},
-      examples: {...prevState.examples, [pos.id]: ''}
+      details: {
+        ...prevState.details,
+        [id]: {
+          lexeme: lexeme,
+          definition: '',
+          example: ''
+        }
+      }
     }));
 
-    // Remove error message if lexeme is selected
+    // Remove error message
     if (this.state.errors.lexeme) {
       this.setState(prevState => ({
         errors: {
@@ -238,44 +218,30 @@ class EntryForm extends Component {
     }
   }
 
-  renderDefinition = () => {
-    return this.state.partsOfSpeeches.map((lexeme, index) => {
-      return (
-        <FormTextarea
-          type={lexeme.partsOfSpeech}
-          key={lexeme.id}
-          id={lexeme.id}
-          name={`${lexeme.id}`}
-          tabIndex={(2 * index) + 10}
-          value={this.state.definitions[`${lexeme.id}`]}
-          onChange={this.onChangeDefinition}
-          onDelete={this.onDelete}
-          errorOn={this.state.errors.definition}
-        />
-      );
-    });
-  };
+  renderDetails = (detailType) => {
+    let detailsArray = [];
 
-  renderExample = () => {
-    return this.state.partsOfSpeeches.map((lexeme, index) => {
-      return (
+    for (const [id, detail] of Object.entries(this.state.details)) {
+      detailsArray.push(
         <FormTextarea
-          type={lexeme.partsOfSpeech}
-          key={lexeme.id}
-          id={lexeme.id}
-          name={`${lexeme.id}`}
-          tabIndex={(2 * index) + 30}
-          value={this.state.examples[`${lexeme.id}`]} 
-          onChange={this.onChangeExample}
+          type={detail.lexeme}
+          key={id}
+          id={id}
+          name={detailType}
+          tabIndex={10}
+          value={this.state.details[id][detailType]} 
+          onChange={e => this.onChangeDetails(e, id)}
           onDelete={this.onDelete}
         />
       );
-    });
+    }
+
+    return detailsArray;
   }
 
   render() {
-    const definitionChildren = this.renderDefinition();
-    const exampleChildren = this.renderExample();
+    const definitionChildren = this.renderDetails('definition');
+    const exampleChildren = this.renderDetails('example');
 
     return (
       <div className="entry-form-container">
@@ -293,7 +259,7 @@ class EntryForm extends Component {
           <div className="parts-of-speech-selection">
             <FormGroup>
               <FormLabel name="PARTS OF SPEECH" errorMessage={this.state.errors.lexeme} errorOn={this.state.errors.lexeme} />
-              <FormSelect option={partsOfSpeech} onClick={this.posOnClick} />
+              <FormSelect option={partsOfSpeech} onClick={this.lexemeOnClick} />
             </FormGroup>
           </div>
           <div className="definition-input">
