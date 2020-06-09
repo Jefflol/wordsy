@@ -7,7 +7,7 @@ import './entry.css';
 
 export default class Entry extends Component {
   render() {
-    const { word, definition, pos: partsOfSpeeches, id } = this.props;
+    const { word, definition, pos: lexemes, id } = this.props;
 
     return (
       <div className="entry">
@@ -17,8 +17,8 @@ export default class Entry extends Component {
         <div className="entry-definition">
           <EntryDefinition>{definition}</EntryDefinition>
         </div>
-        <div className="entry-parts-of-speech">
-          { partsOfSpeeches.map(pos => <EntryPOS key={`${id}+${pos}`}type={pos} />) }
+        <div className="entry-lexeme">
+          { lexemes.map(lexeme => <EntryLexeme key={`${id}+${lexeme}`} type={lexeme} />) }
         </div>
       </div>
     );
@@ -37,19 +37,19 @@ const EntryWord = props => {
 
 const EntryDefinition = props => {
   return (
-    <div>
+    <>
       {props.children}
-    </div>
+    </>
   );
 }
 
-const EntryPOS = props => {
-  const { color: posColor, text: posText } = getPartsOfSpeechData(props.type);
-  const classNames = `entry-parts-of-speech-icon pos-background-${posColor} pos-text-${posColor}`;
+const EntryLexeme = props => {
+  const { color: lexemeColor, text: lexemeText } = getPartsOfSpeechData(props.type);
+  const classNames = `entry-lexeme-icon lexeme-background-${lexemeColor} lexeme-text-${lexemeColor}`;
 
   return (
     <div className={classNames}>
-      {posText}
+      {lexemeText}
     </div>
   );
 }
