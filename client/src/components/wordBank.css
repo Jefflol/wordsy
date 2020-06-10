@@ -1,5 +1,6 @@
 .word-bank-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -10,14 +11,41 @@
   height: calc(100% - 20px);
 
   padding: 20px;
-  margin: 10px 10px 10px 0;
+  margin: 10px;
   border-radius: 10px;
 
   background-color: #F2F2F2;
   box-sizing: border-box; 
 }
 
+.word-bank-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 85%;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #D9D9D9;
+  margin: 30px 0 15px;
+}
+
+.word-bank-header > .header-title {
+  color: #262626;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.word-bank-header > .word-bank-options {
+
+}
+
+.word-bank-header > .word-bank-options:hover {
+  cursor: pointer;
+}
+
 .word-bank {
   width: 85%;
   height: 100%;
+  margin: 0 0 30px;
+  overflow: scroll;
 }

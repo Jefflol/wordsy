@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Entry from './Entry/entry';
 import { getWordEntries } from '../actions/entryActions';
+import { ReactComponent as MoreIcon } from '../assets/more-horizontal.svg';
 
 import './wordBank.css';
 
@@ -23,6 +24,10 @@ class WordBank extends Component {
     if (isEntryLoading !== prevProps.isEntryLoading && !isEntryLoading) {
       this.setState({ entry: this.props.entry || [] });
     }
+  }
+
+  toggleOptions = () => {
+    console.log('Toggled');
   }
 
   renderWordBank = () => {
@@ -53,6 +58,10 @@ class WordBank extends Component {
 
     return (
       <div className="word-bank-container">
+        <div className="word-bank-header">
+          <div className="header-title">Your Words</div>
+          <MoreIcon className="word-bank-options" onClick={this.toggleOptions} />
+        </div>
         <div className="word-bank">
           { wordBank }
         </div>
