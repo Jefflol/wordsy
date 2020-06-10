@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { tokenConfig } from './tokenConfig';
 
 import {
   ADD_ENTRY_SUCCESS,
@@ -9,19 +10,12 @@ import {
 } from './types';
 
 // Add a word entry
-export const addWordEntry = ({ userId, word, definition, example }) => dispatch => {
-  // Headers
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
-
+export const addWordEntry = ({ userId, word, definition, example }) => (dispatch, getState) => {
   // Request body
   const body = JSON.stringify({ userId, word, definition, example });
 
   // Add a word
-  axios.post('/entry', body, config)
+  axios.post(`/entry/${userId}`, body, tokenConfig(getState))
     .then(res => {
       console.log(`[SUCCESS]: ADDED NEW WORD - ${word}`);
       dispatch({
@@ -39,10 +33,10 @@ export const addWordEntry = ({ userId, word, definition, example }) => dispatch 
 
 
 // Get word entry for a user
-export const getWordEntries = userId => dispatch => {
+export const getWordEntries = userId => (dispatch, getState) => {
   dispatch({ type: LOAD_ENTRIES });
 
-  axios.get(`/entry/${userId}`)
+  axios.get(`/entry/${userId}`, tokenConfig(getState))
     .then(res => {
       // console.log('[SUCCESS]: GET ALL WORD ENTRIES');
       dispatch({

@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const { Entry, Definition, Example } = require('../models/entry-model');
-
+const checkAuth = require('../middleware/check-auth');
 
 // @route   GET /entry
 // @desc    Fetch all entries
@@ -30,13 +30,13 @@ const { Entry, Definition, Example } = require('../models/entry-model');
 // @route   GET /entry/:userId
 // @desc    Fetch all entries for a specific user
 // @access  PRIVATE
-router.get('/:userId', (req, res, next) => {
+router.get('/:userId', checkAuth, (req, res, next) => {
   // Check if user is authorized
-  // if (req.params.userId !== req.userData.userId) {
-  //   return res.status(401).json({
-  //     message: 'Unauthorized'
-  //   });
-  // }
+  if (req.params.userId !== req.userData.userId) {
+    return res.status(401).json({
+      message: 'Unauthorized'
+    });
+  }
 
   Entry.find({ userId: req.params.userId })
     .select('_id userId word definition example dateCreated')
@@ -57,7 +57,14 @@ router.get('/:userId', (req, res, next) => {
 // @route   GET /entry/:userId/:entryId
 // @desc    Fetch an entry by ID
 // @access  PRIVATE
-router.get('/:userId/:entryId', (req, res, next) => {
+router.get('/:userId/:entryId', checkAuth, (req, res, next) => {
+  // Check if user is authorized
+  if (req.params.userId !== req.userData.userId) {
+    return res.status(401).json({
+      message: 'Unauthorized'
+    });
+  }
+
   Entry.find({ userId: req.params.userId, _id: req.params.entryId })
     .select('_id userId word definition example dateCreated')
     .then(entry => {
@@ -81,10 +88,17 @@ router.get('/:userId/:entryId', (req, res, next) => {
 });
 
 
-// @route   POST /entry
+// @route   POST /entry/:userId
 // @desc    Create an entry
 // @access  PRIVATE
-router.post('/', (req, res, next) => {
+router.post('/:userId', checkAuth, (req, res, next) => {
+  // Check if user is authorized
+  if (req.params.userId !== req.userData.userId) {
+    return res.status(401).json({
+      message: 'Unauthorized'
+    });
+  }
+
   const id = new mongoose.Types.ObjectId();
   const definitions = req.body.definition.map(definition => {
     return new Definition({
@@ -128,7 +142,14 @@ router.post('/', (req, res, next) => {
 // @route   DELETE /entry/:entryId
 // @desc    Remove an entry
 // @access  PRIVATE
-router.delete('/:entryId', (req, res, next) => {
+router.delete('/:entryId', checkAuth, (req, res, next) => {
+  // Check if user is authorized
+  if (req.params.userId !== req.userData.userId) {
+    return res.status(401).json({
+      message: 'Unauthorized'
+    });
+  }
+
   Entry.deleteOne({ _id: req.params.entryId })
     .then(entry => {
       if (entry.deletedCount) {
@@ -152,7 +173,14 @@ router.delete('/:entryId', (req, res, next) => {
 // @route   PATCH /entry/:entryId
 // @desc    Edit an entry
 // @access  PRIVATE
-router.patch('/:entryId', (req, res, next) => {
+router.patch('/:entryId', checkAuth, (req, res, next) => {
+  // Check if user is authorized
+  if (req.params.userId !== req.userData.userId) {
+    return res.status(401).json({
+      message: 'Unauthorized'
+    });
+  }
+
   const updateOps = {};
   for (const ops of req.body) {
     updateOps[ops.propName] = ops.value;
