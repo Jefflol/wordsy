@@ -19,6 +19,7 @@
 }
 
 .word-bank-header {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -36,11 +37,17 @@
 }
 
 .word-bank-header > .word-bank-options {
-
+  /* position: relative; */
 }
-
 .word-bank-header > .word-bank-options:hover {
   cursor: pointer;
+}
+
+.options-dropdown {
+  position: absolute;
+  right: -40px;
+  bottom: 0;
+  width: 200px;
 }
 
 .word-bank {
