@@ -24,16 +24,60 @@
   box-sizing: border-box;
 }
 
-
-.word-header {
+.word-details-header {
+  position: relative;
   display: flex;
   align-items: center;
-
-  position: relative;
   width: 100%;
+  margin: 0 0 20px 0;
 }
 
-.word-bubble {
+.word-details-header > .edit-btn,
+.word-details-header > .close-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 0;
+  background: none;
+}
+.word-details-header > .edit-btn:hover,
+.word-details-header > .close-btn:hover {
+  cursor: pointer;
+}
+
+.word-details-header > .edit-btn {
+  width: 25px;
+  margin: 0 10px;
+}
+
+.word-details-header >.close-btn {
+  position: absolute;
+  right: 0;
+}
+
+.word-details-header > .word-details-body {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+}
+
+.word-details-body > .body-title {
+  margin: 10px 0;
+}
+
+.word-details-body > .body-entry {
+  display: flex;
+  align-items: center;
+}
+
+
+
+
+
+
+/* WORD */
+.word-container {
   display: inline-flex;
   align-items: center;
 
@@ -45,76 +89,19 @@
   background-color: #CBE6FF;
 }
 
-.word-text {  
+.word-container > .word-text {  
   color: #3385C6;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-
-.edit-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 25px;
-  border: 0;
-  margin: 0 10px;
-  background: none;
-}
-.edit-btn:hover {
-  cursor: pointer;
-}
-
-.close-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  position: absolute;
-  right: 0;
-  border: 0;
-  background: none;
-}
-.close-btn {
-  cursor: pointer;
-}
-
-
-.word-definitions,
-.word-examples {
-  display: flex;
-  flex-direction: column;
-  margin: 20px 0;
-}
-
-.word-definitions-title,
-.word-examples-title {
-  margin: 10px 0;
-}
-
-.word-definitions-entry,
-.word-examples-entry {
-  display: flex;
-  align-items: center;
-}
-
-.word-definitions-lexeme-number,
-.word-examples-lexeme-number {
-  position: absolute;
-  bottom: -5px;
-  right: -10px;
-  color: #B3B3B3;
-}
-
-
-.word-definitions-lexeme,
-.word-examples-lexeme {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* WORD LEXEME */
+.word-lexeme {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 32px;
   height: 32px;
   min-width: 32px;
@@ -125,7 +112,12 @@
   box-sizing: border-box;
 }
 
-
+.word-lexeme-order {
+  position: absolute;
+  bottom: -5px;
+  right: -10px;
+  color: #B3B3B3;
+}
 
 .lexeme-text-blue { color: #00A5E0; }
 .lexeme-text-green { color: #2B976D; }
