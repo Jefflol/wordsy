@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { ReactComponent as EditIcon } from '../../assets/edit.svg';
 import { ReactComponent as CloseIcon } from '../../assets/x-circle.svg';
-import { getPartsOfSpeechData } from '../partsOfSpeech';
+import { Word, WordLexeme, WordDefinition, WordExample } from '../Word/word';
 
 import './wordDetails.css';
 
@@ -34,40 +34,4 @@ export default class WordDetails extends Component {
       </div>
     );
   }
-}
-
-const Word = props => {
-  return (
-    <div className="word-container">
-      <div className="word-text">
-        {props.text}
-      </div>
-    </div>
-  );
-}
-
-const WordLexeme = props => {
-  let { color: lexemeColor, text: lexemeText } = getPartsOfSpeechData(props.type);
-  let classNames = `word-lexeme lexeme-background-${lexemeColor} lexeme-text-${lexemeColor}`;
-
-  return (
-    <>
-      <div className={classNames}>
-        {lexemeText}
-        <div className="word-lexeme-order">{props.order}</div>
-      </div>
-    </>
-  );
-}
-
-const WordDefinition = props => {
-  return (
-    <div className="word-definition">{props.definition}</div>
-  );
-}
-
-const WordExample = props => {
-  return (
-    <div className="word-example">{props.example}</div>
-  );
 }
