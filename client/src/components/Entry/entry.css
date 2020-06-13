@@ -23,6 +23,7 @@
 }
 
 .entry-word-bubble {
+  position: relative;
   display: flex;
   align-items: center;
 
@@ -33,12 +34,48 @@
 
   background-color: #CBE6FF;
 }
+.entry-word-bubble:hover {
+  cursor: pointer;
+}
 
 .entry-word-text {  
   color: #3385C6;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.entry-word-bubble:hover .entry-word-delete-btn {
+  display: flex;
+}
+
+.entry-word-delete-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+
+  border: 0;
+  border-radius: 15px;
+  font-size: 8px;
+  font-weight: 800;
+
+  background-color: #FF4F4F;
+  color: #262626;
+}
+.entry-word-delete-btn:hover {
+  top: -2px;
+  right: -2px;
+  width: 15px;
+  height: 15px;
+  
+  font-size: 12px;
+  cursor: pointer;
 }
 
 .entry-definition {

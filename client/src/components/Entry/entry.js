@@ -31,6 +31,7 @@ const EntryWord = props => {
       <div className="entry-word-text">
         {props.children}
       </div>
+      <button className="entry-word-delete-btn">&times;</button>
     </div>
   );
 }
