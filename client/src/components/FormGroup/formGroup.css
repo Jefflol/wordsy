@@ -77,6 +77,13 @@
 
 .form-textarea-container {
   position: relative;
+  width: 100%;
+  height: 60px;
+  margin: 10px 0;
+  box-sizing: border-box;
+}
+.form-textarea-container:first-of-type {
+  margin: 4px 0;
 }
 
 .form-textarea-container > .body-alert-error {
@@ -86,10 +93,9 @@
 
 .form-textarea {
   width: 100%;
-  height: 60px;
+  height: 100%;
   padding: 10px 15px;
   border: 3px solid transparent;
-  margin: 4px 0;
   border-radius: 10px;
 
   font-size: 14px;
@@ -121,10 +127,12 @@
   font-size: 8px;
   font-weight: 800;
 
+  opacity: 50%;
   background-color: #FF4F4F;
   color: #262626;
+  
+  z-index: 1;
 }
-
 .form-textarea-delete-btn:hover {
   top: -1px;
   right: -1px;
@@ -147,9 +155,16 @@
   opacity: 0;
 }
 .form-textarea-delete-btn > span:hover {
-  visibility: visible;
-  opacity: 1;
+  visibility: 1;
+  opacity: 100%;
+  outline: none;
 }
+
+.form-textarea-container:hover .form-textarea,
+.form-textarea-container:hover .form-textarea-delete-btn {
+  opacity: 100%;
+}
+
 
 
 .form-select {
