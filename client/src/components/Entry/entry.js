@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { deleteWordEntry } from '../../actions/entryActions';
+import { getWordEntry, deleteWordEntry } from '../../actions/entryActions';
 import { getPartsOfSpeechData } from '../partsOfSpeech';
 
 import './entry.css';
@@ -13,9 +13,10 @@ class Entry extends Component {
     this.props.deleteWordEntry(this.props.userId, wordId);
   }
 
-  showWordDetails = e => {
+  showWordDetails = (e, wordId) => {
     e.stopPropagation();
-    console.log('Show more');
+
+    this.props.getWordEntry(this.props.userId, wordId);
   }
 
   render() {
@@ -24,7 +25,7 @@ class Entry extends Component {
     return (
       <div className="entry">
         <div className="entry-word">
-          <EntryWord onClick={this.showWordDetails} onDelete={e => this.deleteWordEntry(e, id)}>{word}</EntryWord>
+          <EntryWord onClick={e => this.showWordDetails(e, id)} onDelete={e => this.deleteWordEntry(e, id)}>{word}</EntryWord>
         </div>
         <div className="entry-definition">
           <EntryDefinition>{definition}</EntryDefinition>
@@ -42,6 +43,7 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
+  getWordEntry,
   deleteWordEntry
 })(Entry);
 

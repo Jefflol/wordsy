@@ -43,7 +43,7 @@ router.get('/:userId', checkAuth, (req, res, next) => {
     .then(entries => {
       console.log('Entries found ', entries);
       return res.status(200).json({
-          entry: entries
+        entry: entries
       });
     })
     .catch(err => {
@@ -65,14 +65,14 @@ router.get('/:userId/:entryId', checkAuth, (req, res, next) => {
     });
   }
 
-  Entry.find({ userId: req.params.userId, _id: req.params.entryId })
+  Entry.findOne({ userId: req.params.userId, _id: req.params.entryId })
     .select('_id userId word definition example dateCreated')
     .then(entry => {
-      console.log('Entries found ', entry);
+      console.log('Entry found ', entry);
 
       if (entry) {
         return res.status(200).json({
-            entry: entry
+          entry: entry
         });
       } else {
         return res.status(404).json({

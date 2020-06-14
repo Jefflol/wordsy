@@ -6,9 +6,12 @@ import {
   ADD_ENTRY_FAIL,
   GET_ENTRIES_SUCCESS,
   GET_ENTRIES_FAIL,
+  GET_ENTRY_SUCCESS,
+  GET_ENTRY_FAIL,
   DELETE_ENTRY_SUCCESS,
   DELETE_ENTRY_FAIL,
-  LOAD_ENTRIES
+  LOAD_ENTRIES,
+  LOAD_ENTRY
 } from './types';
 
 // Add a word entry
@@ -53,6 +56,27 @@ export const getWordEntries = userId => (dispatch, getState) => {
       });
     });
 };
+
+
+// Get details for a word
+export const getWordEntry = (userId, wordId) => (dispatch, getState) => {
+  dispatch({ type: LOAD_ENTRY });
+  
+  axios.get(`/entry/${userId}/${wordId}`, tokenConfig(getState))
+    .then(res => {
+      console.log('[SUCCESS]: RETRIEVED WORD');
+      dispatch({
+        type: GET_ENTRY_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log('[ENTRY]: ', err);
+      dispatch({
+        type: GET_ENTRY_FAIL
+      });
+    });
+}
 
 
 // Delete word entry for a user

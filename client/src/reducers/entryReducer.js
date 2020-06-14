@@ -1,11 +1,14 @@
 import {
   ADD_ENTRY_SUCCESS,
   ADD_ENTRY_FAIL,
+  GET_ENTRY_SUCCESS,
+  GET_ENTRY_FAIL,
   GET_ENTRIES_SUCCESS,
   GET_ENTRIES_FAIL,
   DELETE_ENTRY_SUCCESS,
   DELETE_ENTRY_FAIL,
-  LOAD_ENTRIES
+  LOAD_ENTRIES,
+  LOAD_ENTRY
 } from '../actions/types';
 
 const initialState = {
@@ -14,11 +17,17 @@ const initialState = {
   definition: null,
   example: null,
   isEntryLoading: false,
-  isEntryAdded: false
+  isEntryAdded: false,
+  isWordDetailsLoading: false
 };
 
 export default function (state = initialState, action) {
   switch(action.type) {
+    case LOAD_ENTRY:
+      return {
+        ...state,
+        isWordDetailsLoading: true
+      }
     case LOAD_ENTRIES:
       return {
         ...state,
@@ -37,6 +46,17 @@ export default function (state = initialState, action) {
         ...state,
         isEntryLoading: false,
         isEntryAdded: false,
+      };
+    case GET_ENTRY_SUCCESS:
+      return {
+        ...state,
+        wordDetails: action.payload.entry,
+        isWordDetailsLoading: false
+      };
+    case GET_ENTRY_FAIL:
+      return {
+        ...state,
+        isWordDetailsLoading: false
       };
     case ADD_ENTRY_SUCCESS:
       return {

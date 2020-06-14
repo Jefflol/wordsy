@@ -7,28 +7,48 @@ import { Word, WordLexeme, WordDefinition, WordExample } from '../Word/word';
 import './wordDetails.css';
 
 export default class WordDetails extends Component {
+  renderDefinitions = definitions => {
+    return definitions.map((entry, index) => {
+      return (
+        <div className="body-entry">
+          <WordLexeme type={entry.partsOfSpeech} order={index + 1} />
+          <WordDefinition definition={entry.definition} />
+        </div>
+      );
+    });
+  }
+
+  renderExamples = examples => {
+    return examples.map((entry, index) => {
+      return (
+        <div className="body-entry">
+          <WordLexeme type={entry.partsOfSpeech} order={index + 1} />
+          <WordExample example={entry.example} />
+        </div>
+      );
+    });
+  }
+
   render() {
+    const { word, definition, example } = this.props.word;
+    const definitions = this.renderDefinitions(definition);
+    const examples = this.renderExamples(example);
+
     return (
       <div className="word-details-container">
         <div className="word-details">
           <div className="word-details-header">
-            <Word text="Baleful" />
+            <Word text={word} />
             <button className="edit-btn"><EditIcon /></button>
-            <button className="close-btn"><CloseIcon /></button>
+            <button className="close-btn" onClick={this.props.closeWordDetails}><CloseIcon /></button>
           </div>
           <div className="word-details-body">
             <div className="body-title">DEFINITION</div>
-            <div className="body-entry">
-              <WordLexeme type="Noun" order="1"/>
-              <WordDefinition definition="Threatening harm; menacing" />
-            </div>
+            { definitions }
           </div>
           <div className="word-details-body">
             <div className="body-title">EXAMPLE</div>
-            <div className="body-entry">
-              <WordLexeme type="Noun" order="1"/>
-              <WordExample example="What a baleful personality!" />
-            </div>
+            { examples }
           </div>
         </div>
       </div>

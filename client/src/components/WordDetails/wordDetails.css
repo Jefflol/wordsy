@@ -9,6 +9,7 @@
   /* border: 2px solid red; */
   
   box-sizing: border-box;
+  z-index: 10;
 }
 
 .word-details {
@@ -56,10 +57,8 @@
   right: 0;
 }
 
-.word-details-header > .word-details-body {
-  display: flex;
-  flex-direction: column;
-  margin: 20px 0;
+.word-details-body {
+  margin: 20px 0 40px 0;
 }
 
 .word-details-body > .body-title {
@@ -69,4 +68,5 @@
 .word-details-body > .body-entry {
   display: flex;
   align-items: center;
+  margin: 10px 0;
 }
