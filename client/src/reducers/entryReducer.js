@@ -3,6 +3,8 @@ import {
   ADD_ENTRY_FAIL,
   GET_ENTRIES_SUCCESS,
   GET_ENTRIES_FAIL,
+  DELETE_ENTRY_SUCCESS,
+  DELETE_ENTRY_FAIL,
   LOAD_ENTRIES
 } from '../actions/types';
 
@@ -43,6 +45,8 @@ export default function (state = initialState, action) {
         isEntryAdded: true,
       };
     case ADD_ENTRY_FAIL:
+    case DELETE_ENTRY_FAIL:
+    case DELETE_ENTRY_SUCCESS:
     default: return state;
   }
 }

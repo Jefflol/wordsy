@@ -1,18 +1,30 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { deleteWordEntry } from '../../actions/entryActions';
 import { getPartsOfSpeechData } from '../partsOfSpeech';
 
 import './entry.css';
 
+class Entry extends Component {
+  deleteWordEntry = (e, wordId) => {
+    e.stopPropagation();
 
-export default class Entry extends Component {
+    this.props.deleteWordEntry(this.props.userId, wordId);
+  }
+
+  showWordDetails = e => {
+    e.stopPropagation();
+    console.log('Show more');
+  }
+
   render() {
     const { word, definition, pos: lexemes, id } = this.props;
 
     return (
       <div className="entry">
         <div className="entry-word">
-          <EntryWord>{word}</EntryWord>
+          <EntryWord onClick={this.showWordDetails} onDelete={e => this.deleteWordEntry(e, id)}>{word}</EntryWord>
         </div>
         <div className="entry-definition">
           <EntryDefinition>{definition}</EntryDefinition>
@@ -25,13 +37,23 @@ export default class Entry extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  userId: state.user.userId
+});
+
+export default connect(mapStateToProps, {
+  deleteWordEntry
+})(Entry);
+
 const EntryWord = props => {
   return (
-    <div className="entry-word-bubble">
+    <div className="entry-word-bubble" onClick={props.onClick}>
       <div className="entry-word-text">
         {props.children}
       </div>
-      <button className="entry-word-delete-btn">&times;</button>
+      <button className="entry-word-delete-btn" onClick={props.onDelete}>
+        &times;
+      </button>
     </div>
   );
 }

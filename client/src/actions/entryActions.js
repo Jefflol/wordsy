@@ -6,6 +6,8 @@ import {
   ADD_ENTRY_FAIL,
   GET_ENTRIES_SUCCESS,
   GET_ENTRIES_FAIL,
+  DELETE_ENTRY_SUCCESS,
+  DELETE_ENTRY_FAIL,
   LOAD_ENTRIES
 } from './types';
 
@@ -50,4 +52,23 @@ export const getWordEntries = userId => (dispatch, getState) => {
         type: GET_ENTRIES_FAIL
       });
     });
+};
+
+
+// Delete word entry for a user
+export const deleteWordEntry = (userId, wordId) => (dispatch, getState) => {
+  axios.delete(`/entry/${userId}/${wordId}`, tokenConfig(getState))
+    .then(res => {
+      console.log('[SUCCESS]: DELETED WORD');
+      dispatch({
+        type: DELETE_ENTRY_SUCCESS
+      });
+      dispatch(getWordEntries(userId));
+    })
+    .catch(err => {
+      console.log('[ENTRY]: ', err);
+      dispatch({
+        type: DELETE_ENTRY_FAIL
+      });
+    })
 };

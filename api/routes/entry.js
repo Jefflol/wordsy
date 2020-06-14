@@ -139,10 +139,10 @@ router.post('/:userId', checkAuth, (req, res, next) => {
 });
 
 
-// @route   DELETE /entry/:entryId
+// @route   DELETE /entry/:userId/:entryId
 // @desc    Remove an entry
 // @access  PRIVATE
-router.delete('/:entryId', checkAuth, (req, res, next) => {
+router.delete('/:userId/:entryId', checkAuth, (req, res, next) => {
   // Check if user is authorized
   if (req.params.userId !== req.userData.userId) {
     return res.status(401).json({
