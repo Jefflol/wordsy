@@ -54,7 +54,7 @@ const EntryWord = props => {
         {props.children}
       </div>
       <button className="entry-word-delete-btn" onClick={props.onDelete}>
-        &times;
+        <span>&times;</span>
       </button>
     </div>
   );

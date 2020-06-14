@@ -78,6 +78,16 @@
   cursor: pointer;
 }
 
+.entry-word-delete-btn > span {
+  visibility: 0;
+  opacity: 0;
+}
+.entry-word-delete-btn:hover > span {
+  visibility: visible;
+  opacity: 1;
+}
+
+
 .entry-definition {
   min-width: 50%;
   margin: 0 2%;
