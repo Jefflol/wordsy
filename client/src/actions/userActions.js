@@ -5,6 +5,7 @@ import {
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT_SUCCESS,
   ERROR_USER_EXISTS,
   ERROR_INVALID_CREDENTIALS,
   CLEAR_ERRORS
@@ -79,4 +80,11 @@ export const loginUser = ({ username, password }) => dispatch => {
         type: LOGIN_FAIL
       });
     });
+};
+
+// Logout user
+export const logoutUser = () => dispatch => {
+  dispatch({
+    type: LOGOUT_SUCCESS
+  });
 };

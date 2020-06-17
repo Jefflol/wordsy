@@ -4,8 +4,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 import FormGroup, { FormLabel, FormInput, FormTextarea, FormSelect } from '../FormGroup/formGroup';
 import { addWordEntry } from '../../actions/entryActions';
+import { logoutUser } from '../../actions/userActions';
 import { partsOfSpeech } from '../partsOfSpeech';
 import { isEmpty } from '../helperFunctions';
+import { ReactComponent as LogoutIcon } from '../../assets/log-out.svg';
 
 import './entryForm.css';
 
@@ -193,6 +195,10 @@ class EntryForm extends Component {
     return valid;
   }
 
+  logoutUser = () => {
+    this.props.logoutUser();
+  };
+
   lexemeOnClick = lexeme => {
     const id = uuidv4();
 
@@ -247,7 +253,10 @@ class EntryForm extends Component {
       <div className="entry-form-container">
         <form className="entry-form" onSubmit={this.onSubmit}>
           <div className="form-header">
-            <h1 className="form-title">Hi JAF</h1>
+            <div className="form-title">
+              <h1>Hi JAF</h1>
+              <LogoutIcon className="form-logout-btn" onClick={this.logoutUser} />
+            </div>
             <h3 className="form-caption">Ready to add a new word?</h3>
           </div>
           <div className="word-input">
@@ -293,5 +302,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  addWordEntry
+  addWordEntry,
+  logoutUser
 })(EntryForm);

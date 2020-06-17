@@ -23,6 +23,12 @@
 }
 
 .form-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-title h1 {
   margin: 0;
   font-size: 36px;
   font-weight: bold;
@@ -33,6 +39,14 @@
   font-size: 18px;
   font-weight: bold;
   opacity: 20%;
+}
+
+.form-logout-btn {
+  opacity: 20%;
+}
+.form-logout-btn:hover {
+  opacity: 100%;
+  cursor: pointer;
 }
 
 .word-input,
