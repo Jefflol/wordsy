@@ -8,9 +8,6 @@ import {
 
 const initialState = {
   token: localStorage.getItem('token'),
-  // isAuthenticated: null,
-  // isLoading: false,
-  // user: null
   userId: null,
   username: null,
   isRegistered: false,
@@ -20,12 +17,8 @@ const initialState = {
 export default function(state = initialState, action) {
   switch(action.type) {
     case REGISTER_SUCCESS:
-      // localStorage.setItem('token', action.payload.token);
       return {
         ...state,
-        // ...action.payload,
-        // isAuthenticated: true,
-      //   isLoading: false
         isRegistered: true
       };
     case LOGIN_SUCCESS:
@@ -38,8 +31,8 @@ export default function(state = initialState, action) {
         isLoggedIn: true
       };
     case REGISTER_FAIL:
-    case LOGOUT_SUCCESS:
     case LOGIN_FAIL:
+    case LOGOUT_SUCCESS:
       localStorage.removeItem('token');
       return {
         ...state,

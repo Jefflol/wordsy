@@ -5,30 +5,33 @@ import {
 } from '../actions/types';
 
 const initialState = {
+  id: null,
   msg: null,
-  status: null,
-  id: null
+  status: null
 };
 
 export default function(state = initialState, action) {
   switch(action.type) {
     case CLEAR_ERRORS:
       return {
+        ...state,
+        id: null,
         msg: null,
-        status: null,
-        id: null
+        status: null
       };
     case ERROR_USER_EXISTS:
       return {
+        ...state,
+        id: 'ERROR_USER_EXISTS',
         msg: 'Username already taken',
-        status: 409,
-        id: 'ERROR_USER_EXISTS'
+        status: 409
       };
     case ERROR_INVALID_CREDENTIALS:
       return {
+        ...state,
+        id: 'ERROR_INVALID_CREDENTIALS',
         msg: 'Incorrect username and/or password',
-        status: 401,
-        id: 'ERROR_INVALID_CREDENTIALS'
+        status: 401
       };
     default: return state;
   }
