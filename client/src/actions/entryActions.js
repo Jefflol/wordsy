@@ -38,10 +38,10 @@ export const addWordEntry = ({ userId, word, definition, example }) => (dispatch
 
 
 // Get word entry for a user
-export const getWordEntries = userId => (dispatch, getState) => {
+export const getWordEntries = (userId, sortType='recent') => (dispatch, getState) => {
   dispatch({ type: LOAD_ENTRIES });
 
-  axios.get(`/entry/${userId}`, tokenConfig(getState))
+  axios.get(`/entry/${userId}?sort=${sortType}`, tokenConfig(getState))
     .then(res => {
       // console.log('[SUCCESS]: GET ALL WORD ENTRIES');
       dispatch({

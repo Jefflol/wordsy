@@ -38,8 +38,13 @@ router.get('/:userId', checkAuth, (req, res, next) => {
     });
   }
 
+  // Sort entries alphabetically or recently (default)
+  const sortQuery = (req.query.sort === 'alphabet') ? { word: 1 } : { dateCreated: 1 };
+
   Entry.find({ userId: req.params.userId })
     .select('_id userId word definition example dateCreated')
+    .sort(sortQuery)
+    .collation({ locale: 'en' })
     .then(entries => {
       console.log('Entries found ', entries);
       return res.status(200).json({

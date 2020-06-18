@@ -18,7 +18,7 @@ class WordBank extends Component {
   }
 
   componentDidMount() {
-    this.props.getWordEntries(this.props.userId);
+    this.props.getWordEntries(this.props.userId, 'alphabet');
     // this.props.getWordEntries('5ec61921d367772fc3177453');
   }
 
@@ -43,6 +43,20 @@ class WordBank extends Component {
       showOptions: false,
       showDefinitions: !prevState.showDefinitions
     }));
+  }
+
+  sortByRecent = () => {
+    this.props.getWordEntries(this.props.userId, 'recent');
+    this.setState({
+      showOptions: false,
+    });
+  }
+
+  sortByAlphabet = () => {
+    this.props.getWordEntries(this.props.userId, 'alphabet');
+    this.setState({
+      showOptions: false,
+    });
   }
 
   renderWordBank = () => {
@@ -85,8 +99,8 @@ class WordBank extends Component {
                     <DropDownOption text="Hide definition" onClick={this.toggleDefinitions}/> :
                     <DropDownOption text="Show definition" onClick={this.toggleDefinitions}/>
                   }
-                  <DropDownOption text="Sort by recent" onClick={this.toggleDefinitions}/>
-                  <DropDownOption text="Sort by alphabetical" onClick={this.toggleDefinitions}/>
+                  <DropDownOption text="Sort by recent" onClick={this.sortByRecent}/>
+                  <DropDownOption text="Sort by alphabetical" onClick={this.sortByAlphabet}/>
                 </DropDown> 
               </div>
             } 
