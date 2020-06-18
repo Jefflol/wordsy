@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const { Entry, Definition, Example } = require('../models/entry-model');
 
 
+// @route   GET /entry/:userId?sort=
+// @desc    Fetch all entries for a specific user
+// @access  PRIVATE
 exports.entry_get_all = (req, res, next) => {
   // Check if user is authorized
   if (req.params.userId !== req.userData.userId) {
@@ -32,6 +35,9 @@ exports.entry_get_all = (req, res, next) => {
 };
 
 
+// @route   GET /entry/:userId/:entryId
+// @desc    Fetch an entry by ID
+// @access  PRIVATE
 exports.entry_get_one = (req, res, next) => {
   // Check if user is authorized
   if (req.params.userId !== req.userData.userId) {
@@ -63,6 +69,9 @@ exports.entry_get_one = (req, res, next) => {
 };
 
 
+// @route   POST /entry/:userId
+// @desc    Create an entry
+// @access  PRIVATE
 exports.entry_add = (req, res, next) => {
   // Check if user is authorized
   if (req.params.userId !== req.userData.userId) {
@@ -111,6 +120,9 @@ exports.entry_add = (req, res, next) => {
 };
 
 
+// @route   DELETE /entry/:userId/:entryId
+// @desc    Remove an entry
+// @access  PRIVATE
 exports.entry_delete = (req, res, next) => {
   // Check if user is authorized
   if (req.params.userId !== req.userData.userId) {
@@ -139,6 +151,9 @@ exports.entry_delete = (req, res, next) => {
 };
 
 
+// @route   PATCH /entry/:entryId
+// @desc    Edit an entry
+// @access  PRIVATE
 exports.entry_edit = (req, res, next) => {
   // Check if user is authorized
   if (req.params.userId !== req.userData.userId) {

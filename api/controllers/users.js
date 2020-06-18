@@ -5,6 +5,9 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/users-model');
 
 
+// @route   POST /users/signup
+// @desc    Create a user
+// @access  PUBLIC
 exports.user_signup = (req, res, next) => {
   User.find({ username: req.body.username })
     .then(user => {
@@ -43,6 +46,10 @@ exports.user_signup = (req, res, next) => {
     });
 };
 
+
+// @route   POST /users/login
+// @desc    Check for a user and login
+// @access  PUBLIC
 exports.user_login = (req, res, next) => {
   User.find({ username: req.body.username })
     .then(user => {
@@ -89,6 +96,10 @@ exports.user_login = (req, res, next) => {
     });
 };
 
+
+// @route   DELETE /users/:userId
+// @desc    Delete a user by ID
+// @access  PRIVATE
 exports.user_delete = (req, res, next) => {
   // Check if user is authorized
   if (req.params.userId !== req.userData.userId) {
@@ -116,6 +127,10 @@ exports.user_delete = (req, res, next) => {
     });
 };
 
+
+// @route   GET /users/:userId
+// @desc    Fetch user data
+// @access  PRIVATE
 exports.user_get_data = (req, res, next) => {
   // Check if user is authorized
   if (req.params.userId !== req.userData.userId) {
