@@ -28,25 +28,16 @@ export default function(state = initialState, action) {
       //   isLoading: false
         isRegistered: true
       };
-    case REGISTER_FAIL:
-      // localStorage.removeItem('token');
-      return {
-        ...state,
-        // token: null,
-        // user: null,
-        // isAuthenticated: null,
-        // isLoading: false,
-        isRegistered: false
-      };
     case LOGIN_SUCCESS:
       localStorage.setItem('token', action.payload.token);
       return {
         ...state,
-        // ...action.payload
+        token: action.payload.token,
         userId: action.payload.userId,
         username: action.payload.username,
         isLoggedIn: true
       };
+    case REGISTER_FAIL:
     case LOGOUT_SUCCESS:
     case LOGIN_FAIL:
       localStorage.removeItem('token');
