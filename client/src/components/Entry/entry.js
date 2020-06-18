@@ -20,7 +20,7 @@ class Entry extends Component {
   }
 
   render() {
-    const { word, definition, pos: lexemes, id } = this.props;
+    const { word, definition, pos: lexemes, id, show } = this.props;
 
     return (
       <div className="entry">
@@ -28,7 +28,7 @@ class Entry extends Component {
           <EntryWord onClick={e => this.showWordDetails(e, id)} onDelete={e => this.deleteWordEntry(e, id)}>{word}</EntryWord>
         </div>
         <div className="entry-definition">
-          <EntryDefinition>{definition}</EntryDefinition>
+          { show && <EntryDefinition>{definition}</EntryDefinition> }
         </div>
         <div className="entry-lexeme">
           { lexemes.map(lexeme => <EntryLexeme key={`${id}+${lexeme}`} type={lexeme} />) }

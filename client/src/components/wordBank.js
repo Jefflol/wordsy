@@ -14,7 +14,7 @@ class WordBank extends Component {
   state = {
     entry: [],
     showOptions: false,
-    showDefinitions: true
+    showDefinition: true
   }
 
   componentDidMount() {
@@ -36,12 +36,10 @@ class WordBank extends Component {
     }));
   }
 
-  toggleDefinitions = () => {
-    console.log('Toggle definitions');
-
+  toggleDefinition = () => {
     this.setState(prevState => ({
       showOptions: false,
-      showDefinitions: !prevState.showDefinitions
+      showDefinition: !prevState.showDefinition
     }));
   }
 
@@ -75,6 +73,7 @@ class WordBank extends Component {
           word={entry.word}
           definition={definition}
           pos={partsOfSpeeches}
+          show={this.state.showDefinition}
         />
       );
     });
@@ -95,9 +94,9 @@ class WordBank extends Component {
               <div className="options-dropdown">
                 <DropDown>
                   { 
-                    this.state.showDefinitions ?
-                    <DropDownOption text="Hide definition" onClick={this.toggleDefinitions}/> :
-                    <DropDownOption text="Show definition" onClick={this.toggleDefinitions}/>
+                    this.state.showDefinition ?
+                    <DropDownOption text="Hide definition" onClick={this.toggleDefinition}/> :
+                    <DropDownOption text="Show definition" onClick={this.toggleDefinition}/>
                   }
                   <DropDownOption text="Sort by recent" onClick={this.sortByRecent}/>
                   <DropDownOption text="Sort by alphabetical" onClick={this.sortByAlphabet}/>
