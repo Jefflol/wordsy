@@ -8,7 +8,12 @@ import {
   DELETE_ENTRY_SUCCESS,
   DELETE_ENTRY_FAIL,
   LOAD_ENTRIES,
-  LOAD_ENTRY
+  LOAD_ENTRY,
+  LOAD_EDIT_FORM,
+  LOAD_EDIT_FORM_SUCCESS,
+  LOAD_EDIT_FORM_FAIL,
+  EDIT_ENTRY_SUCCESS,
+  EDIT_ENTRY_FAIL
 } from '../actions/types';
 
 const initialState = {
@@ -18,7 +23,9 @@ const initialState = {
   example: null,
   isEntryLoading: false,
   isEntryAdded: false,
-  isWordDetailsLoading: false
+  isWordDetailsLoading: false,
+  isLoadingEdit: false,
+  isEditing: false,
 };
 
 export default function (state = initialState, action) {
@@ -52,11 +59,30 @@ export default function (state = initialState, action) {
         isEntryLoading: false,
         isEntryAdded: true,
       };
+    case LOAD_EDIT_FORM_SUCCESS:
+      return {
+        ...state,
+        isLoadingEdit: false,
+      };
+    case LOAD_EDIT_FORM:
+      return {
+        ...state,
+        wordDetails: action.payload.entry,
+        isLoadingEdit: true,
+        isEditing: true
+      };
+    case EDIT_ENTRY_SUCCESS:
+      return {
+        ...state,
+        isEditing: false
+      }
     case ADD_ENTRY_FAIL:
     case GET_ENTRY_FAIL:
     case GET_ENTRIES_FAIL:
     case DELETE_ENTRY_FAIL:
     case DELETE_ENTRY_SUCCESS:
+    case LOAD_EDIT_FORM_FAIL:
+    case EDIT_ENTRY_FAIL:
       return {
         ...state,
         userId: null,
@@ -65,7 +91,9 @@ export default function (state = initialState, action) {
         example: null,
         isEntryLoading: false,
         isEntryAdded: false,
-        isWordDetailsLoading: false
+        isWordDetailsLoading: false,
+        isLoadingEdit: false,
+        isEditing: false
       };
     default: return state;
   }

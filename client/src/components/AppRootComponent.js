@@ -6,6 +6,8 @@ import EntryForm from '../components/EntryForm/entryForm';
 import WordBank from '../components/wordBank';
 import WordDetails from './WordDetails/wordDetails';
 
+import { loadWordEntry } from '../actions/entryActions';
+
 import '../App.css';
 
 class AppRootComponent extends Component {
@@ -15,18 +17,31 @@ class AppRootComponent extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isWordDetailsLoading, wordDetails } = this.props;
+    const { isWordDetailsLoading, wordDetails, isLoadingEdit } = this.props;
 
+    // Update wordDetails before rendering WordDetails component
     if (isWordDetailsLoading !== prevProps.isWordDetailsLoading && !isWordDetailsLoading) {
+      console.log(wordDetails);
       this.setState({ 
         showWordDetails: true,
         wordDetails: wordDetails || {
           word: '',
           definition: [],
           example: []
-        } 
+        },
+        userId: wordDetails.userId,
+        wordId: wordDetails._id
       });
     }
+
+    // Hide WordDetails component if editing
+    if (isLoadingEdit !== prevProps.isLoadingEdit && isLoadingEdit) {
+      this.setState({ showWordDetails: false });
+    }
+  }
+
+  editWordDetails = () => {
+    this.props.loadWordEntry(this.state.userId, this.state.wordId);
   }
 
   closeWordDetails = () => {
@@ -48,7 +63,14 @@ class AppRootComponent extends Component {
             <UserForm />
           </>
         }
-        { this.state.showWordDetails && <WordDetails word={this.state.wordDetails} closeWordDetails={this.closeWordDetails} /> }
+        { 
+          this.state.showWordDetails && 
+          <WordDetails 
+            word={this.state.wordDetails}
+            onEdit={this.editWordDetails}
+            onClose={this.closeWordDetails}
+          />
+        }
       </div>
     )
   }
@@ -57,7 +79,11 @@ class AppRootComponent extends Component {
 const mapStateToProps = state => ({
   isLoggedIn: state.user.isLoggedIn,
   isWordDetailsLoading: state.entry.isWordDetailsLoading,
-  wordDetails: state.entry.wordDetails
+  wordDetails: state.entry.wordDetails,
+  userId: state.user.userId,
+  isLoadingEdit: state.entry.isLoadingEdit
 });
 
-export default connect(mapStateToProps)(AppRootComponent);
+export default connect(mapStateToProps, {
+  loadWordEntry
+})(AppRootComponent);

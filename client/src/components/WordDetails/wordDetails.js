@@ -7,6 +7,14 @@ import { Word, WordLexeme, WordDefinition, WordExample } from '../Word/word';
 import './wordDetails.css';
 
 export default class WordDetails extends Component {
+  onEdit = () => {
+    this.props.onEdit();
+  }
+
+  onClose = () => {
+    this.props.onClose();
+  }
+
   renderDefinitions = definitions => {
     return definitions.map((entry, index) => {
       return (
@@ -39,8 +47,8 @@ export default class WordDetails extends Component {
         <div className="word-details">
           <div className="word-details-header">
             <Word text={word} />
-            <button className="edit-btn"><EditIcon /></button>
-            <button className="close-btn" onClick={this.props.closeWordDetails}><CloseIcon /></button>
+            <button className="edit-btn" onClick={this.onEdit}><EditIcon /></button>
+            <button className="close-btn" onClick={this.onClose}><CloseIcon /></button>
           </div>
           <div className="word-details-body">
             <div className="body-title">DEFINITION</div>

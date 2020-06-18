@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import FormGroup, { FormLabel, FormInput, FormTextarea, FormSelect } from '../FormGroup/formGroup';
-import { addWordEntry } from '../../actions/entryActions';
+import { addWordEntry, editWordEntry } from '../../actions/entryActions';
 import { logoutUser } from '../../actions/userActions';
 import { partsOfSpeech } from '../partsOfSpeech';
 import { isEmpty } from '../helperFunctions';
@@ -37,10 +37,27 @@ class EntryForm extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isEntryAdded } = this.props;
+    const { isEntryAdded, isLoadingEdit, wordDetails } = this.props;
 
     if (isEntryAdded !== prevProps.isEntryAdded && isEntryAdded) {
       this.clearForm();
+    }
+
+    if (isLoadingEdit !== prevProps.isLoadingEdit && isLoadingEdit) {
+      let details = {};
+
+      wordDetails.definition.forEach((entry, index) => {
+        details[entry._id] = {
+          lexeme: wordDetails.definition[index].partsOfSpeech,
+          definition: wordDetails.definition[index].definition,
+          example: wordDetails.example[index].example
+        };
+      });
+
+      this.setState({
+        word: wordDetails.word,
+        details: details
+      });
     }
   }
 
@@ -116,7 +133,24 @@ class EntryForm extends Component {
       example: exampleArray,
     };
 
-    this.props.addWordEntry(wordEntry);
+    if (!this.props.isEditing) {
+      this.props.addWordEntry(wordEntry);
+    } else {
+      const modifications = [{
+        "propName": "word",
+        "value": this.state.word
+      },
+      {
+        "propName": "definition",
+        "value": definitionArray
+      },
+      {
+        "propName": "example",
+        "value": exampleArray
+      }];
+      
+      this.props.editWordEntry(this.state.userId, this.props.wordDetails._id, modifications);
+    }
   }
 
   clearForm = () => {
@@ -298,10 +332,13 @@ class EntryForm extends Component {
 
 const mapStateToProps = state => ({
   userId: state.user.userId,
-  isEntryAdded: state.entry.isEntryAdded
+  isEntryAdded: state.entry.isEntryAdded,
+  wordDetails: state.entry.wordDetails,
+  isLoadingEdit: state.entry.isLoadingEdit
 });
 
 export default connect(mapStateToProps, {
   addWordEntry,
+  editWordEntry,
   logoutUser
 })(EntryForm);

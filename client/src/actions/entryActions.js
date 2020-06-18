@@ -11,7 +11,12 @@ import {
   DELETE_ENTRY_SUCCESS,
   DELETE_ENTRY_FAIL,
   LOAD_ENTRIES,
-  LOAD_ENTRY
+  LOAD_ENTRY,
+  LOAD_EDIT_FORM,
+  LOAD_EDIT_FORM_SUCCESS,
+  LOAD_EDIT_FORM_FAIL,
+  EDIT_ENTRY_SUCCESS,
+  EDIT_ENTRY_FAIL
 } from './types';
 
 // Add a word entry
@@ -96,3 +101,39 @@ export const deleteWordEntry = (userId, wordId) => (dispatch, getState) => {
       });
     })
 };
+
+// Load word details into entry form for editing
+export const loadWordEntry = (userId, wordId) => (dispatch, getState) => {
+  axios.get(`/entry/${userId}/${wordId}`, tokenConfig(getState))
+  .then(res => {
+    console.log('[SUCCESS]: RETRIEVED WORD');
+    dispatch({
+      type: LOAD_EDIT_FORM,
+      payload: res.data
+    });
+    dispatch({ type: LOAD_EDIT_FORM_SUCCESS });
+  })
+  .catch(err => {
+    console.log('[ENTRY]: ', err);
+    dispatch({
+      type: LOAD_EDIT_FORM_FAIL
+    });
+  });
+}
+
+// Edit word entry
+export const editWordEntry = (userId, wordId, modifications) => (dispatch, getState) => {
+  axios.patch(`/entry/${userId}/${wordId}`, modifications, tokenConfig(getState))
+  .then(res => {
+    console.log('[SUCCESS]: EDITED WORD');
+    dispatch({
+      type: EDIT_ENTRY_SUCCESS,
+    });
+  })
+  .catch(err => {
+    console.log('[ENTRY]: ', err);
+    dispatch({
+      type: EDIT_ENTRY_FAIL
+    });
+  })
+}
