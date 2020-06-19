@@ -18,7 +18,7 @@ export default class WordDetails extends Component {
   renderDefinitions = definitions => {
     return definitions.map((entry, index) => {
       return (
-        <div className="body-entry">
+        <div className="body-entry" key={index}>
           <WordLexeme type={entry.partsOfSpeech} order={index + 1} />
           <WordDefinition definition={entry.definition} />
         </div>
@@ -29,7 +29,7 @@ export default class WordDetails extends Component {
   renderExamples = examples => {
     return examples.map((entry, index) => {
       return (
-        <div className="body-entry">
+        <div className="body-entry" key={index}>
           <WordLexeme type={entry.partsOfSpeech} order={index + 1} />
           <WordExample example={entry.example} />
         </div>
