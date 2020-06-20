@@ -7,13 +7,15 @@ import { getPartsOfSpeechData } from '../partsOfSpeech';
 import './entry.css';
 
 class Entry extends Component {
-  deleteWordEntry = (e, wordId) => {
+  // Delete word entry
+  handleEntryDelete = (e, wordId) => {
     e.stopPropagation();
 
     this.props.deleteWordEntry(this.props.userId, wordId);
   }
 
-  showWordDetails = (e, wordId) => {
+  // Show word details
+  handleEntryClick = (e, wordId) => {
     e.stopPropagation();
 
     this.props.getWordEntry(this.props.userId, wordId);
@@ -25,7 +27,7 @@ class Entry extends Component {
     return (
       <div className="entry">
         <div className="entry-word">
-          <EntryWord onClick={e => this.showWordDetails(e, id)} onDelete={e => this.deleteWordEntry(e, id)}>{word}</EntryWord>
+          <EntryWord onClick={e => this.handleEntryClick(e, id)} onDelete={e => this.handleEntryDelete(e, id)}>{word}</EntryWord>
         </div>
         <div className="entry-definition">
           { show && <EntryDefinition>{definition}</EntryDefinition> }
