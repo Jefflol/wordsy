@@ -86,11 +86,6 @@
   margin: 4px 0;
 }
 
-.form-textarea-container > .body-alert-error {
-  /* border: 2px solid #FF4F4F; */
-  opacity: 100%;
-}
-
 .form-textarea {
   width: 100%;
   height: 100%;
