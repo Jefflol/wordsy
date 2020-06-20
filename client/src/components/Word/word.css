@@ -127,17 +127,3 @@
   right: -10px;
   color: #B3B3B3;
 }
-
-
-@media only screen and (max-width: 1279.5px) {
-  .entry-lexeme {
-    width: 78px;
-    max-width: 78px;
-  }
-}
-
-@media only screen and (max-width: 900px) {
-  .entry-word {
-    margin: 5px 5%;
-  }
-}
