@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 
+import { Word, WordDefinition, WordExample, WordLexeme } from '../Word/word';
 import { ReactComponent as EditIcon } from '../../assets/edit.svg';
 import { ReactComponent as CloseIcon } from '../../assets/x-circle.svg';
-import { Word, WordDefinition, WordExample, WordLexeme } from '../Word/word';
 
 import './wordDetails.css';
 
+
 export default class WordDetails extends Component {
-  onEdit = () => {
+  editWordEntry = () => {
     this.props.onEdit();
   }
 
-  onClose = () => {
+  closeWordDetails = () => {
     this.props.onClose();
   }
 
@@ -19,7 +20,7 @@ export default class WordDetails extends Component {
     return definitions.map((entry, index) => {
       return (
         <div className="body-entry" key={index}>
-          <WordLexeme className="word-details-lexeme" type={entry.partsOfSpeech} order={index + 1} />
+          <WordLexeme className="body-entry-lexeme" type={entry.partsOfSpeech} order={index + 1} />
           <WordDefinition text={entry.definition} />
         </div>
       );
@@ -30,7 +31,7 @@ export default class WordDetails extends Component {
     return examples.map((entry, index) => {
       return (
         <div className="body-entry" key={index}>
-          <WordLexeme className="word-details-lexeme" type={entry.partsOfSpeech} order={index + 1} />
+          <WordLexeme className="body-entry-lexeme" type={entry.partsOfSpeech} order={index + 1} />
           <WordExample text={entry.example} />
         </div>
       );
@@ -47,15 +48,15 @@ export default class WordDetails extends Component {
         <div className="word-details">
           <div className="word-details-header">
             <Word text={word} />
-            <button className="edit-btn" onClick={this.onEdit}><EditIcon /></button>
-            <button className="close-btn" onClick={this.onClose}><CloseIcon /></button>
+            <button className="edit-btn" onClick={this.editWordEntry}><EditIcon /></button>
+            <button className="close-btn" onClick={this.closeWordDetails}><CloseIcon /></button>
           </div>
           <div className="word-details-body">
-            <div className="body-title">DEFINITION</div>
+            <div className="body-label">DEFINITION</div>
             { definitions }
           </div>
           <div className="word-details-body">
-            <div className="body-title">EXAMPLE</div>
+            <div className="body-label">EXAMPLE</div>
             { examples }
           </div>
         </div>

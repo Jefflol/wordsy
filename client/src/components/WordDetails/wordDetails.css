@@ -5,8 +5,7 @@
   
   width: 40%;
   height: 100%;
-  padding: 3%;
-  /* border: 2px solid red; */
+  padding: 30px;
   
   box-sizing: border-box;
   z-index: 10;
@@ -15,13 +14,12 @@
 .word-details {
   width: 100%;
   height: 100%;
-  border-radius: 10px;
   padding: 5%;
-
-  background-color: #F2F2F2;
-
+  border-radius: 10px;
+  
   font-size: 12px;
   font-weight: bold;
+  background-color: #F2F2F2;
   box-sizing: border-box;
 }
 
@@ -38,7 +36,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
   border: 0;
   background: none;
 }
@@ -61,7 +58,7 @@
   margin: 20px 0 40px 0;
 }
 
-.word-details-body > .body-title {
+.word-details-body > .body-label {
   margin: 10px 0;
 }
 
@@ -71,7 +68,13 @@
   margin: 10px 0;
 }
 
-
-.word-details-lexeme { 
+.body-entry-lexeme { 
   margin: 0 20px 0 0;
+}
+
+
+@media only screen and (max-width: 900px) {
+  .word-details {
+    padding: 10%;
+  }
 }
