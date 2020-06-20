@@ -11,30 +11,41 @@ import './wordBank.css';
 
 
 class WordBank extends Component {
-  state = {
-    entry: [],
-    showOptions: false,
-    showDefinition: true
+  constructor(props) {
+    super(props);
+    this.state = {
+      entry: [],
+      showOptions: false,
+      showDefinition: true
+    };
   }
 
   componentDidMount() {
     this.props.getWordEntries(this.props.userId, 'recent');
-    // this.props.getWordEntries('5ec61921d367772fc3177453');
   }
 
   componentDidUpdate(prevProps) {
     const { isEntryLoading } = this.props;
 
+    // Update word bank whenever an entry is loaded
     if (isEntryLoading !== prevProps.isEntryLoading && !isEntryLoading) {
       this.setState({ entry: this.props.entry || [] });
     }
   }
 
-  toggleOptions = () => {
+  // Toggles options menu
+  handleClickDropDown = () => {
     this.setState(prevState => ({
       showOptions: !prevState.showOptions
     }));
   }
+
+  // Closes options menu
+  handleCloseDropDown = () => {
+    this.setState({
+      showOptions: false
+    });
+  };
 
   toggleDefinition = () => {
     this.setState(prevState => ({
@@ -81,12 +92,6 @@ class WordBank extends Component {
     return wordBank;
   };
 
-  handleCloseDropDown = () => {
-    this.setState({
-      showOptions: false
-    });
-  };
-
   render() {
     const wordBank = this.renderWordBank();
 
@@ -94,7 +99,7 @@ class WordBank extends Component {
       <div className="word-bank-container">
         <div className="word-bank-header">
           <div className="header-title">Your Words</div>
-            <MoreIcon className="word-bank-options" onClick={this.toggleOptions} />           
+            <MoreIcon className="word-bank-options" onClick={this.handleClickDropDown} />           
             { 
               this.state.showOptions && 
               <div className="options-dropdown">
