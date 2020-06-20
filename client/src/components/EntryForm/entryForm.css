@@ -68,7 +68,7 @@
   min-height: 40px;
   border: 1px solid #3385C6;
   border-radius: 10px;
-  margin: 20px 5px;
+  margin: 20px 5px 20px 0;
 
   font-size: 16px;
   font-weight: bold;
@@ -87,7 +87,7 @@
   min-height: 40px;
   border: 0;
   border-radius: 10px;
-  margin: 20px 5px;
+  margin: 20px 0 20px 5px;
 
   font-size: 16px;
   font-weight: bold;
@@ -97,7 +97,6 @@
 .form-buttons > .form-submit-btn:hover,
 .form-buttons > .form-submit-btn:focus {
   background-color: #1E4F76;
-  /* outline: none;*/
   cursor: pointer;
 }
 
