@@ -1,12 +1,12 @@
+/* WORD ENTRY */
 .entry {
   display: flex;
   justify-content: center;
   align-items: center;
+
   width: 100%;
   height: 40px;
   
-  font-size: 12px;
-  font-weight: bold;
   box-sizing: border-box;
 }
 
@@ -22,7 +22,31 @@
   box-sizing: border-box;
 }
 
-.entry-word-bubble {
+.entry-definition {
+  min-width: 50%;
+  margin: 0 2%;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.entry-lexeme {
+  display: flex;
+  min-width: 20%;
+  height: 100%;
+  margin: 0 2%;
+
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* WORD */
+.word-container {
   position: relative;
   display: flex;
   align-items: center;
@@ -34,22 +58,24 @@
 
   background-color: #CBE6FF;
 }
-.entry-word-bubble:hover {
+.word-hover:hover {
   cursor: pointer;
 }
 
-.entry-word-text {  
+.word-text {  
   color: #3385C6;
+  font-size: 12px;
+  font-weight: bold;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.entry-word-bubble:hover .entry-word-delete-btn {
+.word-container:hover .word-delete-btn {
   display: flex;
 }
 
-.entry-word-delete-btn {
+.word-delete-btn {
   display: none;
   align-items: center;
   justify-content: center;
@@ -68,7 +94,7 @@
   background-color: #FF4F4F;
   color: #262626;
 }
-.entry-word-delete-btn:hover {
+.word-delete-btn:hover {
   top: -2px;
   right: -2px;
   width: 15px;
@@ -78,38 +104,24 @@
   cursor: pointer;
 }
 
-.entry-word-delete-btn > span {
+.word-delete-btn > span {
   visibility: 0;
   opacity: 0;
 }
-.entry-word-delete-btn:hover > span {
+.word-delete-btn:hover > span {
   visibility: visible;
   opacity: 1;
 }
 
-
-.entry-definition {
-  min-width: 50%;
-  margin: 0 2%;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;  
-  overflow: hidden;
-
+/* WORD DEFINITION & WORD EXAMPLE*/
+.word-definition,
+.word-example {
   font-weight: 600;
 }
 
-.entry-lexeme {
-  display: flex;
-  min-width: 20%;
-  height: 100%;
-  margin: 0 2%;
-
-  overflow: hidden;
-}
-
-.entry-lexeme-icon {
+/* WORD LEXEME */
+.lexeme-icon {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -118,7 +130,7 @@
   min-width: 32px;
   min-height: 32px;
 
-  margin: 0 3px 0 0;
+  margin: 0 3px 0 0; /* For word bank */
   border-radius: 40px;
 
   font-size: 12px;
@@ -156,16 +168,23 @@
   border-style: solid;
 }
 
+.lexeme-order {
+  position: absolute;
+  bottom: -5px;
+  right: -10px;
+  color: #B3B3B3;
+}
+
 
 @media only screen and (max-width: 1279.5px) {
-  .entry-parts-of-speech {
+  .entry-lexeme {
     width: 78px;
     max-width: 78px;
   }
 }
 
 @media only screen and (max-width: 900px) {
-  .word-entry {
+  .entry-word {
     margin: 5px 5%;
   }
 }

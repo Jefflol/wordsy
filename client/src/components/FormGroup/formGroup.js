@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { EntryLexeme } from '../Entry/entry';
+import { WordLexeme } from '../Entry/entry';
 import { ReactComponent as AlertIcon } from '../../assets/alert-circle.svg';
 import { getPartsOfSpeechData } from '../partsOfSpeech';
 
@@ -103,7 +103,7 @@ export class FormTextarea extends Component {
             <span>&times;</span>
           </div>
         }
-        <EntryLexeme className="lexeme-icon" type={type} border />
+        <WordLexeme className="lexeme-icon" type={type} border />
       </div>
     );
   }

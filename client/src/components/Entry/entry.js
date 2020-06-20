@@ -1,39 +1,51 @@
 import React, { Component } from 'react';
 
-import { connect } from 'react-redux';
-import { getWordEntry, deleteWordEntry } from '../../actions/entryActions';
+import { deleteWordEntry, getWordEntry } from '../../actions/entryActions';
 import { getPartsOfSpeechData } from '../partsOfSpeech';
+import { connect } from 'react-redux';
 
 import './entry.css';
 
-class Entry extends Component {
+
+class WordEntry extends Component {
   // Delete word entry
-  handleEntryDelete = (e, wordId) => {
+  handleDeleteEntry = (e, wordId) => {
     e.stopPropagation();
 
     this.props.deleteWordEntry(this.props.userId, wordId);
   }
 
   // Show word details
-  handleEntryClick = (e, wordId) => {
+  handleClickEntry = (e, wordId) => {
     e.stopPropagation();
 
     this.props.getWordEntry(this.props.userId, wordId);
   }
 
   render() {
-    const { word, definition, pos: lexemes, id, show } = this.props;
+    const { word, definition, lexemes, id, show } = this.props;
 
     return (
       <div className="entry">
         <div className="entry-word">
-          <EntryWord onClick={e => this.handleEntryClick(e, id)} onDelete={e => this.handleEntryDelete(e, id)}>{word}</EntryWord>
+          <Word
+            text={word}
+            onClick={e => this.handleClickEntry(e, id)} 
+            onDelete={e => this.handleDeleteEntry(e, id)} 
+          />
         </div>
         <div className="entry-definition">
-          { show && <EntryDefinition>{definition}</EntryDefinition> }
+          { 
+            show && 
+            <WordDefinition text={definition} /> 
+          }
         </div>
         <div className="entry-lexeme">
-          { lexemes.map(lexeme => <EntryLexeme key={`${id}+${lexeme}`} type={lexeme} />) }
+          { 
+            lexemes.map(lexeme => 
+              <WordLexeme key={`${id}+${lexeme}`} type={lexeme} />
+            ) 
+          }
         </div>
       </div>
     );
@@ -45,40 +57,58 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  getWordEntry,
-  deleteWordEntry
-})(Entry);
+  deleteWordEntry,
+  getWordEntry
+})(WordEntry);
 
-const EntryWord = props => {
+
+export const Word = props => {
+  let classNames = props.onClick ? 'word-container word-hover' : 'word-container';
+
   return (
-    <div className="entry-word-bubble" onClick={props.onClick}>
-      <div className="entry-word-text">
-        {props.children}
+    <div className={classNames} onClick={props.onClick}>
+      <div className="word-text">
+        {props.text}
       </div>
-      <button className="entry-word-delete-btn" onClick={props.onDelete}>
-        <span>&times;</span>
-      </button>
+      {
+        props.onDelete &&
+        <button className="word-delete-btn" onClick={props.onDelete}>
+          <span>&times;</span>
+        </button>
+      }
     </div>
   );
 }
 
-const EntryDefinition = props => {
+
+export const WordDefinition = props => {
   return (
-    <>
-      {props.children}
-    </>
+    <div className="word-definition">
+      {props.text}
+    </div>
   );
 }
 
-export const EntryLexeme = props => {
+
+export const WordExample = props => {
+  return (
+    <div className="word-example">
+      {props.text}
+    </div>
+  );
+}
+
+
+export const WordLexeme = props => {
   const { color: lexemeColor, text: lexemeText } = getPartsOfSpeechData(props.type);
-  let classNames = `entry-lexeme-icon lexeme-background-${lexemeColor} lexeme-text-${lexemeColor}`;
+  let classNames = `lexeme-icon lexeme-background-${lexemeColor} lexeme-text-${lexemeColor}`;
   if (props.border) classNames += ` lexeme-border-${lexemeColor} lexeme-border-active`;
   classNames += ` ${props.className}`;
 
   return (
     <div className={classNames}>
       {lexemeText}
+      { props.order && <div className="lexeme-order">{props.order}</div>}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { ReactComponent as EditIcon } from '../../assets/edit.svg';
 import { ReactComponent as CloseIcon } from '../../assets/x-circle.svg';
-import { Word, WordLexeme, WordDefinition, WordExample } from '../Word/word';
+import { Word, WordDefinition, WordExample, WordLexeme } from '../Entry/entry';
 
 import './wordDetails.css';
 
@@ -19,8 +19,8 @@ export default class WordDetails extends Component {
     return definitions.map((entry, index) => {
       return (
         <div className="body-entry" key={index}>
-          <WordLexeme type={entry.partsOfSpeech} order={index + 1} />
-          <WordDefinition definition={entry.definition} />
+          <WordLexeme className="word-details-lexeme" type={entry.partsOfSpeech} order={index + 1} />
+          <WordDefinition text={entry.definition} />
         </div>
       );
     });
@@ -30,8 +30,8 @@ export default class WordDetails extends Component {
     return examples.map((entry, index) => {
       return (
         <div className="body-entry" key={index}>
-          <WordLexeme type={entry.partsOfSpeech} order={index + 1} />
-          <WordExample example={entry.example} />
+          <WordLexeme className="word-details-lexeme" type={entry.partsOfSpeech} order={index + 1} />
+          <WordExample text={entry.example} />
         </div>
       );
     });

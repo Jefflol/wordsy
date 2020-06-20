@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Entry from './Entry/entry';
+import WordEntry from './Entry/entry';
 import { getWordEntries } from '../actions/entryActions';
 import { ReactComponent as MoreIcon } from '../assets/more-horizontal.svg';
 
@@ -78,12 +78,12 @@ class WordBank extends Component {
       });
 
       return (
-        <Entry
+        <WordEntry
           key={entry._id}
           id={entry._id}
           word={entry.word}
           definition={definition}
-          pos={partsOfSpeeches}
+          lexemes={partsOfSpeeches}
           show={this.state.showDefinition}
         />
       );
