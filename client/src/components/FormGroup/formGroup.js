@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { WordLexeme } from '../Entry/entry';
+import { WordLexeme } from '../Word/word';
 import { ReactComponent as AlertIcon } from '../../assets/alert-circle.svg';
 import { getPartsOfSpeechData } from '../partsOfSpeech';
 

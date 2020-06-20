@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import WordEntry from './Entry/entry';
+import WordEntry from './Word/word';
 import { getWordEntries } from '../actions/entryActions';
 import { ReactComponent as MoreIcon } from '../assets/more-horizontal.svg';
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { ReactComponent as EditIcon } from '../../assets/edit.svg';
 import { ReactComponent as CloseIcon } from '../../assets/x-circle.svg';
-import { Word, WordDefinition, WordExample, WordLexeme } from '../Entry/entry';
+import { Word, WordDefinition, WordExample, WordLexeme } from '../Word/word';
 
 import './wordDetails.css';
 

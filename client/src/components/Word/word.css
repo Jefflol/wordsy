@@ -1,5 +1,54 @@
+/* WORD ENTRY */
+.entry {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 40px;
+  
+  box-sizing: border-box;
+}
+
+.entry-word {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  min-width: 20%;
+  max-width: 100px;
+  margin: 0 2%;
+
+  box-sizing: border-box;
+}
+
+.entry-definition {
+  min-width: 50%;
+  margin: 0 2%;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.entry-lexeme {
+  display: flex;
+  min-width: 20%;
+  height: 100%;
+  margin: 0 2%;
+
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* WORD */
 .word-container {
-  display: inline-flex;
+  position: relative;
+  display: flex;
   align-items: center;
 
   min-width: 0;
@@ -9,15 +58,69 @@
 
   background-color: #CBE6FF;
 }
+.word-hover:hover {
+  cursor: pointer;
+}
 
-.word-container > .word-text {  
+.word-text {  
   color: #3385C6;
+  font-size: 12px;
+  font-weight: bold;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.word-lexeme {
+.word-container:hover .word-delete-btn {
+  display: flex;
+}
+
+.word-delete-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+
+  border: 0;
+  border-radius: 15px;
+  font-size: 8px;
+  font-weight: 800;
+
+  background-color: #FF4F4F;
+  color: #262626;
+}
+.word-delete-btn:hover {
+  top: -2px;
+  right: -2px;
+  width: 15px;
+  height: 15px;
+  
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.word-delete-btn > span {
+  visibility: 0;
+  opacity: 0;
+}
+.word-delete-btn:hover > span {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* WORD DEFINITION & WORD EXAMPLE*/
+.word-definition,
+.word-example {
+  font-weight: 600;
+}
+
+/* WORD LEXEME */
+.lexeme-icon {
   position: relative;
   display: flex;
   justify-content: center;
@@ -27,21 +130,12 @@
   min-width: 32px;
   min-height: 32px;
 
-  margin: 0 20px 0 0;
+  margin: 0 3px 0 0; /* For word bank */
   border-radius: 40px;
+
+  font-size: 12px;
+  font-weight: bold;
   box-sizing: border-box;
-}
-
-.word-lexeme-order {
-  position: absolute;
-  bottom: -5px;
-  right: -10px;
-  color: #B3B3B3;
-}
-
-.word-definition,
-.word-example {
-  font-weight: 600;
 }
 
 .lexeme-text-blue { color: #00A5E0; }
@@ -52,6 +146,14 @@
 .lexeme-text-dark-red { color: #BD000D; }
 .lexeme-text-grey { color: #4F4F4F; }
 
+.lexeme-border-blue { border-color: #00A5E0; }
+.lexeme-border-green { border-color: #2B976D; }
+.lexeme-border-yellow { border-color: #80B134; }
+.lexeme-border-orange { border-color: #E65D00; }
+.lexeme-border-red { border-color: #DB0A00; }
+.lexeme-border-dark-red { border-color: #BD000D; }
+.lexeme-border-grey { border-color: #4F4F4F; }
+
 .lexeme-background-blue { background-color: #AFEAFF; }
 .lexeme-background-green { background-color: #A8E6CE; }
 .lexeme-background-yellow { background-color: #DCEDC2; }
@@ -59,3 +161,30 @@
 .lexeme-background-red { background-color: #FFAAA6; }
 .lexeme-background-dark-red { background-color: #FF8C94; }
 .lexeme-background-grey { background-color: #CFCFCF; }
+
+.lexeme-border-active {
+  cursor: pointer;
+  border-width: 3px;
+  border-style: solid;
+}
+
+.lexeme-order {
+  position: absolute;
+  bottom: -5px;
+  right: -10px;
+  color: #B3B3B3;
+}
+
+
+@media only screen and (max-width: 1279.5px) {
+  .entry-lexeme {
+    width: 78px;
+    max-width: 78px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .entry-word {
+    margin: 5px 5%;
+  }
+}
