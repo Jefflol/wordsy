@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import EntryForm from '../../screens/EntryForm/entryForm';
 import UserForm from '../../screens/UserForm/userForm';
@@ -6,7 +7,6 @@ import WordBank from '../../screens/WordBank/wordBank';
 import WordDetails from '../../screens/WordDetails/wordDetails';
 import { loadWordEntry } from '../../actions/entryActions';
 
-import { connect } from 'react-redux';
 
 import './App.css';
 

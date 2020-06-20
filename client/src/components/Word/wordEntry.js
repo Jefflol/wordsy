@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import { Word, WordDefinition, WordLexeme } from './word';
 import { deleteWordEntry, getWordEntry } from '../../actions/entryActions';
-import { connect } from 'react-redux';
 
 import './wordEntry.css';
 

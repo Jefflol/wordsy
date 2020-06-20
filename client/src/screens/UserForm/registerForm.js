@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import { FormGroup, FormInput, FormLabel } from '../../components/Form/form';
 import { registerUser } from '../../actions/userActions';
-import { connect } from 'react-redux';
 
 import './registerForm.css';
 
