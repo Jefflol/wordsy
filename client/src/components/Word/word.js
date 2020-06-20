@@ -23,7 +23,6 @@ export const Word = props => {
   );
 }
 
-
 export const WordDefinition = props => {
   return (
     <div className="word-definition">
@@ -32,7 +31,6 @@ export const WordDefinition = props => {
   );
 }
 
-
 export const WordExample = props => {
   return (
     <div className="word-example">
@@ -40,7 +38,6 @@ export const WordExample = props => {
     </div>
   );
 }
-
 
 export const WordLexeme = props => {
   const { color: lexemeColor, text: lexemeText } = getPartsOfSpeechData(props.type);
