@@ -70,9 +70,11 @@ const EntryDefinition = props => {
   );
 }
 
-const EntryLexeme = props => {
+export const EntryLexeme = props => {
   const { color: lexemeColor, text: lexemeText } = getPartsOfSpeechData(props.type);
-  const classNames = `entry-lexeme-icon lexeme-background-${lexemeColor} lexeme-text-${lexemeColor}`;
+  let classNames = `entry-lexeme-icon lexeme-background-${lexemeColor} lexeme-text-${lexemeColor}`;
+  if (props.border) classNames += ` lexeme-border-${lexemeColor} lexeme-border-active`;
+  classNames += ` ${props.className}`;
 
   return (
     <div className={classNames}>

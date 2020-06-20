@@ -55,7 +55,9 @@
 .example-input {
   display: flex;
   flex-direction: column;
+  padding: 0 10px;
   margin: 10px 0;
+  overflow: visible;
 }
 
 .form-buttons {
@@ -101,8 +103,20 @@
 }
 
 
+
+
+
+/* Hacks to style textarea properly */
 .definition-textareas,
 .example-textareas {
+  width: calc(100% + 20px);
   height: 100px;
-  overflow: scroll;
+  overflow-y: scroll;
+  transform: translate(-15px);
+}
+
+.definition-overflow,
+.example-overflow {
+  padding: 0 5px 0 15px;
+  overflow-x: visible;
 }

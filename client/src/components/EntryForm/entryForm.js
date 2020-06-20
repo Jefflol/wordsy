@@ -329,7 +329,9 @@ class EntryForm extends Component {
               <FormLabel for="definition" name="DEFINITION" errorMessage={this.state.errors.definition} errorOn={this.state.errors.definition} />
               {/* <FormTextarea id="definition" name="definition" tabIndex="2" value={this.state.definition} onChange={this.handleChange} /> */}
               <div className="definition-textareas">
-                { definitionChildren }
+                <div className="definition-overflow">
+                  { definitionChildren }
+                </div>
               </div>
             </FormGroup>
           </div>
@@ -338,7 +340,9 @@ class EntryForm extends Component {
               <FormLabel for="example" name="EXAMPLE" />
               {/* <FormTextarea id="example" name="example" tabIndex="3" value={this.state.example} onChange={this.handleChange} /> */}
               <div className="example-textareas">
-                { exampleChildren }
+                <div className="example-overflow">
+                  { exampleChildren }
+                </div>
               </div>
             </FormGroup>
           </div>

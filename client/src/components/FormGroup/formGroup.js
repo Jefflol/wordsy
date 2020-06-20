@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { EntryLexeme } from '../Entry/entry';
 import { ReactComponent as AlertIcon } from '../../assets/alert-circle.svg';
 import { getPartsOfSpeechData } from '../partsOfSpeech';
 
@@ -81,7 +82,7 @@ export class FormTextarea extends Component {
   render() {
     const { id, name, type, value, tabIndex, errorOn } = this.props;
     const { color: posColor } = getPartsOfSpeechData(type);
-    const classNames = errorOn ? `form-textarea body-alert-error pos-border-active pos-border-${posColor}` : `form-textarea pos-border-active pos-border-${posColor}`;
+    const classNames = errorOn ? `form-textarea body-alert-error pos-border-active pos-border-${posColor}` : `form-textarea`;
 
     return (
       <div className="form-textarea-container">
@@ -104,6 +105,7 @@ export class FormTextarea extends Component {
             <span>&times;</span>
           </div>
         }
+        <EntryLexeme className="lexeme-icon" type={type} border />
       </div>
     );
   }
