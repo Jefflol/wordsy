@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import FormGroup, { FormLabel, FormInput, FormTextarea, FormSelect } from '../FormGroup/formGroup';
-import { addWordEntry, editWordEntry } from '../../actions/entryActions';
+import { addWordEntry, editWordEntry, cancelEditWordEntry } from '../../actions/entryActions';
 import { logoutUser } from '../../actions/userActions';
 import { partsOfSpeech } from '../partsOfSpeech';
 import { isEmpty } from '../helperFunctions';
@@ -107,6 +107,10 @@ class EntryForm extends Component {
 
   handleReset = () => {
     this.clearForm();
+
+    if (this.props.isEditing) {
+      this.props.cancelEditWordEntry();
+    }
   }
 
   handleSubmit = e => {
@@ -359,5 +363,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   addWordEntry,
   editWordEntry,
+  cancelEditWordEntry,
   logoutUser
 })(EntryForm);

@@ -138,3 +138,7 @@ export const editWordEntry = (userId, wordId, modifications) => (dispatch, getSt
       });
     });
 }
+
+export const cancelEditWordEntry = () => dispatch => {
+  dispatch({ type: EDIT_ENTRY_FAIL });
+}
