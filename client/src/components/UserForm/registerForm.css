@@ -4,10 +4,7 @@
   justify-content: center;
 
   position: relative;
-  /* width: 40%; */
   height: 100%;
-
-  /* padding: 5%; */
 
   color: #E6E6E6;
   box-sizing: border-box;
@@ -51,7 +48,6 @@
 .form-submit-btn:hover,
 .form-submit-btn:focus {
   background-color: #1E4F76;
-  /* outline: none;*/
   cursor: pointer;
 }
 
@@ -65,17 +61,17 @@
   text-align: center;
 }
 
+.registration-success-text,
+.existing-account-text {
+  white-space: nowrap;
+}
+
 .registration-success {
   color: #57FF60;
 }
 
 .existing-account {
   margin-top: 40px;
-}
-
-.registration-success-text,
-.existing-account-text {
-  white-space: nowrap;
 }
 
 .sign-in-btn {
@@ -93,6 +89,5 @@
 .sign-in-btn:focus {
   color: #1E4F76;
   text-decoration: underline;
-  /* outline: none; */
   cursor: pointer;
 }

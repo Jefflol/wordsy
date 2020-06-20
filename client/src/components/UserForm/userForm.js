@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
+
+import LoginForm from './loginForm';
+import RegisterForm from './registerForm';
+
 import './userForm.css';
 
-import RegisterForm from './registerForm';
-import LoginForm from './loginForm';
 
 export default class UserForm extends Component {
-  state = {
-    tab: 'LOGIN_TAB'
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      tab: 'LOGIN_TAB'
+    };
+  }
+  
   switchTab = () => {
     if (this.state.tab === 'REGISTER_TAB') {
       this.setState({ tab: 'LOGIN_TAB' });

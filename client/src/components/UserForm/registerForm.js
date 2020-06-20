@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
-import './registerForm.css';
+
+import FormGroup, { FormInput, FormLabel } from '../FormGroup/formGroup';
+import { registerUser } from '../../actions/userActions';
 import { connect } from 'react-redux';
 
-import { registerUser } from '../../actions/userActions';
+import './registerForm.css';
 
-import FormGroup, { FormLabel, FormInput } from '../FormGroup/formGroup';
 
 class RegisterForm extends Component {
-  state = {
-    username: null,
-    password: null,
-    errors: {
-      username: '',
-      password: ''
-    }
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: null,
+      password: null,
+      errors: {
+        username: '',
+        password: ''
+      }
+    };
+  }
 
   componentDidUpdate(prevProps) {
     const { error } = this.props;
@@ -32,7 +36,7 @@ class RegisterForm extends Component {
     }
   }
 
-  onChange = e => {
+  handleChange = e => {
     // Validate Inputs
     this.checkValidation(e);
 
@@ -41,7 +45,7 @@ class RegisterForm extends Component {
     });
   }
 
-  onSubmit = e => {
+  handleSubmit = e => {
     e.preventDefault();
 
     const { username, password, errors } = this.state;
@@ -110,7 +114,7 @@ class RegisterForm extends Component {
 
   render() {
     return (
-      <form className="register-form" onSubmit={this.onSubmit}>
+      <form className="register-form" onSubmit={this.handleSubmit}>
         <div className="form-header">
           <h1 className="form-title">Register</h1>
           <h3 className="form-caption">Ready to add a new word?</h3>
@@ -118,27 +122,27 @@ class RegisterForm extends Component {
         <div className="username-input">
           <FormGroup>
             <FormLabel for="username" name="USERNAME" errorMessage={this.state.errors.username} errorOn={this.state.errors.username}/>
-            <FormInput type="text" id="username" name="username" maxLength="20" tabIndex="1" onChange={this.onChange} errorOn={this.state.errors.username}/>
+            <FormInput type="text" id="username" name="username" maxLength="20" tabIndex="1" onChange={this.handleChange} errorOn={this.state.errors.username}/>
           </FormGroup>
         </div>
         <div className="password-input">
           <FormGroup>
             <FormLabel for="password" name="PASSWORD" errorMessage={this.state.errors.password} errorOn={this.state.errors.password}/>
-            <FormInput type="text" id="password" name="password" autoComplete="on" tabIndex="2" onChange={this.onChange} errorOn={this.state.errors.password}/>
+            <FormInput type="text" id="password" name="password" autoComplete="on" tabIndex="2" onChange={this.handleChange} errorOn={this.state.errors.password}/>
           </FormGroup>
         </div>
-        <button className="form-submit-btn" tabIndex="3">Register</button>
+        <button className="form-submit-btn" type="submit" tabIndex="3">Register</button>
         <div className="form-footer">
           {
             this.props.isRegistered &&
             <div className="registration-success">
               <span className="registration-success-text">Registration success!</span>
-              <button className="sign-in-btn" tabIndex="4" onClick={this.goToLogin}>Sign in now!</button>
+              <button className="sign-in-btn" type="button" tabIndex="4" onClick={this.goToLogin}>Sign in now!</button>
             </div>
           }
           <div className="existing-account">
             <span className="existing-account-text">Already have an account?</span>
-            <button className="sign-in-btn" tabIndex="5" onClick={this.goToLogin}>Sign in!</button>
+            <button className="sign-in-btn" type="button" tabIndex="5" onClick={this.goToLogin}>Sign in!</button>
           </div>
         </div>
       </form>
@@ -147,13 +151,10 @@ class RegisterForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  isRegistered: state.user.isRegistered,
   error: state.error,
+  isRegistered: state.user.isRegistered,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    registerUser
-  }
-)(RegisterForm);
+export default connect(mapStateToProps, {
+  registerUser
+})(RegisterForm);
