@@ -1,27 +1,30 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-import UserForm from '../../screens/UserForm/userForm';
 import EntryForm from '../../screens/EntryForm/entryForm';
+import UserForm from '../../screens/UserForm/userForm';
 import WordBank from '../../screens/WordBank/wordBank';
 import WordDetails from '../../screens/WordDetails/wordDetails';
-
 import { loadWordEntry } from '../../actions/entryActions';
+
+import { connect } from 'react-redux';
 
 import './App.css';
 
+
 class AppRootComponent extends Component {
-  state = {
-    wordDetails: {},
-    showWordDetails: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      wordDetails: {},
+      showWordDetails: false
+    };
   }
 
   componentDidUpdate(prevProps) {
-    const { isWordDetailsLoading, wordDetails, isLoadingEdit } = this.props;
+    const { isLoadingEdit, isWordDetailsLoading, wordDetails } = this.props;
 
     // Update wordDetails before rendering WordDetails component
     if (isWordDetailsLoading !== prevProps.isWordDetailsLoading && !isWordDetailsLoading) {
-      console.log(wordDetails);
       this.setState({ 
         showWordDetails: true,
         wordDetails: wordDetails || {
@@ -78,10 +81,10 @@ class AppRootComponent extends Component {
 
 const mapStateToProps = state => ({
   isLoggedIn: state.user.isLoggedIn,
-  isWordDetailsLoading: state.entry.isWordDetailsLoading,
-  wordDetails: state.entry.wordDetails,
   userId: state.user.userId,
-  isLoadingEdit: state.entry.isLoadingEdit
+  isLoadingEdit: state.entry.isLoadingEdit,
+  isWordDetailsLoading: state.entry.isWordDetailsLoading,
+  wordDetails: state.entry.wordDetails
 });
 
 export default connect(mapStateToProps, {
