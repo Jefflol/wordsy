@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
-import FormGroup, { FormLabel, FormInput, FormTextarea, FormSelect } from '../../components/FormGroup/formGroup';
+import FormGroup, { FormLabel, FormInput, FormTextarea, FormSelect } from '../../components/Form/formGroup';
 import { addWordEntry, editWordEntry, cancelEditWordEntry } from '../../actions/entryActions';
 import { logoutUser } from '../../actions/userActions';
 import { lexeme } from '../../helpers/lexemeData';
