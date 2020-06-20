@@ -105,6 +105,10 @@ class EntryForm extends Component {
     });
   }
 
+  handleReset = () => {
+    this.clearForm();
+  }
+
   handleSubmit = e => {
     e.preventDefault();
 
@@ -334,7 +338,10 @@ class EntryForm extends Component {
               </div>
             </FormGroup>
           </div>
-          <button className="form-submit-btn" tabIndex="100">Add</button>
+          <div className="form-buttons">
+            <button className="form-reset-btn" type="button" tabIndex="100" onClick={this.handleReset}>Reset</button>
+            <button className="form-submit-btn" type="submit" tabIndex="100">Add</button>
+          </div>
         </form>
       </div>
     )
