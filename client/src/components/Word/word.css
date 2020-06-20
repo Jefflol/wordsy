@@ -39,6 +39,11 @@
   color: #B3B3B3;
 }
 
+.word-definition,
+.word-example {
+  font-weight: 600;
+}
+
 .lexeme-text-blue { color: #00A5E0; }
 .lexeme-text-green { color: #2B976D; }
 .lexeme-text-yellow { color: #80B134; }
