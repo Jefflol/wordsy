@@ -1,20 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import './dropDown.css';
 
 
-export default class DropDown extends Component {
-  render() {
-    return (
-      <>
-        <div className="dropdown">
-          {this.props.children}
-        </div>
-        <div className="dropdown-backdrop" onClick={this.props.onClose}>
-        </div>
-      </>
-    );
-  }
+export const DropDown = props => {
+  return (
+    <>
+      <div className="dropdown">
+        {props.children}
+      </div>
+      <div className="dropdown-backdrop" onClick={props.onClose}>
+      </div>
+    </>
+  );
 }
 
 // Childrens of DropDown must be of type DropDownOption

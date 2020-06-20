@@ -5,7 +5,7 @@ import WordEntry from '../../components/Word/wordEntry';
 import { getWordEntries } from '../../actions/entryActions';
 import { ReactComponent as MoreIcon } from '../../assets/more-horizontal.svg';
 
-import DropDown, { DropDownOption } from '../../components/DropDown/dropDown';
+import { DropDown, DropDownOption } from '../../components/DropDown/dropDown';
 
 import './wordBank.css';
 
