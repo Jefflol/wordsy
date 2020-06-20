@@ -105,35 +105,36 @@ export const deleteWordEntry = (userId, wordId) => (dispatch, getState) => {
 // Load word details into entry form for editing
 export const loadWordEntry = (userId, wordId) => (dispatch, getState) => {
   axios.get(`/entry/${userId}/${wordId}`, tokenConfig(getState))
-  .then(res => {
-    console.log('[SUCCESS]: RETRIEVED WORD');
-    dispatch({
-      type: LOAD_EDIT_FORM,
-      payload: res.data
+    .then(res => {
+      console.log('[SUCCESS]: RETRIEVED WORD');
+      dispatch({
+        type: LOAD_EDIT_FORM,
+        payload: res.data
+      });
+      dispatch({ type: LOAD_EDIT_FORM_SUCCESS });
+    })
+    .catch(err => {
+      console.log('[ENTRY]: ', err);
+      dispatch({
+        type: LOAD_EDIT_FORM_FAIL
+      });
     });
-    dispatch({ type: LOAD_EDIT_FORM_SUCCESS });
-  })
-  .catch(err => {
-    console.log('[ENTRY]: ', err);
-    dispatch({
-      type: LOAD_EDIT_FORM_FAIL
-    });
-  });
 }
 
 // Edit word entry
 export const editWordEntry = (userId, wordId, modifications) => (dispatch, getState) => {
   axios.patch(`/entry/${userId}/${wordId}`, modifications, tokenConfig(getState))
-  .then(res => {
-    console.log('[SUCCESS]: EDITED WORD');
-    dispatch({
-      type: EDIT_ENTRY_SUCCESS,
+    .then(res => {
+      console.log('[SUCCESS]: EDITED WORD');
+      dispatch({
+        type: EDIT_ENTRY_SUCCESS,
+      });
+      dispatch(getWordEntries(userId));
+    })
+    .catch(err => {
+      console.log('[ENTRY]: ', err);
+      dispatch({
+        type: EDIT_ENTRY_FAIL
+      });
     });
-  })
-  .catch(err => {
-    console.log('[ENTRY]: ', err);
-    dispatch({
-      type: EDIT_ENTRY_FAIL
-    });
-  })
 }

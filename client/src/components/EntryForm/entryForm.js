@@ -37,7 +37,7 @@ class EntryForm extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isEntryAdded, isLoadingEdit, wordDetails } = this.props;
+    const { isEntryAdded, isLoadingEdit, isEditing, wordDetails } = this.props;
 
     if (isEntryAdded !== prevProps.isEntryAdded && isEntryAdded) {
       this.clearForm();
@@ -47,7 +47,8 @@ class EntryForm extends Component {
       let details = {};
 
       wordDetails.definition.forEach((entry, index) => {
-        details[entry._id] = {
+        console.log(entry);
+        details[entry.id] = {
           lexeme: wordDetails.definition[index].partsOfSpeech,
           definition: wordDetails.definition[index].definition,
           example: wordDetails.example[index].example
@@ -58,6 +59,10 @@ class EntryForm extends Component {
         word: wordDetails.word,
         details: details
       });
+    }
+
+    if (isEditing !== prevProps.isEditing && !isEditing) {
+      this.clearForm();
     }
   }
 
@@ -110,6 +115,7 @@ class EntryForm extends Component {
 
     // Iterate through states to combine definitions and examples
     for (const [id, detail] of Object.entries(details)) {
+      console.log(id);
       const definitionEntry = {
         id: id,
         partsOfSpeech: detail.lexeme,
@@ -148,7 +154,7 @@ class EntryForm extends Component {
         "propName": "example",
         "value": exampleArray
       }];
-      
+
       this.props.editWordEntry(this.state.userId, this.props.wordDetails._id, modifications);
     }
   }
@@ -334,7 +340,8 @@ const mapStateToProps = state => ({
   userId: state.user.userId,
   isEntryAdded: state.entry.isEntryAdded,
   wordDetails: state.entry.wordDetails,
-  isLoadingEdit: state.entry.isLoadingEdit
+  isLoadingEdit: state.entry.isLoadingEdit,
+  isEditing: state.entry.isEditing
 });
 
 export default connect(mapStateToProps, {

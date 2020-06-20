@@ -28,7 +28,7 @@ router.delete('/:userId/:entryId', checkAuth, EntryController.entry_delete);
 // @route   PATCH /entry/:entryId
 // @desc    Edit an entry
 // @access  PRIVATE
-router.patch('/:entryId', checkAuth, EntryController.entry_edit);
+router.patch('/:userId/:entryId', checkAuth, EntryController.entry_edit);
 
 
 module.exports = router;

@@ -84,6 +84,7 @@ exports.entry_add = (req, res, next) => {
   const definitions = req.body.definition.map(definition => {
     return new Definition({
       _id: id,
+      id: definition.id,
       partsOfSpeech: definition.partsOfSpeech,
       definition: definition.definition
     });
@@ -92,6 +93,7 @@ exports.entry_add = (req, res, next) => {
   const examples = req.body.example.map(example => {
     return new Example({
       _id: id,
+      id: example.id,
       partsOfSpeech: example.partsOfSpeech,
       example: example.example
     });
