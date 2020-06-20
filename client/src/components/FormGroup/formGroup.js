@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { WordLexeme } from '../Word/word';
 import { ReactComponent as AlertIcon } from '../../assets/alert-circle.svg';
-import { getPartsOfSpeechData } from '../partsOfSpeech';
+import { getLexemeData } from '../../helpers/lexemeData';
 
 import './formGroup.css';
 
@@ -150,7 +150,7 @@ export class FormOption extends Component {
 
   render() {
     const { id, type, tabIndex } = this.props;
-    const { text: posText, color: posColor } = getPartsOfSpeechData(type);
+    const { text: posText, color: posColor } = getLexemeData(type);
     const classNames = `form-option pos-border pos-border-${posColor} pos-background-${posColor} pos-text-${posColor}`;
 
     return (

@@ -5,8 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import FormGroup, { FormLabel, FormInput, FormTextarea, FormSelect } from '../FormGroup/formGroup';
 import { addWordEntry, editWordEntry, cancelEditWordEntry } from '../../actions/entryActions';
 import { logoutUser } from '../../actions/userActions';
-import { partsOfSpeech } from '../partsOfSpeech';
-import { isEmpty } from '../helperFunctions';
+import { lexeme } from '../../helpers/lexemeData';
+import { isEmpty } from '../../helpers/helperFunctions';
 import { ReactComponent as LogoutIcon } from '../../assets/log-out.svg';
 
 import './entryForm.css';
@@ -321,7 +321,7 @@ class EntryForm extends Component {
           <div className="parts-of-speech-selection">
             <FormGroup>
               <FormLabel name="PARTS OF SPEECH" errorMessage={this.state.errors.lexeme} errorOn={this.state.errors.lexeme} />
-              <FormSelect option={partsOfSpeech} onClick={this.handleLexemeClick} />
+              <FormSelect option={lexeme} onClick={this.handleLexemeClick} />
             </FormGroup>
           </div>
           <div className="definition-input">

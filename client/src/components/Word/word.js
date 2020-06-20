@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getPartsOfSpeechData } from '../partsOfSpeech';
+import { getLexemeData } from '../../helpers/lexemeData';
 
 import './word.css';
 
@@ -40,7 +40,7 @@ export const WordExample = props => {
 }
 
 export const WordLexeme = props => {
-  const { color: lexemeColor, text: lexemeText } = getPartsOfSpeechData(props.type);
+  const { color: lexemeColor, text: lexemeText } = getLexemeData(props.type);
   let classNames = `lexeme-icon lexeme-background-${lexemeColor} lexeme-text-${lexemeColor}`;
   if (props.border) classNames += ` lexeme-border-${lexemeColor} lexeme-border-active`;
   classNames += ` ${props.className}`;
