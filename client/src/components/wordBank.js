@@ -18,7 +18,7 @@ class WordBank extends Component {
   }
 
   componentDidMount() {
-    this.props.getWordEntries(this.props.userId, 'alphabet');
+    this.props.getWordEntries(this.props.userId, 'recent');
     // this.props.getWordEntries('5ec61921d367772fc3177453');
   }
 
