@@ -81,6 +81,12 @@ class WordBank extends Component {
     return wordBank;
   };
 
+  handleCloseDropDown = () => {
+    this.setState({
+      showOptions: false
+    });
+  };
+
   render() {
     const wordBank = this.renderWordBank();
 
@@ -92,7 +98,7 @@ class WordBank extends Component {
             { 
               this.state.showOptions && 
               <div className="options-dropdown">
-                <DropDown>
+                <DropDown onClose={this.handleCloseDropDown}>
                   { 
                     this.state.showDefinition ?
                     <DropDownOption text="Hide definition" onClick={this.toggleDefinition}/> :

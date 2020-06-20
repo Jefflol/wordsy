@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import './dropDown.css';
 
 export default class DropDown extends Component {
-  onClickHandler = () => {
-    console.log('selected');
-  }
-
   render() {
     return (
-      <div className="dropdown">
-        {this.props.children}
-      </div>
+      <>
+        <div className="dropdown">
+          {this.props.children}
+        </div>
+        <div className="dropdown-backdrop" onClick={this.props.onClose}>
+        </div>
+      </>
     );
   }
 }
