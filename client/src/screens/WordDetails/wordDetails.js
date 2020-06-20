@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Word, WordDefinition, WordExample, WordLexeme } from '../Word/word';
+import { Word, WordDefinition, WordExample, WordLexeme } from '../../components/Word/word';
 import { ReactComponent as EditIcon } from '../../assets/edit.svg';
 import { ReactComponent as CloseIcon } from '../../assets/x-circle.svg';
 

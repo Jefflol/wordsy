@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import UserForm from '../components/UserForm/userForm';
-import EntryForm from '../components/EntryForm/entryForm';
-import WordBank from '../components/wordBank';
-import WordDetails from './WordDetails/wordDetails';
+import UserForm from '../../screens/UserForm/userForm';
+import EntryForm from '../../screens/EntryForm/entryForm';
+import WordBank from '../../screens/WordBank/wordBank';
+import WordDetails from '../../screens/WordDetails/wordDetails';
 
-import { loadWordEntry } from '../actions/entryActions';
+import { loadWordEntry } from '../../actions/entryActions';
 
-import '../App.css';
+import './App.css';
 
 class AppRootComponent extends Component {
   state = {

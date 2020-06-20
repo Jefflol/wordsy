@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import FormGroup, { FormInput, FormLabel } from '../FormGroup/formGroup';
+import FormGroup, { FormInput, FormLabel } from '../../components/FormGroup/formGroup';
 import { loginUser } from '../../actions/userActions';
 import { connect } from 'react-redux';
 
