@@ -56,7 +56,6 @@
 .example-input {
   display: flex;
   flex-direction: column;
-  padding: 0 10px;
   margin: 10px 0;
   overflow: visible;
 }
