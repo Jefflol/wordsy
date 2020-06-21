@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import WordEntry from '../../components/Word/wordEntry';
-import { getWordEntries } from '../../actions/entryActions';
-import { ReactComponent as MoreIcon } from '../../assets/more-horizontal.svg';
-
 import { DropDown, DropDownOption } from '../../components/DropDown/dropDown';
+import WordEntry from '../../components/Word/wordEntry';
+import { ReactComponent as OptionsIcon } from '../../assets/more-horizontal.svg';
+import { getWordEntries } from '../../actions/entryActions';
 
 import './wordBank.css';
 
@@ -54,22 +53,15 @@ class WordBank extends Component {
     }));
   }
 
-  sortByRecent = () => {
-    this.props.getWordEntries(this.props.userId, 'recent');
-    this.setState({
-      showOptions: false,
-    });
-  }
-
-  sortByAlphabet = () => {
-    this.props.getWordEntries(this.props.userId, 'alphabet');
+  sortByType = type => {
+    this.props.getWordEntries(this.props.userId, type);
     this.setState({
       showOptions: false,
     });
   }
 
   renderWordBank = () => {
-    const wordBank = this.state.entry.map(entry => {
+    return this.state.entry.map(entry => {
       const definition = entry.definition[0].definition;
       const partsOfSpeeches = [];
       
@@ -88,8 +80,6 @@ class WordBank extends Component {
         />
       );
     });
-
-    return wordBank;
   };
 
   render() {
@@ -99,7 +89,7 @@ class WordBank extends Component {
       <div className="word-bank-container">
         <div className="word-bank-header">
           <div className="header-title">Your Words</div>
-            <MoreIcon className="word-bank-options" onClick={this.handleClickDropDown} />           
+            <OptionsIcon className="word-bank-options" onClick={this.handleClickDropDown} />           
             { 
               this.state.showOptions && 
               <div className="options-dropdown">
@@ -109,8 +99,8 @@ class WordBank extends Component {
                     <DropDownOption text="Hide definition" onClick={this.toggleDefinition}/> :
                     <DropDownOption text="Show definition" onClick={this.toggleDefinition}/>
                   }
-                  <DropDownOption text="Sort by recent" onClick={this.sortByRecent}/>
-                  <DropDownOption text="Sort by alphabetical" onClick={this.sortByAlphabet}/>
+                  <DropDownOption text="Sort by recent" onClick={() => this.sortByType('recent')}/>
+                  <DropDownOption text="Sort by alphabetical" onClick={() => this.sortByType('alphabet')}/>
                 </DropDown> 
               </div>
             } 
