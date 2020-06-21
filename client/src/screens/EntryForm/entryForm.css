@@ -44,13 +44,14 @@
 .form-logout-btn {
   opacity: 20%;
 }
-.form-logout-btn:hover {
+.form-logout-btn:hover,
+.form-logout-btn:focus {
   opacity: 100%;
   cursor: pointer;
 }
 
 .word-input,
-.parts-of-speech-selection,
+.lexeme-selection,
 .definition-input,
 .example-input {
   display: flex;
@@ -77,11 +78,6 @@
   color: #3385C6;
   background-color: transparent;
 }
-.form-buttons > .form-reset-btn:hover,
-.form-buttons > .form-reset-btn:focus {
-  background-color: #1E4F76;
-  cursor: pointer;
-}
 
 .form-buttons > .form-submit-btn {
   flex: 3;
@@ -96,6 +92,9 @@
   color: #E6E6E6;
   background-color: #3385C6;
 }
+
+.form-buttons > .form-reset-btn:hover,
+.form-buttons > .form-reset-btn:focus,
 .form-buttons > .form-submit-btn:hover,
 .form-buttons > .form-submit-btn:focus {
   background-color: #1E4F76;
@@ -103,10 +102,7 @@
 }
 
 
-
-
-
-/* Hacks to style textarea properly */
+/* Hacks to style textarea with lexeme icons on bottom left */
 .definition-textareas,
 .example-textareas {
   width: calc(100% + 20px);

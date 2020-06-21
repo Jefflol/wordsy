@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
-import { FormGroup, FormLabel, FormInput, FormTextarea, FormSelect } from '../../components/Form/form';
-import { addWordEntry, editWordEntry, cancelEditWordEntry } from '../../actions/entryActions';
-import { logoutUser } from '../../actions/userActions';
-import { lexeme } from '../../helpers/lexemeData';
-import { isEmpty } from '../../helpers/helperFunctions';
+import { FormGroup, FormInput, FormLabel, FormSelect, FormTextarea } from '../../components/Form/form';
 import { ReactComponent as LogoutIcon } from '../../assets/log-out.svg';
+import { addWordEntry, cancelEditWordEntry, editWordEntry } from '../../actions/entryActions';
+import { logoutUser } from '../../actions/userActions';
+import { isEmpty } from '../../helpers/helperFunctions';
+import { lexeme } from '../../helpers/lexemeData';
 
 import './entryForm.css';
 
@@ -16,6 +16,7 @@ class EntryForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: '',
       word: '',
       details: {
         // "": {
@@ -34,12 +35,13 @@ class EntryForm extends Component {
 
   componentDidMount() {
     this.setState({
-      userId: this.props.userId
+      userId: this.props.userId,
+      username: this.props.username
     });
   }
 
   componentDidUpdate(prevProps) {
-    const { isEntryAdded, isLoadingEdit, isEditing, wordDetails } = this.props;
+    const { isEditing, isEntryAdded, isLoadingEdit, wordDetails } = this.props;
 
     // Clear form once entry has been added
     if (isEntryAdded !== prevProps.isEntryAdded && isEntryAdded) {
@@ -80,7 +82,7 @@ class EntryForm extends Component {
     });
   }
 
-  handleDetailsChange = (e, id) => {
+  handleChangeDetails = (e, id) => {
     // Validate Inputs
     this.checkValidation(e);
 
@@ -248,11 +250,11 @@ class EntryForm extends Component {
     return valid;
   }
 
-  handleLogoutClick = () => {
+  handleClickLogout = () => {
     this.props.logoutUser();
   };
 
-  handleLexemeClick = lexeme => {
+  handleClickLexeme = lexeme => {
     const id = uuidv4();
 
     this.setState(prevState => ({
@@ -287,9 +289,9 @@ class EntryForm extends Component {
           key={id}
           id={id}
           name={detailType}
-          tabIndex={10}
+          tabIndex={4}
           value={this.state.details[id][detailType]} 
-          onChange={e => this.handleDetailsChange(e, id)}
+          onChange={e => this.handleChangeDetails(e, id)}
           onDelete={this.handleDelete}
         />
       );
@@ -307,27 +309,26 @@ class EntryForm extends Component {
         <form className="entry-form" onSubmit={this.handleSubmit}>
           <div className="form-header">
             <div className="form-title">
-              <h1>Hi JAF</h1>
-              <LogoutIcon className="form-logout-btn" onClick={this.handleLogoutClick} />
+              <h1>Hi {this.state.username}</h1>
+              <LogoutIcon className="form-logout-btn" onClick={this.handleClickLogout} tabIndex="1"/>
             </div>
             <h3 className="form-caption">Ready to add a new word?</h3>
           </div>
           <div className="word-input">
             <FormGroup>
               <FormLabel for="word" name="WORD" errorMessage={this.state.errors.word} errorOn={this.state.errors.word} />
-              <FormInput type="text" id="word" name="word" maxLength="20" tabIndex="1" value={this.state.word} onChange={this.handleChange} errorOn={this.state.errors.word}/>
+              <FormInput type="text" id="word" name="word" maxLength="20" tabIndex="2" value={this.state.word} onChange={this.handleChange} errorOn={this.state.errors.word}/>
             </FormGroup>
           </div>
-          <div className="parts-of-speech-selection">
+          <div className="lexeme-selection">
             <FormGroup>
               <FormLabel name="PARTS OF SPEECH" errorMessage={this.state.errors.lexeme} errorOn={this.state.errors.lexeme} />
-              <FormSelect option={lexeme} onClick={this.handleLexemeClick} />
+              <FormSelect option={lexeme} tabIndex="3" onClick={this.handleClickLexeme} />
             </FormGroup>
           </div>
           <div className="definition-input">
             <FormGroup>
               <FormLabel for="definition" name="DEFINITION" errorMessage={this.state.errors.definition} errorOn={this.state.errors.definition} />
-              {/* <FormTextarea id="definition" name="definition" tabIndex="2" value={this.state.definition} onChange={this.handleChange} /> */}
               <div className="definition-textareas">
                 <div className="definition-overflow">
                   { definitionChildren }
@@ -338,7 +339,6 @@ class EntryForm extends Component {
           <div className="example-input">
             <FormGroup>
               <FormLabel for="example" name="EXAMPLE" />
-              {/* <FormTextarea id="example" name="example" tabIndex="3" value={this.state.example} onChange={this.handleChange} /> */}
               <div className="example-textareas">
                 <div className="example-overflow">
                   { exampleChildren }
@@ -358,15 +358,16 @@ class EntryForm extends Component {
 
 const mapStateToProps = state => ({
   userId: state.user.userId,
+  username: state.user.username,
+  isEditing: state.entry.isEditing,
   isEntryAdded: state.entry.isEntryAdded,
-  wordDetails: state.entry.wordDetails,
   isLoadingEdit: state.entry.isLoadingEdit,
-  isEditing: state.entry.isEditing
+  wordDetails: state.entry.wordDetails
 });
 
 export default connect(mapStateToProps, {
   addWordEntry,
-  editWordEntry,
   cancelEditWordEntry,
+  editWordEntry,
   logoutUser
 })(EntryForm);
