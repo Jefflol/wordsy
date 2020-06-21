@@ -226,3 +226,22 @@
   border-width: 3px;
   border-style: solid;
 }
+
+@media only screen and (max-width: 900px) {
+  .form-option {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .form-option {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    font-size: 10px;
+  }
+}
