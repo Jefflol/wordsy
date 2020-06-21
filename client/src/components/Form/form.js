@@ -94,7 +94,7 @@ export class FormTextarea extends Component {
           <div
             className="form-textarea-delete-btn" 
             onClick={() => this.handleDelete(id)}
-            onKeyPress={(e) => this.handleKeyPress(e, id)}
+            onKeyPress={e => this.handleKeyPress(e, id)}
             tabIndex={tabIndex}
           >
             <span>&times;</span>
@@ -113,16 +113,16 @@ export class FormSelect extends Component {
   }
 
   render() {
-    const options = this.props.option;
+    const { option: options, tabIndex } = this.props;
 
     return (
       <div className="form-select">
         { 
-          options.map((option, index) => 
+          options.map(option => 
             <FormOption
               key={option.id} 
               type={option.type} 
-              tabIndex={index + 1}
+              tabIndex={tabIndex}
               onClick={this.handleClick} 
             />
           )
