@@ -115,3 +115,15 @@
   padding: 0 20px 0 15px; /* More padding to push scroll bar right */
   overflow-x: visible;
 }
+
+
+/* Support for scroll snaps */
+.definition-textareas,
+.example-textareas {
+  scroll-snap-type: y mandatory;
+}
+
+
+.form-textarea-scroll-snap {
+  scroll-snap-align: center;
+}

@@ -77,12 +77,12 @@ export class FormTextarea extends Component {
   }
 
   render() {
-    const { id, name, type, value, tabIndex } = this.props;
+    const { className, id, name, type, value, tabIndex } = this.props;
 
     return (
       <div className="form-textarea-container">
         <textarea
-          className="form-textarea"
+          className={`form-textarea ${className}`}
           id={id} 
           name={name}
           value={value}

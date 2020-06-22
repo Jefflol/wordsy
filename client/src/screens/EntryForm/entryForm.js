@@ -285,6 +285,7 @@ class EntryForm extends Component {
     for (const [id, detail] of Object.entries(this.state.details)) {
       detailsArray.push(
         <FormTextarea
+          className="form-textarea-scroll-snap"
           type={detail.lexeme}
           key={id}
           id={id}
