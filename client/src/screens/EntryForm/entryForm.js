@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -29,8 +29,11 @@ class EntryForm extends Component {
         word: '',
         lexeme: '',
         definition: ''
-      }
-    }
+      },
+      textareaScrollTop: 0
+    };
+    this.scrollRefDefinition = createRef();
+    this.scrollRefExample = createRef();
   }
 
   componentDidMount() {
@@ -40,7 +43,7 @@ class EntryForm extends Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const { isEditing, isEntryAdded, isLoadingEdit, wordDetails } = this.props;
 
     // Clear form once entry has been added
@@ -70,6 +73,12 @@ class EntryForm extends Component {
         word: wordDetails.word,
         details: details
       });
+    }
+
+    // Sync scrolls for textareas
+    if (prevState.textareaScrollTop !== this.state.textareaScrollTop) {
+      this.scrollRefExample.current.scrollTop = this.state.textareaScrollTop;
+      this.scrollRefDefinition.current.scrollTop = this.state.textareaScrollTop;
     }
   }
 
@@ -279,6 +288,18 @@ class EntryForm extends Component {
     }
   }
 
+  handleScrollDefinition = () => {
+    this.setState({
+      textareaScrollTop: this.scrollRefDefinition.current.scrollTop,
+    });
+  }
+
+  handleScrollExample = () => {
+    this.setState({
+      textareaScrollTop: this.scrollRefExample.current.scrollTop,
+    });
+  }
+
   renderDetails = (detailType) => {
     let detailsArray = [];
 
@@ -330,7 +351,7 @@ class EntryForm extends Component {
           <div className="definition-input">
             <FormGroup>
               <FormLabel for="definition" name="DEFINITION" errorMessage={this.state.errors.definition} errorOn={this.state.errors.definition} />
-              <div className="definition-textareas">
+              <div className="definition-textareas" ref={this.scrollRefDefinition} onScroll={this.handleScrollDefinition}>
                 <div className="definition-overflow">
                   { definitionChildren }
                 </div>
@@ -340,7 +361,7 @@ class EntryForm extends Component {
           <div className="example-input">
             <FormGroup>
               <FormLabel for="example" name="EXAMPLE" />
-              <div className="example-textareas">
+              <div className="example-textareas" ref={this.scrollRefExample} onScroll={this.handleScrollExample}>
                 <div className="example-overflow">
                   { exampleChildren }
                 </div>

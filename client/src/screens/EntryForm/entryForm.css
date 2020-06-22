@@ -118,12 +118,11 @@
 
 
 /* Support for scroll snaps */
-.definition-textareas,
+/* .definition-textareas,
 .example-textareas {
   scroll-snap-type: y mandatory;
 }
 
-
 .form-textarea-scroll-snap {
   scroll-snap-align: center;
-}
+} */
