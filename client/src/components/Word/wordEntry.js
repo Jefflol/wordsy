@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { Word, WordDefinition, WordLexeme } from './word';
 import { deleteWordEntry, getWordEntry } from '../../actions/entryActions';
-import { debounce } from '../../helpers/helperFunctions';
+import { debounce, removeDuplicates } from '../../helpers/helperFunctions';
 
 import './wordEntry.css';
 
@@ -109,7 +109,7 @@ class WordEntry extends Component {
 
   render() {
     const { word, definition, lexemes, id, show } = this.props;
-    const entryLexemes = this.renderLexemes(lexemes);
+    const entryLexemes = this.renderLexemes(removeDuplicates(lexemes));
 
     return (
       <div className="entry">

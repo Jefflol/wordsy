@@ -19,4 +19,9 @@ export const debounce = (fn, ms, args) => {
       fn.apply(this, args);
     }, ms);
   };
-;}
+};
+
+// Remove duplicates in array
+export const removeDuplicates = array => {
+  return Array.from(new Set(array));
+}
