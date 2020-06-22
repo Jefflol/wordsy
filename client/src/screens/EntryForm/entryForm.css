@@ -104,7 +104,7 @@
 /* Hacks to style textarea with lexeme icons on bottom left */
 .definition-textareas,
 .example-textareas {
-  width: calc(100% + 20px);
+  width: calc(100% + 35px);
   height: 100px;
   overflow-y: scroll;
   transform: translate(-15px);
@@ -112,6 +112,6 @@
 
 .definition-overflow,
 .example-overflow {
-  padding: 0 5px 0 15px;
+  padding: 0 20px 0 15px; /* More padding to push scroll bar right */
   overflow-x: visible;
 }
