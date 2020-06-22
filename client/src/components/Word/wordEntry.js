@@ -57,25 +57,28 @@ class WordEntry extends Component {
   }
 
   renderLexemes = lexemes => {
+    let lexemesSize = lexemes.length;
     let res = [];
 
-    lexemes.some((lexeme, index) => {
-      // Calculate total width of displayed lexemes
-      let lexemesWidth = index
-        ? (index * 22) + 6 + 28 + 4 // DIFFERENCE(BTW LEFT OF LEXEMES) + DIFFERENCE(BTW FIRST AND NEXT LEXEME SIZE) + WIDTH + BORDER(BOTH SIDES)
-        : 34 + 4;
+    for (let i = 0; i < lexemesSize; i++) {
+      let lexeme = lexemes[i];
 
       let style = {
-        left: index ? `${(index * 22) + 6}px` : '0px',
-        zIndex: `${(lexemes.length - index) * lexemes.length}`, // ensures lexemes are placed in front of each other from left to right
+        left: i ? `${(i * 22) + 6}px` : '0px',
+        zIndex: `${(lexemesSize - i) * lexemesSize}`, // ensures lexemes are placed in front of each other from left to right
       };
 
+      // Calculate total width of displayed lexemes
+      let lexemesWidth = i
+        ? (i * 22) + 6 + 28 + 4 // DIFFERENCE(BTW LEFT OF LEXEMES) + DIFFERENCE(BTW FIRST AND NEXT LEXEME SIZE) + WIDTH + BORDER(BOTH SIDES)
+        : 34 + 4;
+
       // If lexemes exceeds entry-lexeme width, show ellipsis for the last one and hide rest
-      if (lexemesWidth >= this.state.entryLexemeWidth && lexemes.length - index > 0) {
+      if (lexemesWidth >= this.state.entryLexemeWidth && lexemesSize - i > 0) {
         // Replace last lexeme with ellipsis lexeme
         style = {
-          left: `${((index - 1) * 22) + 6}px`,
-          zIndex: `${(lexemes.length - index - 1) * lexemes.length}`,
+          left: `${((i - 1) * 22) + 6}px`,
+          zIndex: `${(lexemesSize - i - 1) * lexemesSize}`,
         };
 
         res.pop();
@@ -83,23 +86,23 @@ class WordEntry extends Component {
           <WordLexeme
             className="entry-lexeme-compact-style"
             style={style}
-            key={`${index}+${lexeme}`}
+            key={`${i}+${lexeme}`}
             type={"MORE-LEXEME"} 
           />
         );
 
-        return true;
+        break;
       }
 
       res.push(
         <WordLexeme
           className="entry-lexeme-compact-style"
           style={style}
-          key={`${index}+${lexeme}`}
+          key={`${i}+${lexeme}`}
           type={lexeme} 
         />
       );
-    });
+    };
 
     return res;
   }
