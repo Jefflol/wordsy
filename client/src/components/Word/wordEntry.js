@@ -8,6 +8,31 @@ import './wordEntry.css';
 
 
 class WordEntry extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      entryLexemeWidth: 0
+    };
+
+    this.lexemeRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this.getEntryLexemeWidth();
+    window.addEventListener('resize', this.getEntryLexemeWidth);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.getEntryLexemeWidth);
+  }
+
+  getEntryLexemeWidth = () => {
+    this.setState({
+      entryLexemeWidth: this.lexemeRef.current.offsetWidth
+    });
+  }
+
+
   // Delete word entry
   handleDeleteEntry = (e, wordId) => {
     e.stopPropagation();
@@ -22,8 +47,57 @@ class WordEntry extends Component {
     this.props.getWordEntry(this.props.userId, wordId);
   }
 
+  renderLexemes = lexemes => {
+    let res = [];
+
+    lexemes.some((lexeme, index) => {
+      // Calculate total width of displayed lexemes
+      let lexemesWidth = index
+        ? (index * 22) + 6 + 28 + 4 // DIFFERENCE(BTW LEFT OF LEXEMES) + DIFFERENCE(BTW FIRST AND NEXT LEXEME SIZE) + WIDTH + BORDER(BOTH SIDES)
+        : 34 + 4;
+
+      let style = {
+        left: index ? `${(index * 22) + 6}px` : '0px',
+        zIndex: `${(lexemes.length - index) * lexemes.length}`, // ensures lexemes are placed in front of each other from left to right
+      };
+
+      // If lexemes exceeds entry-lexeme width, show ellipsis for the last one and hide rest
+      if (lexemesWidth >= this.state.entryLexemeWidth && lexemes.length - index > 0) {
+        // Replace last lexeme with ellipsis lexeme
+        style = {
+          left: `${((index - 1) * 22) + 6}px`,
+          zIndex: `${(lexemes.length - index - 1) * lexemes.length}`,
+        };
+
+        res.pop();
+        res.push(
+          <WordLexeme
+            className="entry-lexeme-compact-style"
+            style={style}
+            key={`${index}+${lexeme}`}
+            type={"MORE-LEXEME"} 
+          />
+        );
+
+        return true;
+      }
+
+      res.push(
+        <WordLexeme
+          className="entry-lexeme-compact-style"
+          style={style}
+          key={`${index}+${lexeme}`}
+          type={lexeme} 
+        />
+      );
+    });
+
+    return res;
+  }
+
   render() {
     const { word, definition, lexemes, id, show } = this.props;
+    const entryLexemes = this.renderLexemes(lexemes);
 
     return (
       <div className="entry">
@@ -35,17 +109,10 @@ class WordEntry extends Component {
           />
         </div>
         <div className="entry-definition">
-          { 
-            show && 
-            <WordDefinition text={definition} /> 
-          }
+          { show && <WordDefinition text={definition} /> }
         </div>
-        <div className="entry-lexeme">
-          { 
-            lexemes.map(lexeme => 
-              <WordLexeme key={`${id}+${lexeme}`} type={lexeme} />
-            ) 
-          }
+        <div className="entry-lexeme" ref={this.lexemeRef}>
+          { entryLexemes }
         </div>
       </div>
     );

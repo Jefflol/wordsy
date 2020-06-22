@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ReactComponent as MoreIcon } from '../../assets/more-horizontal.svg';
 import { getLexemeData } from '../../helpers/lexemeData';
 
 import './word.css';
@@ -41,12 +42,20 @@ export const WordExample = props => {
 
 export const WordLexeme = props => {
   const { color: lexemeColor, text: lexemeText } = getLexemeData(props.type);
-  let classNames = `lexeme-icon lexeme-background-${lexemeColor} lexeme-text-${lexemeColor}`;
+  let classNames = `${props.className} lexeme-icon lexeme-background-${lexemeColor} lexeme-text-${lexemeColor}`;
   if (props.border) classNames += ` lexeme-border-${lexemeColor} lexeme-border-active`;
-  classNames += ` ${props.className}`;
+
+  // Special case to display and ellipsis WordLexeme
+  if (props.type === 'MORE-LEXEME') {
+    return (
+      <div className={classNames} style={props.style}>
+        <MoreIcon style={{width: '16px'}}/>
+      </div>
+    );
+  }
 
   return (
-    <div className={classNames}>
+    <div className={classNames} style={props.style}>
       {lexemeText}
       { props.order && <div className="lexeme-order">{props.order}</div>}
     </div>

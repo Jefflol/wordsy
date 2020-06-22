@@ -41,10 +41,15 @@ export const getLexemeData = type => {
         text: 'Pre'
       };
     case 'Other':
-    default:
       return {
         color: 'grey',
         text: 'O'
+      };
+    case 'MORE-LEXEME':
+    default:
+      return {
+        color: 'grey',
+        text: 'MORE-LEXEME'
       };
   }
 }
