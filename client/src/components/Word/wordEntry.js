@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { Word, WordDefinition, WordLexeme } from './word';
 import { deleteWordEntry, getWordEntry } from '../../actions/entryActions';
+import { debounce } from '../../helpers/helperFunctions';
 
 import './wordEntry.css';
 
@@ -19,11 +20,14 @@ class WordEntry extends Component {
 
   componentDidMount() {
     this.getEntryLexemeWidth();
+
     window.addEventListener('resize', this.getEntryLexemeWidth);
+    // window.addEventListener('resize', this.debouncedGetEntryLexemeWidth);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.getEntryLexemeWidth);
+    window.removeEventListener('resize', this.debouncedGetEntryLexemeWidth);
+    // window.removeEventListener('resize', this.debouncedGetEntryLexemeWidth);
   }
 
   getEntryLexemeWidth = () => {
@@ -32,6 +36,11 @@ class WordEntry extends Component {
     });
   }
 
+  // Performance optimization for entryLexeme when resizing screen
+  debouncedGetEntryLexemeWidth = debounce(
+    this.getEntryLexemeWidth,
+    500
+  );
 
   // Delete word entry
   handleDeleteEntry = (e, wordId) => {
