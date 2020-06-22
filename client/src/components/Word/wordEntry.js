@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 
 import { Word, WordDefinition, WordLexeme } from './word';
@@ -15,7 +15,7 @@ class WordEntry extends Component {
       entryLexemeWidth: 0
     };
 
-    this.lexemeRef = React.createRef();
+    this.lexemeRef = createRef();
   }
 
   componentDidMount() {
