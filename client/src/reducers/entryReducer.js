@@ -17,10 +17,6 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  userId: null,
-  word: null,
-  definition: null,
-  example: null,
   isEntryLoading: false,
   isEntryAdded: false,
   isWordDetailsLoading: false,
@@ -85,10 +81,6 @@ export default function (state = initialState, action) {
     case EDIT_ENTRY_FAIL:
       return {
         ...state,
-        userId: null,
-        word: null,
-        definition: null,
-        example: null,
         isEntryLoading: false,
         isEntryAdded: false,
         isWordDetailsLoading: false,
