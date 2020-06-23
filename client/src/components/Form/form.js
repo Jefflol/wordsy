@@ -91,14 +91,14 @@ export class FormTextarea extends Component {
         />
         {
           !!this.props.onDelete &&
-          <div
+          <button
             className="form-textarea-delete-btn" 
             onClick={() => this.handleDelete(id)}
             onKeyPress={e => this.handleKeyPress(e, id)}
             tabIndex={tabIndex}
           >
             <span>&times;</span>
-          </div>
+          </button>
         }
         <WordLexeme className="form-textarea-lexeme-icon" type={type} border />
       </div>

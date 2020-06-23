@@ -42,6 +42,8 @@
 }
 
 .form-logout-btn {
+  background-color: transparent;
+  border: 0;
   opacity: 20%;
 }
 .form-logout-btn:hover,
@@ -126,3 +128,14 @@
 .form-textarea-scroll-snap {
   scroll-snap-align: center;
 } */
+
+
+/* Only show outline when user begins tab navigation */
+body:not(.user-is-tabbing) button:focus,
+body:not(.user-is-tabbing) input:focus,
+body:not(.user-is-tabbing) select:focus,
+body:not(.user-is-tabbing) textarea:focus,
+body:not(.user-is-tabbing) .form-option:focus,
+body:not(.user-is-tabbing) .word-hover:focus {
+  outline: none;
+}

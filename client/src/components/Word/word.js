@@ -23,7 +23,7 @@ export class Word extends React.Component {
         </div>
         {
           (this.props.onDelete) &&
-          <button className="word-delete-btn" onClick={this.props.onDelete} tabIndex={this.props.tabIndex}>
+          <button className="word-delete-btn" type="button" onClick={this.props.onDelete} tabIndex={this.props.tabIndex}>
             <span>&times;</span>
           </button>
         }

@@ -112,17 +112,19 @@
   width: 12px;
   height: 12px;
 
+  border: 0;
   border-radius: 15px;
   font-size: 8px;
   font-weight: 800;
+
   background-color: #FF4F4F;
   color: #262626;
   
   z-index: 1;
 }
 .form-textarea-delete-btn:hover {
-  top: -3px;
-  right: -3px;
+  top: -2px;
+  right: -2px;
   width: 15px;
   height: 15px;
   
@@ -131,20 +133,13 @@
 }
 
 .form-textarea-delete-btn > span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  height: 100%;
-
   visibility: 0;
   opacity: 0;
 }
+.form-textarea-delete-btn:hover > span,
 .form-textarea-delete-btn > span:hover {
-  visibility: 1;
+  visibility: visible;
   opacity: 100%;
-  outline: none;
 }
 
 .form-textarea-lexeme-icon {

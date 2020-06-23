@@ -11,7 +11,8 @@
 
   background-color: #CBE6FF;
 }
-.word-hover:hover {
+.word-hover:hover,
+.word-hover:focus {
   cursor: pointer;
 }
 

@@ -41,6 +41,12 @@ class EntryForm extends Component {
       userId: this.props.userId,
       username: this.props.username
     });
+
+    window.addEventListener('keydown', this.handleFirstTab);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleFirstTab);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -288,16 +294,26 @@ class EntryForm extends Component {
     }
   }
 
+  // Sync up scroll to examples
   handleScrollDefinition = () => {
     this.setState({
       textareaScrollTop: this.scrollRefDefinition.current.scrollTop,
     });
   }
 
+  // Sync up scroll to definition
   handleScrollExample = () => {
     this.setState({
       textareaScrollTop: this.scrollRefExample.current.scrollTop,
     });
+  }
+
+  // Show outline when user uses tab navigation
+  handleFirstTab = e => {
+    if (e.keyCode === 9) {
+        document.body.classList.add('user-is-tabbing');
+        window.removeEventListener('keydown', this.handleFirstTab);
+    }
   }
 
   renderDetails = (detailType) => {
@@ -332,7 +348,7 @@ class EntryForm extends Component {
           <div className="form-header">
             <div className="form-title">
               <h1>Hi {this.state.username}</h1>
-              <LogoutIcon className="form-logout-btn" onClick={this.handleClickLogout} tabIndex="1"/>
+              <button className="form-logout-btn" type="button" onClick={this.handleClickLogout} tabIndex="1"><LogoutIcon /></button>
             </div>
             <h3 className="form-caption">Ready to add a new word?</h3>
           </div>
