@@ -55,20 +55,33 @@
   right: 0;
 }
 
-.word-details-body {
+.word-details-body-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   max-height: 40%;
   margin: 20px 0 40px 0;
+  box-sizing: border-box;
+}
+
+.word-details-body {
+  width: 100%;
+
+  box-sizing: border-box;
   overflow: scroll;
 }
 
-.word-details-body > .body-label {
+.body-label {
   margin: 0 0 10px 0;
 }
 
-.word-details-body > .body-entry {
+.body-entry {
   display: flex;
   align-items: center;
   margin: 10px 0;
+}
+.body-entry:first-of-type {
+  margin: 0 0 10px 0;
 }
 
 .body-entry-lexeme { 

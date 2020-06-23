@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 
 import { Word, WordDefinition, WordExample, WordLexeme } from '../../components/Word/word';
 import { ReactComponent as EditIcon } from '../../assets/edit.svg';
@@ -8,12 +8,41 @@ import './wordDetails.css';
 
 
 export default class WordDetails extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      scrollTop: 0
+    };
+
+    this.scrollRefDefinition = createRef();
+    this.scrollRefExample = createRef();
+  }
+
+  componentDidUpdate(prevProp, prevState) {
+    if (this.state.scrollTop !== prevState.scrollTop) {
+      this.scrollRefDefinition.current.scrollTop = this.state.scrollTop;
+      this.scrollRefExample.current.scrollTop = this.state.scrollTop;
+    }
+  }
+
   editWordEntry = () => {
     this.props.onEdit();
   }
 
   closeWordDetails = () => {
     this.props.onClose();
+  }
+
+  handleScrollDefinition = () => {
+    this.setState({
+      scrollTop: this.scrollRefDefinition.current.scrollTop
+    });
+  }
+
+  handleScrollExample = () => {
+    this.setState({
+      scrollTop: this.scrollRefExample.current.scrollTop
+    });
   }
 
   renderDefinitions = definitions => {
@@ -51,13 +80,17 @@ export default class WordDetails extends Component {
             <button className="edit-btn" onClick={this.editWordEntry}><EditIcon /></button>
             <button className="close-btn" onClick={this.closeWordDetails}><CloseIcon /></button>
           </div>
-          <div className="word-details-body">
+          <div className="word-details-body-container">
             <div className="body-label">DEFINITION</div>
-            { definitions }
+            <div className="word-details-body" ref={this.scrollRefDefinition} onScroll={this.handleScrollDefinition}>
+              { definitions }
+            </div>
           </div>
-          <div className="word-details-body">
+          <div className="word-details-body-container">
             <div className="body-label">EXAMPLE</div>
+            <div className="word-details-body" ref={this.scrollRefExample} onScroll={this.handleScrollExample}>
             { examples }
+            </div>
           </div>
         </div>
       </div>
