@@ -18,7 +18,7 @@ router.post('/login', UserController.user_login);
 // @route   DELETE /users/:userId
 // @desc    Delete a user by ID
 // @access  PRIVATE
-router.delete('/:userId', checkAuth, UserController.user_delete);
+// router.delete('/:userId', checkAuth, UserController.user_delete);
 
 // @route   GET /users/:userId
 // @desc    Fetch user data
