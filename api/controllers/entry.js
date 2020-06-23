@@ -22,7 +22,7 @@ exports.entry_get_all = (req, res, next) => {
     .sort(sortQuery)
     .collation({ locale: 'en' })
     .then(entries => {
-      console.log('Entries found ', entries);
+      // console.log('Entries found ', entries);
       return res.status(200).json({
         entry: entries
       });
@@ -49,7 +49,7 @@ exports.entry_get_one = (req, res, next) => {
   Entry.findOne({ userId: req.params.userId, _id: req.params.entryId })
     .select('_id userId word definition example dateCreated')
     .then(entry => {
-      console.log('Entry found ', entry);
+      // console.log('Entry found ', entry);
 
       if (entry) {
         return res.status(200).json({
@@ -109,7 +109,7 @@ exports.entry_add = (req, res, next) => {
 
   entry.save()
     .then(result => {
-      console.log(result);
+      // console.log(result);
       return res.status(201).json({
         message: 'Entry created'
       });
@@ -177,7 +177,7 @@ exports.entry_edit = (req, res, next) => {
     });
   })
   .catch(err => {
-    console.log(err);
+    // console.log(err);
     return res.status(500).json({
       error: err
     });

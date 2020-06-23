@@ -27,14 +27,14 @@ export const addWordEntry = ({ userId, word, definition, example }) => (dispatch
   // Add a word
   axios.post(`/entry/${userId}`, body, tokenConfig(getState))
     .then(res => {
-      console.log(`[SUCCESS]: ADDED NEW WORD - ${word}`);
+      // console.log(`[SUCCESS]: ADDED NEW WORD - ${word}`);
       dispatch({
         type: ADD_ENTRY_SUCCESS,
       });
       dispatch(getWordEntries(userId));
     })
     .catch(err => {
-      console.log('[ENTRY]: ', err);
+      // console.log('[ENTRY]: ', err);
       dispatch({
         type: ADD_ENTRY_FAIL
       });
@@ -55,7 +55,7 @@ export const getWordEntries = (userId, sortType='recent') => (dispatch, getState
       });
     })
     .catch(err => {
-      console.log('[ENTRY]: ', err);
+      // console.log('[ENTRY]: ', err);
       dispatch({
         type: GET_ENTRIES_FAIL
       });
@@ -69,14 +69,14 @@ export const getWordEntry = (userId, wordId) => (dispatch, getState) => {
   
   axios.get(`/entry/${userId}/${wordId}`, tokenConfig(getState))
     .then(res => {
-      console.log('[SUCCESS]: RETRIEVED WORD');
+      // console.log('[SUCCESS]: RETRIEVED WORD');
       dispatch({
         type: GET_ENTRY_SUCCESS,
         payload: res.data
       });
     })
     .catch(err => {
-      console.log('[ENTRY]: ', err);
+      // console.log('[ENTRY]: ', err);
       dispatch({
         type: GET_ENTRY_FAIL
       });
@@ -88,14 +88,14 @@ export const getWordEntry = (userId, wordId) => (dispatch, getState) => {
 export const deleteWordEntry = (userId, wordId) => (dispatch, getState) => {
   axios.delete(`/entry/${userId}/${wordId}`, tokenConfig(getState))
     .then(res => {
-      console.log('[SUCCESS]: DELETED WORD');
+      // console.log('[SUCCESS]: DELETED WORD');
       dispatch({
         type: DELETE_ENTRY_SUCCESS
       });
       dispatch(getWordEntries(userId));
     })
     .catch(err => {
-      console.log('[ENTRY]: ', err);
+      // console.log('[ENTRY]: ', err);
       dispatch({
         type: DELETE_ENTRY_FAIL
       });
@@ -106,7 +106,7 @@ export const deleteWordEntry = (userId, wordId) => (dispatch, getState) => {
 export const loadWordEntry = (userId, wordId) => (dispatch, getState) => {
   axios.get(`/entry/${userId}/${wordId}`, tokenConfig(getState))
     .then(res => {
-      console.log('[SUCCESS]: RETRIEVED WORD');
+      // console.log('[SUCCESS]: RETRIEVED WORD');
       dispatch({
         type: LOAD_EDIT_FORM,
         payload: res.data
@@ -114,7 +114,7 @@ export const loadWordEntry = (userId, wordId) => (dispatch, getState) => {
       dispatch({ type: LOAD_EDIT_FORM_SUCCESS });
     })
     .catch(err => {
-      console.log('[ENTRY]: ', err);
+      // console.log('[ENTRY]: ', err);
       dispatch({
         type: LOAD_EDIT_FORM_FAIL
       });
@@ -125,14 +125,14 @@ export const loadWordEntry = (userId, wordId) => (dispatch, getState) => {
 export const editWordEntry = (userId, wordId, modifications) => (dispatch, getState) => {
   axios.patch(`/entry/${userId}/${wordId}`, modifications, tokenConfig(getState))
     .then(res => {
-      console.log('[SUCCESS]: EDITED WORD');
+      // console.log('[SUCCESS]: EDITED WORD');
       dispatch({
         type: EDIT_ENTRY_SUCCESS,
       });
       dispatch(getWordEntries(userId));
     })
     .catch(err => {
-      console.log('[ENTRY]: ', err);
+      // console.log('[ENTRY]: ', err);
       dispatch({
         type: EDIT_ENTRY_FAIL
       });

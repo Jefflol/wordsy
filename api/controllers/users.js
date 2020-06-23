@@ -30,7 +30,7 @@ exports.user_signup = (req, res, next) => {
 
             user.save()
             .then(result => {
-              console.log(result);
+              // console.log(result);
               return res.status(201).json({
                 message: 'User created'
               });
@@ -142,7 +142,7 @@ exports.user_get_data = (req, res, next) => {
   User.findById({ _id: req.params.userId })
     .select('_id username')
     .then(user => {
-      console.log('User found ', user);
+      // console.log('User found ', user);
 
       if (user) {
         return res.status(200).json({

@@ -67,7 +67,7 @@ class EntryForm extends Component {
       let details = {};
 
       wordDetails.definition.forEach((entry, index) => {
-        console.log(entry);
+        // console.log(entry);
         details[entry.id] = {
           lexeme: wordDetails.definition[index].partsOfSpeech,
           definition: wordDetails.definition[index].definition,
@@ -145,7 +145,6 @@ class EntryForm extends Component {
 
     // Iterate through states to combine definitions and examples
     for (const [id, detail] of Object.entries(details)) {
-      console.log(id);
       const definitionEntry = {
         id: id,
         partsOfSpeech: detail.lexeme,

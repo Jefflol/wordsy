@@ -61,7 +61,7 @@ export const loginUser = ({ username, password }) => dispatch => {
   // Login User
   axios.post('/users/login', body, config)
     .then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       dispatch({ type: CLEAR_ERRORS });
       dispatch({
         type: LOGIN_SUCCESS,
