@@ -361,7 +361,7 @@ class EntryForm extends Component {
           <div className="lexeme-selection">
             <FormGroup>
               <FormLabel name="PARTS OF SPEECH" errorMessage={this.state.errors.lexeme} errorOn={this.state.errors.lexeme} />
-              <FormSelect option={lexeme} tabIndex="3" onClick={this.handleClickLexeme} />
+              <FormSelect options={lexeme} tabIndex="3" onClick={this.handleClickLexeme} />
             </FormGroup>
           </div>
           <div className="definition-input">

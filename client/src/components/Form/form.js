@@ -113,7 +113,7 @@ export class FormSelect extends Component {
   }
 
   render() {
-    const { option: options, tabIndex } = this.props;
+    const { options, tabIndex } = this.props;
 
     return (
       <div className="form-select">
