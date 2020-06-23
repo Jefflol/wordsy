@@ -89,22 +89,21 @@ class WordBank extends Component {
       <div className="word-bank-container">
         <div className="word-bank-header">
           <div className="header-title">Your Words</div>
-            <button className="word-bank-options" tabIndex="100" onClick={this.handleClickDropDown}><OptionsIcon /></button>
-            {/* <OptionsIcon className="word-bank-options" onClick={this.handleClickDropDown} />            */}
-            { 
-              this.state.showOptions && 
-              <div className="options-dropdown">
-                <DropDown onClose={this.handleCloseDropDown}>
-                  { 
-                    this.state.showDefinition ?
-                    <DropDownOption text="Hide definition" tabIndex={100} onClick={this.toggleDefinition}/> :
-                    <DropDownOption text="Show definition" tabIndex={100} onClick={this.toggleDefinition}/>
-                  }
-                  <DropDownOption text="Sort by recent" tabIndex={100} onClick={() => this.sortByType('recent')}/>
-                  <DropDownOption text="Sort by alphabetical" tabIndex={100} onClick={() => this.sortByType('alphabet')}/>
-                </DropDown> 
-              </div>
-            } 
+          <button className="word-bank-options" tabIndex="100" onClick={this.handleClickDropDown}><OptionsIcon /></button>
+          { 
+            this.state.showOptions && 
+            <div className="options-dropdown">
+              <DropDown onClose={this.handleCloseDropDown}>
+                { 
+                  this.state.showDefinition
+                  ? <DropDownOption text="Hide definition" tabIndex={100} onClick={this.toggleDefinition}/>
+                  : <DropDownOption text="Show definition" tabIndex={100} onClick={this.toggleDefinition}/>
+                }
+                <DropDownOption text="Sort by recent" tabIndex={100} onClick={() => this.sortByType('recent')}/>
+                <DropDownOption text="Sort by alphabetical" tabIndex={100} onClick={() => this.sortByType('alphabet')}/>
+              </DropDown> 
+            </div>
+          } 
         </div>
         <div className="word-bank">
           { wordBank }
