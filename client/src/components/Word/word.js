@@ -6,23 +6,48 @@ import { getLexemeData } from '../../helpers/lexemeData';
 import './word.css';
 
 
-export const Word = props => {
-  let classNames = props.onClick ? 'word-container word-hover' : 'word-container';
+export class Word extends React.Component {
+  handleKeyPressWord = e => {
+    if (e.key === 'Enter') {
+      this.props.onClick(e);
+    }
+  }
 
-  return (
-    <div className={classNames} onClick={props.onClick}>
-      <div className="word-text">
-        {props.text}
+  render() {
+    let classNames = this.props.onClick ? 'word-container word-hover' : 'word-container';
+
+    return (
+      <div className={classNames} onClick={this.props.onClick} onKeyPress={e => this.handleKeyPressWord(e)} tabIndex={this.props.tabIndex}>
+        <div className="word-text">
+          {this.props.text}
+        </div>
+        {
+          (this.props.onDelete) &&
+          <button className="word-delete-btn" onClick={this.props.onDelete} tabIndex={this.props.tabIndex}>
+            <span>&times;</span>
+          </button>
+        }
       </div>
-      {
-        props.onDelete &&
-        <button className="word-delete-btn" onClick={props.onDelete}>
-          <span>&times;</span>
-        </button>
-      }
-    </div>
-  );
+    );
+  }
 }
+// export const Word = props => {
+//   let classNames = props.onClick ? 'word-container word-hover' : 'word-container';
+
+//   return (
+//     <div className={classNames} onClick={props.onClick} tabIndex={props.tabIndex}>
+//       <div className="word-text">
+//         {props.text}
+//       </div>
+//       {
+//         props.onDelete &&
+//         <button className="word-delete-btn" onClick={props.onDelete} tabIndex={props.tabIndex}>
+//           <span>&times;</span>
+//         </button>
+//       }
+//     </div>
+//   );
+// }
 
 export const WordDefinition = props => {
   return (

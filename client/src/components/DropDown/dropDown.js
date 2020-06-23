@@ -35,6 +35,7 @@ export const DropDownOption = props => {
   return (
     <button
       className="dropdown-option"
+      tabIndex={props.tabIndex}
       onClick={props.onClick}
     >
       {props.text}

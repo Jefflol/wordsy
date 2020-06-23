@@ -369,8 +369,8 @@ class EntryForm extends Component {
             </FormGroup>
           </div>
           <div className="form-buttons">
-            <button className="form-reset-btn" type="button" tabIndex="100" onClick={this.handleReset}>Reset</button>
-            <button className="form-submit-btn" type="submit" tabIndex="100">{this.props.isEditing ? 'Save' : 'Add'}</button>
+            <button className="form-reset-btn" type="button" tabIndex="50" onClick={this.handleReset}>Reset</button>
+            <button className="form-submit-btn" type="submit" tabIndex="50">{this.props.isEditing ? 'Save' : 'Add'}</button>
           </div>
         </form>
       </div>

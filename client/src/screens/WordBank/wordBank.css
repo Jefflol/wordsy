@@ -36,6 +36,10 @@
   font-weight: 700;
 }
 
+.word-bank-header > .word-bank-options {
+  border: 0;
+  background-color: transparent;
+}
 .word-bank-header > .word-bank-options:hover {
   cursor: pointer;
 }

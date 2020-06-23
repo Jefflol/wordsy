@@ -117,7 +117,8 @@ class WordEntry extends Component {
           <Word
             text={word}
             onClick={e => this.handleClickEntry(e, id)} 
-            onDelete={e => this.handleDeleteEntry(e, id)} 
+            onDelete={e => this.handleDeleteEntry(e, id)}
+            tabIndex={100}
           />
         </div>
         <div className="entry-definition">
