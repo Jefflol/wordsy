@@ -65,24 +65,51 @@ export const WordExample = props => {
   );
 }
 
-export const WordLexeme = props => {
-  const { color: lexemeColor, text: lexemeText } = getLexemeData(props.type);
-  let classNames = `${props.className} lexeme-icon lexeme-background-${lexemeColor} lexeme-text-${lexemeColor}`;
-  if (props.border) classNames += ` lexeme-border-${lexemeColor} lexeme-border-active`;
-
-  // Special case to display and ellipsis WordLexeme
-  if (props.type === 'MORE-LEXEME') {
+export class WordLexeme extends React.Component {
+  render() {
+    const { className, style, type, order, border, hover, tabIndex, onClick, onKeyPress } = this.props;
+    const { color: lexemeColor, text: lexemeText } = getLexemeData(type);
+    
+    let classNames = `${className} lexeme-icon lexeme-background-${lexemeColor} lexeme-text-${lexemeColor}`;
+    if (border) classNames += ` lexeme-border-${lexemeColor} lexeme-border-active`;
+    if (hover) classNames += ` lexeme-border-${lexemeColor} lexeme-border-hover`;
+  
+    // Special case to display and ellipsis WordLexeme
+    if (type === 'MORE-LEXEME') {
+      return (
+        <div className={classNames} style={style}>
+          <MoreIcon style={{width: '16px'}}/>
+        </div>
+      );
+    }
+  
     return (
-      <div className={classNames} style={props.style}>
-        <MoreIcon style={{width: '16px'}}/>
+      <div className={classNames} style={style} tabIndex={tabIndex} onClick={onClick} onKeyPress={onKeyPress}>
+        {lexemeText}
+        { order && <div className="lexeme-order">{order}</div>}
       </div>
     );
   }
-
-  return (
-    <div className={classNames} style={props.style}>
-      {lexemeText}
-      { props.order && <div className="lexeme-order">{props.order}</div>}
-    </div>
-  );
 }
+
+// export const WordLexeme = props => {
+//   const { color: lexemeColor, text: lexemeText } = getLexemeData(props.type);
+//   let classNames = `${props.className} lexeme-icon lexeme-background-${lexemeColor} lexeme-text-${lexemeColor}`;
+//   if (props.border) classNames += ` lexeme-border-${lexemeColor} lexeme-border-active`;
+
+//   // Special case to display and ellipsis WordLexeme
+//   if (props.type === 'MORE-LEXEME') {
+//     return (
+//       <div className={classNames} style={props.style}>
+//         <MoreIcon style={{width: '16px'}}/>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className={classNames} style={props.style}>
+//       {lexemeText}
+//       { props.order && <div className="lexeme-order">{props.order}</div>}
+//     </div>
+//   );
+// }

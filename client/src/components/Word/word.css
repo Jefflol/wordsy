@@ -122,6 +122,12 @@
   border-style: solid;
 }
 
+.lexeme-border-hover:hover,
+.lexeme-border-hover:active {
+  cursor: pointer;
+  border: 3px solid;
+}
+
 .lexeme-order {
   position: absolute;
   bottom: -5px;

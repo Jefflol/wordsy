@@ -145,20 +145,15 @@ export class FormOption extends Component {
   }
 
   render() {
-    const { id, type, tabIndex } = this.props;
-    const { text: lexemeText, color: lexemeColor } = getLexemeData(type);
-    const classNames = `form-option lexeme-border lexeme-border-${lexemeColor} lexeme-background-${lexemeColor} lexeme-text-${lexemeColor}`;
-
     return (
-      <div
-        className={classNames} 
-        key={id}
-        tabIndex={tabIndex}
+      <WordLexeme 
+        className={"form-option"}
+        type={this.props.type}
+        tabIndex={this.props.tabIndex}
         onClick={this.handleClick}
         onKeyPress={this.handleKeyPress}
-      >
-        {lexemeText}
-      </div>
+        hover
+      />
     );
   }
 }
