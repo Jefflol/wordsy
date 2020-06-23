@@ -23,7 +23,7 @@ router.post('/login', UserController.user_login);
 // @route   GET /users/:userId
 // @desc    Fetch user data
 // @access  PRIVATE
-router.get('/:userId', checkAuth, UserController.user_get_data);
+// router.get('/:userId', checkAuth, UserController.user_get_data);
 
 
 module.exports = router;
