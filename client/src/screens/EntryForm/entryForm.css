@@ -38,17 +38,17 @@
   margin: 0;
   font-size: 18px;
   font-weight: bold;
-  opacity: 20%;
+  opacity: 0.2;
 }
 
 .form-logout-btn {
   background-color: transparent;
   border: 0;
-  opacity: 20%;
+  opacity: 0.2;
 }
 .form-logout-btn:hover,
 .form-logout-btn:focus {
-  opacity: 100%;
+  opacity: 1;
   cursor: pointer;
 }
 

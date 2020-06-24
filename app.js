@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const morgan = require('morgan');
+const path = require('path');
 
 const userRoutes = require('./api/routes/users');
 const entryRoutes = require('./api/routes/entry');
@@ -9,9 +9,11 @@ const entryRoutes = require('./api/routes/entry');
 
 // Connect MongoDB
 mongoose.connect(
-  'mongodb+srv://JAF:' + 
-  process.env.MONGO_ATLAS_PW +
-  "@wordsy-vgraf.mongodb.net/test?retryWrites=true&w=majority", 
+  'mongodb+srv://' + 
+  process.env.MONGO_ATLAS_USERNAME + ':' + process.env.MONGO_ATLAS_PASSWORD +
+  '@wordsy-vgraf.mongodb.net/' + 
+  process.env.MONGO_ATLAS_DB_NAME + 
+  '?retryWrites=true&w=majority', 
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -24,7 +26,10 @@ mongoose.connect(
 app.use(express.json());
 
 // Logging Middle ware
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+  const morgan = require('morgan');
+  app.use(morgan('dev'));
+}
 
 // Allow resource sharing from different server (CORS Headers)
 app.use((req, res, next) => {
@@ -46,7 +51,17 @@ app.use((req, res, next) => {
 app.use('/users', userRoutes);
 app.use('/entry', entryRoutes);
 
+// Server static assets if in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
 
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
+// Error if code above doesn't run
 app.use((req, res, next) => {
   const error = new Error('Not found');
   error.status = 404;
