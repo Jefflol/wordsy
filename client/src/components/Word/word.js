@@ -13,41 +13,42 @@ export class Word extends React.Component {
     }
   }
 
+  handleKeyPressDelete = e => {
+    if (e.key === 'Enter') {
+      e.stopPropagation();
+      return () => this.props.onDelete();
+    }
+  }
+
   render() {
     let classNames = this.props.onClick ? 'word-container word-hover' : 'word-container';
 
     return (
-      <div className={classNames} onClick={this.props.onClick} onKeyPress={e => this.handleKeyPressWord(e)} tabIndex={this.props.tabIndex}>
+      <div 
+        className={classNames} 
+        onClick={this.props.onClick}
+        onKeyPress={this.handleKeyPressWord}
+        tabIndex={this.props.tabIndex}
+      >
         <div className="word-text">
           {this.props.text}
         </div>
         {
-          (this.props.onDelete) &&
-          <button className="word-delete-btn" type="button" onClick={this.props.onDelete} tabIndex={this.props.tabIndex}>
+          this.props.onDelete &&
+          <button
+            className="word-delete-btn"
+            type="button"
+            onClick={this.props.onDelete}
+            onKeyPress={this.handleKeyPressDelete}
+            tabIndex={this.props.tabIndex}
+          >
             <span>&times;</span>
           </button>
-        }
+          }
       </div>
     );
   }
 }
-// export const Word = props => {
-//   let classNames = props.onClick ? 'word-container word-hover' : 'word-container';
-
-//   return (
-//     <div className={classNames} onClick={props.onClick} tabIndex={props.tabIndex}>
-//       <div className="word-text">
-//         {props.text}
-//       </div>
-//       {
-//         props.onDelete &&
-//         <button className="word-delete-btn" onClick={props.onDelete} tabIndex={props.tabIndex}>
-//           <span>&times;</span>
-//         </button>
-//       }
-//     </div>
-//   );
-// }
 
 export const WordDefinition = props => {
   return (
@@ -91,25 +92,3 @@ export class WordLexeme extends React.Component {
     );
   }
 }
-
-// export const WordLexeme = props => {
-//   const { color: lexemeColor, text: lexemeText } = getLexemeData(props.type);
-//   let classNames = `${props.className} lexeme-icon lexeme-background-${lexemeColor} lexeme-text-${lexemeColor}`;
-//   if (props.border) classNames += ` lexeme-border-${lexemeColor} lexeme-border-active`;
-
-//   // Special case to display and ellipsis WordLexeme
-//   if (props.type === 'MORE-LEXEME') {
-//     return (
-//       <div className={classNames} style={props.style}>
-//         <MoreIcon style={{width: '16px'}}/>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className={classNames} style={props.style}>
-//       {lexemeText}
-//       { props.order && <div className="lexeme-order">{props.order}</div>}
-//     </div>
-//   );
-// }

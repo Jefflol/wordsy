@@ -25,12 +25,13 @@
   text-overflow: ellipsis;
 }
 
-.word-container:hover .word-delete-btn {
-  display: flex;
+.word-container:hover .word-delete-btn,
+.word-container:focus .word-delete-btn {
+  opacity: 1;
 }
 
 .word-delete-btn {
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
 
@@ -47,8 +48,11 @@
 
   background-color: #FF4F4F;
   color: #262626;
+
+  opacity: 0;
 }
-.word-delete-btn:hover {
+.word-delete-btn:hover,
+.word-delete-btn:focus {
   top: -2px;
   right: -2px;
   width: 15px;
@@ -56,14 +60,14 @@
   
   font-size: 12px;
   cursor: pointer;
+  opacity: 1;
 }
 
 .word-delete-btn > span {
-  visibility: 0;
   opacity: 0;
 }
-.word-delete-btn:hover > span {
-  visibility: visible;
+.word-delete-btn:hover > span,
+.word-delete-btn:focus > span {
   opacity: 1;
 }
 
