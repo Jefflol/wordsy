@@ -63,7 +63,9 @@ class AppRootComponent extends Component {
             <WordBank />
           </> :
           <>
-            <UserForm />
+            <div style={{height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              <UserForm />
+            </div>
           </>
         }
         { 
