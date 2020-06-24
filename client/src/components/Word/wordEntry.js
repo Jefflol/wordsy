@@ -26,7 +26,7 @@ class WordEntry extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.debouncedGetEntryLexemeWidth);
+    window.removeEventListener('resize', this.getEntryLexemeWidth);
     // window.removeEventListener('resize', this.debouncedGetEntryLexemeWidth);
   }
 
