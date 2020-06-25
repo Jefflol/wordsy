@@ -9,11 +9,12 @@ const entryRoutes = require('./api/routes/entry');
 
 // Connect MongoDB
 mongoose.connect(
-  'mongodb+srv://' + 
+  process.env.MONGO_ATLAS_URI ||
+  ('mongodb+srv://' + 
   process.env.MONGO_ATLAS_USERNAME + ':' + process.env.MONGO_ATLAS_PASSWORD +
   '@wordsy-vgraf.mongodb.net/' + 
   process.env.MONGO_ATLAS_DB_NAME + 
-  '?retryWrites=true&w=majority', 
+  '?retryWrites=true&w=majority'), 
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
