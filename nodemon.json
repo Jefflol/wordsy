@@ -1,9 +1,0 @@
-{
-  "env": {
-    "MONGO_ATLAS_USERNAME": "JAF",
-    "MONGO_ATLAS_PASSWORD": "JAF",
-    "MONGO_ATLAS_DB_NAME": "test",
-    "JWT_KEY": "JWT_SECRET",
-    "NODE_ENV": "development"
-  }
-}
