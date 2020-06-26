@@ -20,9 +20,14 @@ If you're running Wordsy locally, clone this repo and follow the instructions be
 
 ### Prerequisites
 
-Add your `MONGO_ATLAS_URI`, `JWT_KEY` to the nodemon.json. Make sure you set an environment variables for them if deploying.
+1. Install nodemon for development purpose
+    ```
+    npm install --save-dev nodemon
+    ```
 
-You can set `NODE_ENV` to `development` to output development logs or set it to `production` before deployment.
+2. Add your `MONGO_ATLAS_URI`, `JWT_KEY` to the nodemon.json. Make sure you set environment variables for them if deploying
+
+3. You can set `NODE_ENV` to `development` to output development logs or set it to `production` before deployment
 
 ### Installing
 
