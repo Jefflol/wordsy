@@ -1,0 +1,7 @@
+{
+  "env": {
+    "MONGO_ATLAS_URI": "YOUR_MONGO_ATLAS_URI",
+    "JWT_KEY": "JWT_SECRET",
+    "NODE_ENV": "development"
+  }
+}
