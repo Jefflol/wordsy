@@ -74,4 +74,4 @@ I also used [Redux](https://redux.js.org/) for state management, [Axios](https:/
 
 ## Author
 
-**JAF** - [JefflolC](https://github.com/JefflolC)
+**JAF** - [Jefflol](https://github.com/Jefflol)
